@@ -4,7 +4,6 @@ import PyPDF2
 def subtract(num1, num2):
     return num1 - num2
 
- 
 # creating a pdf file object
 pdfFileObj = open('Hello world!.pdf', 'rb')
   
