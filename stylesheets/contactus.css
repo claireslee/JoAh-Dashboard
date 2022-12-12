@@ -1,0 +1,123 @@
+html {background-color: rgb(255, 255, 255)}
+
+/* standard repeating nav bar */
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px 10%;
+    background-color: #ffffff;
+}
+
+.logo {
+    margin-right: auto;
+}
+  
+.navbar-links {
+    list-style: none;
+    display: flex;
+}
+  
+.navbar-links a,
+.login-button {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    color: #0a1c80;
+    text-decoration: none;
+}
+  
+.navbar-links li {
+    padding: 0px 20px;
+}
+  
+.navbar-links li a {
+    transition: all 0.3s ease 0s;
+}
+  
+.navbar-links li a:hover {
+    color: #8b73e3;
+}
+
+.login-button {
+    margin-left: 20px;
+    padding: 9px 25px;
+    background-color: rgb(71, 132, 218);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+  
+.login-button:hover {
+    background-color: rgba(94, 149, 226, 0.8);
+}
+
+
+/* contact-us-bar section */
+.contact-us-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    /* width: 100%; */
+    background-size: cover;
+    position: relative;
+    min-height: 10vh;
+    padding: 140px 0px 140px 100px;
+    background-color: rgb(236, 232, 225);
+
+    font-size: 22px;
+    font-weight: 700;
+    /* margin-bottom: 20px; */
+}
+
+/* contact-options section */
+.contact-options {
+    /* background-size: cover; */
+    background-color:  rgb(255, 255, 255);
+    font-size: 22px;
+    font-weight: 700;
+    padding: 10px 0px 80px 0px;
+}
+
+.contact-options h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-options p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+    font-weight: 70;
+}
+
+.contact-options .button-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-options .contact-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 150px;
+    font-size: 16px;
+
+    margin-left: 20px;
+    background-color: rgb(96, 140, 228);
+    color:black;
+    border: none;
+    border-radius: 50px;
+
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+  }
+  
+.contact-options .contact-button:hover {
+    background-color: rgba(163, 165, 240, 0.8);
+}
