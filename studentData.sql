@@ -3,3 +3,5 @@ INSERT INTO students VALUES (1, "Jones", "Bob", "bobjones123", "BobsGroceries78"
 INSERT INTO students VALUES (2, "Grande", "Ariana", "Agags", "AriBae123");
 INSERT INTO students VALUES (3, "Peters", "Evan", "evanpeters", "ahs00000");
 INSERT INTO students VALUES (4, "James", "Theo", "tj1214", "Divergent");
+
+SELECT username FROM students ORDER BY lastname;
