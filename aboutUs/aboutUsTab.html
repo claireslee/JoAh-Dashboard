@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="aboutUsPage.css">
+    <title> joah project </title>
+</head>
+
+<body>
+    <header>
+        <a class="logo" href="/"> joah </a>
+       
+        <nav>
+            <ul class="navbar-links">
+                <li><a href="#"> about us </a></li>
+                <li><a href="#"> resources </a></li>
+                <li><a href="#"> calendar </a></li>
+                <li><a href="#"> programs </a></li>
+                <li><a href="#"> contact </a></li>
+                <!-- <li><a href="#">About</a></li> -->
+            </ul>
+        </nav>
+        <a class="login-button" href="http://127.0.0.1:8000/admin/login/?next=/admin/"> login </a>
+    </header>
+
+   <div class = "joah meanings">
+    <h1>Joah</h1>
+    <h2>About Us</h2>
+    <p class="joahMeanings">The word&nbsp;<span style="font-weight: 700;">joah</span>&nbsp;can be used&nbsp;<br>in three distinct ways:&nbsp;<br>1. Bravo! (잘한다!)&nbsp;<br>2. Okay! (알았어!)&nbsp;<br>3. I like you! (좋아해!) </p>
+      <img src="https://joah-academy.com/wp-content/uploads/2021/12/Brochure.png" data-image-width="400" data-image-height="500"> 
+  
+   </div>
+  
+   <div class = "joah overview">
+    <h2 class="joahOverviewHeading">JoAh</h3>
+    <h4>Overview</h4>
+    <p class="joahOverview">We at JoAh Academy believe that all students have the potential and skills to excel in their academics. All they need is to be showed with compliments, recognition, and relationship. Both teachers and staff are committed not only to the helping students achieve their goals in middle school, high school, and college but also to cultivate deep, meaningful relationships that foster a more optimal learning experience.​Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of
+        disruptive innovation.</p>
+   </div>
+
+   <div class = "teacher 1">
+    <img class="teacher1pic" data-image-width="353" data-image-height="400" src="https://thumbs.dreamstime.com/z/teacher-dinosaur-17246958.jpg">
+    <h3 class="Teacher1Heading">Teacher 1</h3>
+    <p class="teacher1Description">Description 1</p>
+   </div>
+
+   <div class = "teacher 2">
+    <img class="teacher2pic" data-image-width="353" data-image-height="400" src="images/dfbaad3d-3cea-47a2-585b-d90f0129c474.jpeg">
+    <h3 class="Teacher2Heading">Teacher 2</h3>
+    <p class="teacher2Description">Description 2</p>
+   </div>
+
+   <div class = "teacher 3">
+    <img class="teacher3pic" data-image-width="353" data-image-height="400" src="images/8e3ad240-23d4-2312-1544-1e17a5f402aa.jpeg">
+    <h3 class="Teacher3Heading">Teacher 3</h3>
+    <p class="teacher3Description">Description 3</p>
+   </div>
+
+   <div class = "teacher 4">
+    <img class="teacher4pic" data-image-width="353" data-image-height="400" src="https://cdn2.vectorstock.com/i/1000x1000/18/41/cartoon-animal-teacher-on-white-background-vector-24631841.jpg">
+    <h3 class="Teacher4Heading">Teacher 4</h3>
+    <p class="teacher4Description">Description 4</p>
+   </div>
+
+   <div class = "teacher 5">
+    <img class="teacher5pic" data-image-width="353" data-image-height="400" src="https://www.clipartmax.com/png/middle/67-671555_animal-clipart-for-teachers-clip-art-library-turtle-teacher-clipart.png">
+    <h3 class="Teacher5Heading">Teacher 5</h3>
+    <p class="teacher5Description">Description 5</p>
+   </div>
+
+   <div class = "Location">
+    <p class = "LocationPar">Located at: <br> 268 Broad Ave. 2nd Floor, Palisades Park, NJ 07650​S</p>
+    <img class = "locationPic" data-image-width="500" data-image-height="400" src="https://previews.123rf.com/images/tombaky/tombaky1107/tombaky110700005/10072476-red-pin-show-the-location-of-a-destination-point-on-a-map-little-focus.jpg">
+   </div>
+
+   <div class = "Interested">
+    <h2 class="Interested?">Interested in working for us?</h2>
+    <form id="interest" onsubmit="return sendToForm();">
+    
+    <fieldset>
+        <input placeholder="Name"
+            type="text"
+            name="entry.1502403719"
+            data-name="Name"
+            id="Name"
+            required>
+    </fieldset>
+
+   <fieldset>
+    <input placeholder="Email Address"
+        type="text"
+        name="entry.445941044"
+        data-name="Email"
+        id="Email"
+        required>
+   </fieldset>
+
+   <div class="interest-button">
+    <button type="submit" value="Submit">Submit</button>
+   </div>
+   </form>
+   
+   </div>
+<!--1502403719-->
+<!--445941044-->
+    <script>
+        function sendToForm() {
+        var name = $("#Name").val();
+        var email = $("#Email").val();
+
+        $.ajax({
+            url: "",     
+            data: {
+            "entry.1502403719": name,
+            "entry.445941044": email
+            },
+            type: "POST",
+            dataType: "xml",
+            success: function (d) {
+            $('#contact').trigger('reset');
+            },
+            error: function (x, y, z) {
+            $('#contact').trigger('reset');
+            }
+        });
+        return false;
+        }
+    </script>
+</body>
+
+</html>
