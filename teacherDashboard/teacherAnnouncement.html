@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="stylesheets/calendar.css">
+    <link rel="stylesheet" href="teacherDashboard/teacherAnnouncement.css">
     <title> joah project </title>
 </head>
 
@@ -25,12 +25,23 @@
         <a class="login-button" href="logintab.html"> login </a>
     </header>
 
-    <body>
-        <h1>PDF Scanner</h1>
+    <label for="classes">Select a class:</label>
 
-        <form action="/action_page.php">
-          <label for="myfile">Select a PDF to be scanned:</label>
-          <input type="file" id="myfile" name="myfile"><br><br>
-          <input type="submit">
-        </form>
-    </body>
+    
+
+    <form action="/action_page.php" id="usrform">
+        <select name="classes" id="classes">
+            <option value="1">Class 1 - Reading</option>
+            <option value="2">Class 2 - Grammar</option>
+            <option value="3">Class 3 - Math</option>
+        </select>
+        <input type="submit">
+      </form>
+      
+      
+<textarea rows="4" cols="50" name="comment" form="usrform" 
+    placeholder="Enter announcement here...">
+</textarea>
+
+
+</body>
