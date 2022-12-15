@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="stylesheets/pdfScanner.css">
+    <link rel="stylesheet" href="pdfScanner.css">
     <title> joah project </title>
 </head>
 
@@ -22,15 +22,19 @@
                 <li><a href="resources.html"> resources </a></li>
             </ul>
         </nav>
-        <a class="login-button" href="logintab.html"> login </a>
+        <a class="login-button" href="http://127.0.0.1:8000/admin/login/?next=/admin/"> login </a>
     </header>
 
-    <body>
-        <h1>PDF Scanner</h1>
-
-        <form action="/action_page.php">
-          <label for="myfile">Select a PDF to be scanned:</label>
-          <input type="file" id="myfile" name="myfile"><br><br>
-          <input type="submit">
-        </form>
+        <div class="scannerArea">
+            <p class="select" align="center">Select a PDF to be scanned:</p>
+            <form action="/action_page.php">
+            <label class="choose-file">
+                <input class="fileSelect" type="file" id="myfile" name="myfile">
+                Choose File
+            </label><br><br><br>
+            
+            <a class="submit" align="center">Submit</a>
+             
+            </form>
+        </div>
     </body>
