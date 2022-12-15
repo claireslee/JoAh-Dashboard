@@ -1,12 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700|Open+Sans");
-html {
-  background-color:rgb(210, 216, 224);
-}
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
 header {
   display: flex;
@@ -16,17 +8,15 @@ header {
   background-color: #ffffff;
 }
 
-h2 {
-text-align: center;
-}
-
 .logo {
   margin-right: auto;
+  color: #0a1c80;
 }
 
 .navbar-links {
   list-style: none;
   display: flex;
+  margin-left: auto;
 }
 
 .navbar-links a,
@@ -61,7 +51,7 @@ text-align: center;
 
 .login-button:hover {
   background-color: rgba(94, 149, 226, 0.8);
-}
+} 
 
 body {
   font-family: 'Open Sans', sans-serif;
