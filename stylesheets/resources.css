@@ -11,7 +11,7 @@ html {
 header {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: left;
   padding: 30px 10%;
   background-color: #ffffff;
 }
