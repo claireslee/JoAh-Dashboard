@@ -5,25 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="teacherDashboard.css">
+    <link rel="stylesheet" href="stylesheets/teacherDashboard.css">
     <title> joah project </title>
 </head>
 
 <body>
     <header>
         <a class="logo" href="/"> joah </a>
-       
-        <nav>
-            <ul class="navbar-links">
-                <li><a href="aboutUs/aboutUsTab.html"> about us </a></li>
-                <li><a href="calendar.html"> calendar </a></li>
-                <li><a href="programs.html"> programs </a></li>
-                <li><a href="contactus.html"> contact </a></li>
-                <li><a href="resources.html"> resources </a></li>
-                <!-- <li><a href="#">About</a></li> -->
-            </ul>
-        </nav>
-        <a class="login-button" href="http://127.0.0.1:8000/admin/login/?next=/admin/"> login </a>
+        <a class="login-button" href="/"> logout </a>
     </header>
 
       <div class="container">
@@ -36,7 +25,10 @@
             <nav class="sidebar card py-2 mb-4">
                 <ul class="nav flex-column" id="nav_accordion">
                     <li class="nav-item">
-                        <a class="nav-link" href="teacherDashboard/teacherCalendar.html"> Calendar </a>
+                        <a class="nav-link" href="teacherCalendar.html"> Calendar </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="teacherAnnouncement.html"> Add Announcement </a>
                     </li>
                     
                     <li class="nav-item">
@@ -45,36 +37,34 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item1" href="#"> Class 1 - Reading <i class="bi small bi-caret-down-fill"></i> </a>
                                 <ul id="menu_item1" class="submenu collapse" data-bs-parent="#nav_accordion">
-                                    <li><a class="nav-link" href="#"> Announcement</a></li>
-                                    <li><a class="nav-link" href="#"> Calendar </a></li>
+                                    <li><a class="nav-link" href="class1Announcements.html"> Announcements</a></li>
+                                    <li><a class="nav-link" href="class1Calendar.html"> Calendar </a></li>
                                 </ul>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item2" href="#"> Class 2 - Grammar <i class="bi small bi-caret-down-fill"></i> </a>
                                 <ul id="menu_item2" class="submenu collapse" data-bs-parent="#nav_accordion">
-                                    <li><a class="nav-link" href="#"> Announcement</a></li>
-                                    <li><a class="nav-link" href="#"> Calendar </a></li>
+                                    <li><a class="nav-link" href="class2Announcements.html"> Announcements</a></li>
+                                    <li><a class="nav-link" href="class2Calendar.html"> Calendar </a></li>
                                 </ul>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item3" href="#"> Class 3 - Math <i class="bi small bi-caret-down-fill"></i> </a>
                                 <ul id="menu_item3" class="submenu collapse" data-bs-parent="#nav_accordion">
-                                    <li><a class="nav-link" href="#"> Announcement</a></li>
-                                    <li><a class="nav-link" href="#"> Calendar </a></li>
+                                    <li><a class="nav-link" href="class3Announcements.html"> Announcements</a></li>
+                                    <li><a class="nav-link" href="class3Calendar.html"> Calendar </a></li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="pdfScanner/pdfScanner.html"> PDF Scanner </a>
+                        <a class="nav-link" href="pdfScanner.html"> PDF Scanner </a>
                     </li>
                 </ul>
             </nav>
 
-  
-<!-- 3 announcement page-->
 
     </body>
