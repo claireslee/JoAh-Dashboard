@@ -115,5 +115,25 @@ html {
     line-height:25px;
     letter-spacing:1px;
     font-family: "Montserrat", sans-serif;
+}
 
+.teacher1pic {
+  width: 200px;
+  height: 300px;
+}
+.teacher2pic {
+  width: 200px;
+  height: 300px;
+}
+.teacher3pic {
+  width: 200px;
+  height: 300px;
+}
+.teacher4pic {
+  width: 200px;
+  height: 300px;
+}
+.teacher5pic {
+  width: 200px;
+  height: 300px;
 }
