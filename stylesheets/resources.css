@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700|Open+Sans");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500;600&display=swap");
 
 header {
   display: flex;
@@ -21,7 +22,7 @@ header {
 
 .navbar-links a,
 .login-button {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Raleway", sans-serif;
   font-weight: 500;
   color: #0a1c80;
   text-decoration: none;
@@ -54,7 +55,7 @@ header {
 } 
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Raleway', sans-serif;
   color: #546E7A;
   font-size: 14px;
   font-weight: 400;
@@ -70,12 +71,12 @@ p {
   font-size: 14px;
   color: #546E7A;
   line-height: 26px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Raleway', sans-serif;
   margin-bottom: 0;
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-size: 40px;
   font-weight: 700;
   color: #263238;
@@ -96,7 +97,7 @@ h1, h2, h3, h4, h5 {
   font-size: 36px;
   margin-bottom: 20px;
   text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-weight: 700;
   color: #263238;
   position: relative;
@@ -118,7 +119,7 @@ h1, h2, h3, h4, h5 {
   font-size: 60px;
   color: rgba(0, 0, 0, 0.07);
   z-index: 2;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-weight: 500;
   text-transform: capitalize;
   position: absolute;
