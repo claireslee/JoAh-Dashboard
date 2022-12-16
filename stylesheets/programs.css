@@ -46,7 +46,7 @@ header {
     cursor: pointer;
     transition: all 0.3s ease 0s;
 }
-  
+
 .login-button:hover {
     background-color: rgba(94, 149, 226, 0.8);
 }
@@ -61,7 +61,7 @@ header {
 }
 .sidebar .nav-link {
     font-weight: 500;
-    color: black;
+    color: rgb(0, 0, 0);
 }
 .sidebar .nav-link:hover {
     color: rgb(234, 152, 60);
