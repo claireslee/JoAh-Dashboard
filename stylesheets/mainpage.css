@@ -13,8 +13,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
- 
-
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -294,6 +292,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 
 .fw-bolder {
+  color:rgb(0, 0, 0);
   font-weight: bolder !important;
 }
 
@@ -416,6 +415,7 @@ button {
     font-size: 2.5em;
     font-weight: 300;
   }
+
   #contact-form {
 
     justify-content: center;
@@ -425,41 +425,47 @@ button {
     margin: 0 auto;
     padding-bottom: 50px;
   }
+
   #contact, label, input[name="submit"] {
     position: relative;
   }
+
   label > span, input, textarea, button {
     box-sizing: border-box;
   }
+
   label {
     display: block;
   }
+
   label > span {
     display: none;
   }
+
   input, textarea, button {
     width: 100%;
     padding: 0.5em;
     border: none;
     font: 300 100%/1.2 Ubuntu, sans-serif;
   }
+
   input[type="text"], input[type="email"], textarea {
     margin: 0 0 1em;
     border: 1px solid #ccc;
     outline: none;
   }
-  input.invalid, textarea.invalid {
-    border-color: #d5144d;
-  }
+
   textarea {
     height: 6em;
   }
+
   input[type="submit"] {
-    background: #cb7e2b;
-    color: #333;
+    background: #7191dd;
+    color: rgb(0, 0, 0);
   }
+
   input[type="submit"]:hover {
-    background: #91b36f;
+    background: #b6a5dc;
   }
 
   .contact-center {
@@ -471,6 +477,8 @@ button {
   }
 
   .contact-header-center {
+    font-weight: bolder;
+    color:rgb(0, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
