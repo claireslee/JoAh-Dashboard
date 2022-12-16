@@ -1,12 +1,38 @@
-/* 
-Blue blog template 
-----------------------
-You are free to use
-this template in any
-way you desire, no
-author information or
-link back are required.
-*/
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 10%;
+    background-color: rgba(182, 214, 253, 0.92);
+  }
+  
+  .logo {
+    margin-right: auto;
+    color: #0a1c80;
+}
+
+.navbar-links a,
+.login-button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #0a1c80;
+  text-decoration: none;
+}
+
+.login-button {
+  margin-left: 20px;
+  top: 20px;
+  padding: 9px 25px;
+  background-color: rgb(71, 132, 218);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.login-button:hover {
+  background-color: rgba(94, 149, 226, 0.8);
+} 
 
 * {
 	margin: 0;
@@ -14,7 +40,7 @@ link back are required.
 }
 
 body {
-	background: #337FC6 url("bg.gif") top center repeat-y;
+	background: #337FC6;
 	font: normal 8pt/13pt verdana, arial,sans-serif;
 	color: #808080;
 }
@@ -32,10 +58,10 @@ a:hover {
 #header {
 	width: 562px;
 	height: 60px;
-	background: #000 url("header.gif") no-repeat;
+	background: #000;
 	padding-top: 30px;
 	padding-left: 18px;
-	font-size: 14pt;
+	font-size: 20pt;
 	color: #FFF;
 }
 
@@ -86,7 +112,7 @@ a:hover {
 
 #content {
 	float: left;
-	width: 410px;
+	width: 510px;
 	margin: 10px 0 0 4px;
 }
 
@@ -107,25 +133,6 @@ p {
 margin-bottom: 20px;
 padding-left: 14px;
 background: url(articlebg.gif) top left repeat-y;
-}
-
-input.text {
-	width: 70px;	
-	border: 1px solid #ccc;
-}
-
-input.button {
-	color: #808080;
-	padding-left: 0px;
-	font-size: 8pt;	
-	border: none;
-	background: none;
-	}
-
-#searchbox {
-	background: url(searchbox.gif) no-repeat;
-	padding: 5px;
-	height: 30px;
 }
 
 #footer {
