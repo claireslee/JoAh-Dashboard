@@ -21,23 +21,27 @@
         <a class="login-button" href="/"> logout </a>
     </header>
 
-    <label for="classes">Select a class:</label>
+<div class = "announcement-area">
+            <p class="announce" align="center">Announcement:</p>
 
-    
+            <div class="enter-here">
+            <textarea rows="10" cols="75" name="comment" form="usrform" 
+                placeholder="Enter announcement here...">
+            </textarea>
+            </div>
 
-    <form action="/action_page.php" id="usrform">
-        <select name="classes" id="classes">
-            <option value="1">Class 1 - Reading</option>
-            <option value="2">Class 2 - Grammar</option>
-            <option value="3">Class 3 - Math</option>
-        </select>
-        <input type="submit">
-      </form>
-      
-      
-<textarea rows="4" cols="50" name="comment" form="usrform" 
-    placeholder="Enter announcement here...">
-</textarea>
+            <p class="announce" align="center">Select Class:</p>
+
+            <form action="class2Announcements.html" id="usrform">
+                <select class="choose" name="classes" id="classes">
+                    <option value="1">Class 1 - Reading</option>
+                    <option value="2">Class 2 - Grammar</option>
+                    <option value="3">Class 3 - Math</option>
+                </select>
+                <input class="choose" type="submit">
+            </form>
+
+</div>
 
 
 </body>
