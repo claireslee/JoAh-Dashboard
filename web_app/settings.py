@@ -1,11 +1,17 @@
 from pathlib import Path
 from decouple import config
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1$@#!wizzal00&ejy)_m@%@%c4)#8vd_edco7ywb@r6wzkwwnq'
+SECRET_KEY = os.environ['SECRET_KEY']
+print(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
