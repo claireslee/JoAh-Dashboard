@@ -7,7 +7,7 @@
 
     <title> Dashboard </title>
     <link rel = "stylesheet" href = "createTest.css" />
-    <script type="text/javascript" src="createTest.js"></script>
+    <!-- <script type="text/javascript" src="createTest.js"></script> -->
 </head>
 
 <body>
@@ -18,19 +18,39 @@
 
 
 <form action="confirmation.html">
-    <label for="fname">First name:</label>
-    <input type="text" id="fname" name="fname"><br><br>
-    <label for="lname">Last name:</label>
-    <input type="text" id="lname" name="lname"><br><br>
-    <input type="submit" value="Submit" onlcick="getInputValue()">
-  </form>
+    <p>
+        Input the title of the test and then generate as many questions as desired. 
+        In the first value field, enter the question, and then follow with the four answer choices.
+    </p>
+    <br><br>
+    <label for="test">Title of Test: </label>
+    <input type="text" id="test" name="test"><br><br>
+</form>
+    
+    <button id="create-questions">Add a Question!</button>
+    <div id="textboxes-container"></div>
 
-<!-- <script>
-    function getInputValue(){
-        var inputVal = document.getElementById("fname").value;
+    <script>
+        var questionButton = document.getElementById("create-questions");
+        var textboxesContainer = document.getElementById("textboxes-container");
 
-        alert(inputVal);
-    }
-</script> -->
+        questionButton.addEventListener("click", function() {
+            for (var i = 0; i < 5; i++){
+                var label = document.createElement("label");
+                label.innerHTML = "Enter Value " + (i+1) +": ";
+                var textbox = document.createElement("input");
+                textbox.type = "text";
+                textboxesContainer.appendChild(label);
+                textboxesContainer.appendChild(textbox);
+            }
+        });
+    </script>
+
+<form action="confirmation.html">
+    <center>
+        <input type="submit" value="Submit">
+    </center>
+</form>
+
 </body>
 </html>
