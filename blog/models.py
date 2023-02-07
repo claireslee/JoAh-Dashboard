@@ -26,3 +26,4 @@ class Users(models.Model):
     passwd = models.CharField(max_length = 50)
     classname = models.CharField(max_length = 100)
     # email = models.EmailField(max_length=100);
+    
