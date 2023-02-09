@@ -1,5 +1,5 @@
 """DjangoQuiz URL Configuration
- 
+
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 Examples:
@@ -18,14 +18,10 @@ from django.urls import path
 from Quiz.views import *
 from django.conf import settings
 from django.conf.urls.static import static
- 
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', home,name='home'),
-    path('addQuestion/', addQuestion,name='addQuestion'),
-    path('login/', loginPage,name='login'),
-    path('logout/', logoutPage,name='logout'),
-    path('register/', registerPage,name='register'),
- 
+    path('addQuestion', addQuestion, name="addQuestion"),
+    path('home', home, name="home"),
+    path('result', result, name="result"),
 ]
-urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
