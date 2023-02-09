@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import User
 import json
 
 # Create your views here.
@@ -24,3 +25,9 @@ def profile(request):
     }
     return render(request,'profile.html',context)
 
+def home(request):
+    all_users = User.objects.all # assign all data in db to the variable
+    return render(request, 'home.html', {'all':all_users}) # pass var into home page -- context dictionary
+
+def join(request):
+        return render(request, 'join.html', {})
