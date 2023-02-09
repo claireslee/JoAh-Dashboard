@@ -18,8 +18,8 @@
 
 <body>
     <header>
-        <a class="logo" href="/"> joah </a>
-        <a class="login-button" href="/"> logout </a>
+        <a class="logo" href="mainpage.html"> joah </a>
+        <a class="login-button" href="mainpage.html"> logout </a>
     </header>
 
       <div class="container">
@@ -38,41 +38,30 @@
                     <li class="nav-item">
                         <a class="nav-link" href="teacherAnnouncement.html"> Add Announcement </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="createTest.html"> Create Test </a>
+                    </li>
                     
-                    <!-- classes accordian -->
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item1" href="#"> Classes <i class="bi small bi-caret-down-fill"></i> </a>
                         <ul id="menu_item1" class="submenu collapse" data-bs-parent="#nav_accordion">
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item1" href="#"> Class 1 - Reading <i class="bi small bi-caret-down-fill"></i> </a>
-                                <ul id="menu_item2" class="submenu collapse" data-bs-parent="#nav_accordion">
-                                    <li><a class="nav-link" href="class1Announcements.html"> Announcements</a></li>
-                                    <li><a class="nav-link" href="class1Calendar.html"> Calendar </a></li>
-                                </ul>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item2" href="#"> Class 2 - Grammar <i class="bi small bi-caret-down-fill"></i> </a>
-                                <ul id="menu_item3" class="submenu collapse" data-bs-parent="#nav_accordion">
-                                    <li><a class="nav-link" href="class2Announcements.html"> Announcements</a></li>
-                                    <li><a class="nav-link" href="class2Calendar.html"> Calendar </a></li>
-                                </ul>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item3" href="#"> Class 3 - Math <i class="bi small bi-caret-down-fill"></i> </a>
-                                <ul id="menu_item4" class="submenu collapse" data-bs-parent="#nav_accordion">
-                                    <li><a class="nav-link" href="class3Announcements.html"> Announcements</a></li>
-                                    <li><a class="nav-link" href="class3Calendar.html"> Calendar </a></li>
-                                </ul>
-                            </li>
-                            
+                            <ul><a class="nav-link" data-bs-toggle="collapse" data-bs-target="#c1" href="#"> Class 1 <i class="bi small bi-caret-down-fill"></i> </a>
+                                    <a id="c1" class="nav-link" href="class1Calender.html"> Class 1 Calendar </a>
+                                    <a id="c1" class="nav-link" href="class1Announcements.html"> Class 1 Announcements </a>
+                            </ul>
+                            <ul><a class="nav-link" data-bs-toggle="collapse" data-bs-target="#c2" href="#"> Class 2 <i class="bi small bi-caret-down-fill"></i> </a>
+                                <a id="c2" class="nav-link" href="class2Calender.html"> Class 2 Calendar </a>
+                                <a id="c2" class="nav-link" href="class2Announcements.html"> Class 2 Announcements </a>
+                            </ul>
+                            <ul><a class="nav-link" data-bs-toggle="collapse" data-bs-target="#c3" href="#"> Class 3 <i class="bi small bi-caret-down-fill"></i> </a>
+                                <a id="c3" class="nav-link" href="class3Calender.html"> Class 3 Calendar </a>
+                                <a id="c3" class="nav-link" href="class3Announcements.html"> Class 3 Announcements </a>
+                            </ul>
                         </ul>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="pdfScanner.html"> PDF Scanner </a>
-                    </li>
+                        
+                      
+            
                 </ul>
             </nav>
 
