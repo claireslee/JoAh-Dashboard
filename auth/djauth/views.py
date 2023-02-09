@@ -35,7 +35,7 @@ class LoginView(View):
             
             if user is not None:
                 login(req, user)
-                redirect_to = "http://127.0.0.1:5501/teacherDashboard.html"
+                redirect_to = "http://127.0.0.1:5501/teacherDash.html"
                 
                 if redirect_to is None:
                     return HttpResponseRedirect("You've logged in.")
