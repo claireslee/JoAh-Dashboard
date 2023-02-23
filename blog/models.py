@@ -27,3 +27,4 @@ class Users(models.Model):
     classname = models.CharField(max_length = 100)
     # email = models.EmailField(max_length=100);
     
+    
