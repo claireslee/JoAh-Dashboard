@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> 
+  
+        <title>{% block title %}Joah Website{% endblock %}</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+       <!-- Bootstrap icons-->
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+       <!-- Core theme CSS (includes Bootstrap)-->
+        {%load static%}
+        <link href="{% static 'djauth/mainpage.css' %}" rel="stylesheet">
+       <!-- Bootstrap core JS-->
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+       <!-- Core theme JS-->
+       <script src="js/scripts.js"></script>
+    </head>
+    
+    <body>
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <div>
+                            <ul class="navbar-nav">
+                                <a class="logo" href="/mainpage"> <img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"> </a>
+                                <li class="nav-item"><a class="nav-link" href="/aboutUs"> about us </a></li>
+                                <li class="nav-item"><a class="nav-link" href="/resources"> resources </a></li>
+                                <li class="nav-item"><a class="nav-link" href="/calendar"> calendar </a></li>
+                                <li class="nav-item"><a class="nav-link" href="/programs"> programs </a></li>
+                                <li class="nav-item"><a class="nav-link" href="/contactus"> contact us </a></li>
+                                {% if user.is_authenticated %}
+                                    <li class="nav-item"><a class="nav-link" href="/dash"> dashboard </a></li>
+                                    {%endif%}
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="navbar-nav">
+                                {% if user.is_authenticated %}
+                                <span class="navbar-text"> Welcome to JoAh, {{user.username}}! | </span>
+                                <li class="nav-item"><a class="nav-link" href="/logout"> logout </a></li>
+                                {% else %}
+                                <li class="nav-item"><a class="nav-link" href="/login"> login </a></li>
+                            {%endif%}
+                    </div>
+                </nav>
+            
+
+            <div class="container">{%block content%}
+
+                <div class = "py-5">
+                    <div class="container px-5">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8 col-xxl-6">
+                                <div class="text-center my-5">
+                                    <h1 class="section-one-position fw-bolder mb-3"> OUR FOCUS IS ON OUR STUDENTS ... </h1>
+                                    <p class="section-one-position lead fw-normal text-muted mb-4"> 
+                                         JoAh Academy invites you to study with the best teachers and caring staff members... <br> 
+                                     </p>
+                                    <a class="btn btn-primary btn-lg" href="/contactus"> Register! </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+      
+                <!-- About -- section two -->
+                <section class="py-5 bg-light" id="scroll-target">
+                    <div class="container px-5 my-5">
+                        <div class="row gx-5 align-items-center">
+                            <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="{% static 'djauth/media/joahphoto2.jpg' %}" alt="..." /></div>
+                            <div class="col-lg-6">
+                                <h2 class="fw-bolder">ABOUT US</h2>
+                                <p class="lead fw-normal text-muted mb-0"> The word joah can be used
+                                 in three distinct ways:
+                                 <br>1. Bravo! (잘한다!)
+                                 <br>2. Okay! (알았어!)
+                                 <br>3. I like you! (좋아해!)
+                                 <br><br>JoAh Academy invites you to study with some of the best teachers
+                                 and caring staff members. </p>
+                                <a class="btn btn-primary btn-lg" href="/aboutUs"> Learn More </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+               
+                <!-- About -- section three -->
+                <section class="py-5">
+                    <div class="container px-5 my-5">
+                        <div class="row gx-5 align-items-center">
+                            <!-- <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div> -->
+                            <div > <!-- class="col-lg-6" -->
+                                 <div class="results-position"> 
+                                     <h2 class="fw-bolder"> OUR RESULTS</h2>
+                                 </div>
+                             
+                                 <div class="early-acc-position">
+                                     <p class="lead fw-normal text-muted mb-0">
+                                         <em> CLASS OF 2023 EARLY ACCEPTANCES: </em>
+                                         <br>
+                                         Brown University, Cornell University, Northwestern University, University of Michigan, 
+                                         Tufts University. Rice University, NYU, Villanova University, 
+                                         University of Illinois Urbana-Champaign
+                                     </p>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+                </section>
+      
+                <!-- Programs / Cards -->
+                <section class="py-5 bg-light" id="#scroll-target">
+                    <div class = "programs-header"> 
+                        <h2 class="fw-bolder"> PROGRAMS </h2>
+                    </div>
+      
+                    <div class = "card-align" >
+                        <div class="card">
+                            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
+                                <div class="card__details">
+                                    <div class="name"> SAT/ACT </div>
+                                    
+                                    <button href="/satbasic"> Learn More </button>
+                                </div>
+                        </div>
+      
+                        <div class="card">
+                            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
+                                <div class="card__details">
+                                    <div class="name"> MATH CLASSES </div>
+                                     
+                                    <button href="/geometry"> Learn More </button>
+                                </div>
+                        </div>
+      
+                        <div class="card">
+                            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
+                                <div class="card__details">
+                                    <div class="name"> JUNIOR CLASSES </div>
+                                    
+                                    <button href="/jr3"> Learn More </button>
+                                </div>
+                         </div>
+      
+                        <div class="card">
+                            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
+                                <div class="card__details">
+                                    <div class="name"> AP CLASSES </div>
+                                     
+                                    <button href="/aplang"> Learn More </button>
+                                </div>
+                        </div>
+                    </div>
+                </section>
+      
+                <!-- About -- section three -->
+                 <section id="contact-form">
+                     <div class="contact-header-center ">
+                         <h2 class="fw-bolder">Contact Us</h2>
+                     </div>
+                     <form id="contact" name="contact" accept-charset="utf-8">
+                         <label><span>Name</span><input name="name" type="text" placeholder="Name"/></label>
+                         <label><span>Email</span><input name="email" type="email" placeholder="Email"/></label>
+                         <label><span>Message</span><textarea name="message" placeholder="Message"></textarea></label>
+                         <input name="submit" type="submit" value="Send"/>
+                     </form>
+                 </section>
+                 <!-- <aside> </aside> ??-->
+            </main>
+      
+            <!-- Footer-->
+            <footer class="bg-dark py-4 mt-auto">
+                <div class="container px-5">
+                    <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                        <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; JoAh 2022</div></div>
+                        <!-- <div class="col-auto">
+                            <a class="link-light small" href="#!">Privacy</a>
+                            <span class="text-white mx-1">&middot;</span>
+                            <a class="link-light small" href="#!">Terms</a>
+                            <span class="text-white mx-1">&middot;</span>
+                            <a class="link-light small" href="#!">Contact</a>
+                        </div> -->
+                    </div>
+                </div>
+            </footer>
+      
+        </body>
+        {% endblock %} </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+ 
+    </body>
+</html>

@@ -1,0 +1,102 @@
+{% extends 'djauth/mainpage.html' %}
+{% block content %}
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title> Programs </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous"> </script>
+
+    <!-- dropdown icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    {%load static%}
+    <link href="{% static 'djauth/individprograms.css' %}" rel="stylesheet">
+    <script src="programs.js"></script>
+
+</head> 
+    
+    <div class="container">
+
+        <section class="section-content py-3">
+            <div class="row"> 
+                <aside class="col-lg-3"> 
+                    <!-- side bar start -->
+                    <nav class="sidebar card py-2 mb-4">
+    
+                        <ul class="nav flex-column" id="nav_accordion">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> Courses: </a>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item1" href="#"> SAT I / ACT <i class="bi small bi-caret-down-fill"></i> </a>
+                                <ul id="menu_item1" class="submenu collapse" data-bs-parent="#nav_accordion">
+                                    <li><a class="nav-link" href="/satbasic"> SAT I - Basic Course </a></li>
+                                    <li><a class="nav-link" href="/satadvanced"> SAT I - Advanced Course </a></li>
+                                    <li><a class="nav-link" href="/sattestprep"> SAT I - Test Prep </a> </li>
+                                    <li><a class="nav-link" href="/acttestprep"> ACT - Test Prep </a> </li>
+                                </ul>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item2" href="#"> MATH / TUTOR <i class="bi small bi-caret-down-fill"></i> </a>
+                                <ul id="menu_item2" class="submenu collapse" data-bs-parent="#nav_accordion">
+                                    <li><a class="nav-link" href="/geometry"> Geometry </a></li>
+                                    <li><a class="nav-link" href="/algebra1"> Algebra I </a></li>
+                                    <li><a class="nav-link" href="/tutor"> 1 ON 1 </a></li>
+                                </ul>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item3" href="#"> JUNIOR CLASSES <i class="bi small bi-caret-down-fill"></i> </a>
+                                <ul id="menu_item3" class="submenu collapse" data-bs-parent="#nav_accordion">
+                                    <li><a class="nav-link" href="/jr3"> Junior LV3 </a></li>
+                                    <li><a class="nav-link" href="/jr2"> Junior LV2 </a></li>
+                                    <li><a class="nav-link" href="/jr1"> Junior LV1 </a></li>
+                                </ul>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item4" href="#"> AP CLASSES <i class="bi small bi-caret-down-fill"></i> </a>
+                                <ul id="menu_item4" class="submenu collapse" data-bs-parent="#nav_accordion">
+                                    <li><a class="nav-link" href="/aplang"> AP Lang </a></li>
+                                    <li><a class="nav-link" href="/aphistory"> AP History </a></li>
+                                    <li><a class="nav-link" href="/apcalc"> AP Calc AB/BC </a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- side bar end -->	
+                
+                </aside>
+
+            <!-- Based on Bootstrap 5 CSS framework. -->
+            <main class="col-lg-9"> 
+                <div class="card text-center">
+                    <div class="card-header">
+                        AP ENGLISH LANGUAGE AND COMPOSITION
+                    </div>
+
+                    <div class="card-body">
+                      <h5 class="card-title"> DESCRIPTION </h5>
+                      <p class="card-text"> <em>CONTENT:</em> Lecture + Practice Test </p>
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        WEDNESDAY ~ 16:00 - 19:00
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </section>
+
+    </div> <!-- container end -->
+
+</body>
+</html>
+{%endblock%}

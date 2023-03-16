@@ -1,0 +1,25 @@
+{% extends 'djauth/mainpage.html'%}
+{% block title %} Contact Us {% endblock %}
+{% block content %} 
+
+{%load static%}
+    <link href="{% static 'djauth/contactUs.css' %}" rel="stylesheet">
+    <section id="contact-us-bar" class="contact-us-bar">
+        <h2 data-aos="fade-up"> CONTACT US </h2>
+    </section>
+
+    <section id="contact-options" class="contact-options">
+        <h2 data-aos="fade-up"> set your children up for success... </h2>
+        <p> have questions? use any of the below to contact us: </p>
+
+        <div class = "button-row"> 
+            <a class="contact-button"> 123-456-7890 </a>
+            <a class="contact-button"> joah@joah </a>
+            <a class="contact-button"> kakaotalk </a>
+        </div> 
+    </section>
+
+     
+</body>
+{%endblock%}
+</html>

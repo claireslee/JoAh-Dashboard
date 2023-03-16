@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="stylesheets/pdfScanner.css">
+    <title> joah project </title>
+</head>
+
+{%load static%}
+    <link href="{% static 'djauth/pdfScanner.css' %}" rel="stylesheet">
+<body>
+    <header>
+        <a class="logo" href="mainpage.html"> joah </a>
+       
+        <nav>
+            <ul class="navbar-links">
+                <li><a href="teacherDashboard.html"> << Back to Dashboard</a></li>
+            </ul>
+        </nav>
+        <a class="login-button" href="mainpage.html"> logout </a>
+    </header>
+
+        <div class="scannerArea">
+            <p class="select" align="center">Select a PDF to be scanned:</p>
+            <form action="/action_page.php">
+            <label class="choose-file">
+                <input class="fileSelect" type="file" id="myfile" name="myfile">
+                Choose File
+                
+                
+                
+            </label><br><br><br>
+            
+            <a class="submit" align="center">Submit</a>
+             
+            </form>
+        </div>
+    </body>

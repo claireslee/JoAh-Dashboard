@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> joah project </title>
+    {%load static%}
+    <link href="{% static 'djauth/studentAnnouncement.css' %}" rel="stylesheet">
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> {% endcomment %}
+  
+  </head>
+  
+  <body>
+    
+    
+<a  href="/dash"> Back to Dashboard </a>
+<br>
+<div id="container">
+    <center>
+        
+    
+    <div id="container">
+        <center>
+            <div id="header"> Announcements </b> </div>
+        </center>
+
+
+        <div id="content">
+
+            {% for item in all_announcements %} <br/>
+                <strong> Teacher:</strong> {{ item.teachername }} <br/>
+                <strong>Announcement:</strong> {{ item.announcement }} <hr>
+            {% endfor %}
+
+            {% comment %} {{ form.as_p }}
+            <h1> New Announcement: <br> {{ announcement }} </h1> {% endcomment %}
+        </div>
+
+        <div id="footer"> &copy; 2020. <a href="/">JoAh</a> </div>
+    </div>
+</body>
+</html>

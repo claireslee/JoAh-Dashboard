@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700|Open+Sans");
+
+.submit-button {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    color: #0a1c80;
+    margin-left: 20px;
+    top: 20px;
+    padding: 9px 25px;
+    background-color: #fd910d;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.hey-lol {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    color: #000104;
+}
+
+.title{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 1000;
+    color: #000104;
+}

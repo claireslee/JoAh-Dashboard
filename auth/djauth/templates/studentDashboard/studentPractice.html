@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="studentPractice.css">
+    <title> joah project </title>
+    {%load static%}
+    <link href="{% static 'djauth/studentPractice.css' %}" rel="stylesheet">
+</head>
+
+<body>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <div>
+            <ul class="navbar-nav">
+                
+                <a class="logo" href="/mainpage"> <img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"> </a>
+                <li class="nav-item"><a class="nav-link" href="/studentCalendar"> Student Calendar </a></li>
+                <li class="nav-item"><a class="nav-link" href="/studentAnnouncement"> View Announcements </a></li>
+                <li class="nav-item"><a class="nav-link" href="/studentPractice"> Extra Practice </a></li>
+                <!-- <li><a href="#">About</a></li> -->
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <span class="navbar-text"> Logged in as {{user.username}}! | </span>
+                <li class="nav-item"><a class="nav-link" href="/logout"> logout </a></li>
+               
+    </div>
+
+    <br>
+    <center>
+        <img src="testquestion.webp" alt="">
+    </center>
+
+</div>
+  
+</body>
+
+</html>

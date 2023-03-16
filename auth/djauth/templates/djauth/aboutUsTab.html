@@ -1,0 +1,126 @@
+{% extends 'djauth/mainpage.html'%}
+{% load static%}
+{% block title %} About Us {% endblock %}
+{% block content %} 
+
+<link href="{% static 'djauth/aboutUsTab.css' %}" rel="stylesheet">
+
+<section class="py-5 bg-light" id="scroll-target">
+    <div class="container px-5 my-5">
+        <!-- <div class="text-center my-5"> -->
+            <h1> JOAH'S MISSION </h1> <br>
+            <p class="lead fw-normal text-muted mb-4"> 
+                We at JoAh Academy believe that all students have the potential and skills to excel in their academics. All they need is to be showed with compliments, recognition, and relationship. 
+                <br><br> Both teachers and staff are committed not only to the helping students achieve their goals in middle school, high school, and college but also to cultivate deep, meaningful relationships that foster a more optimal learning experience.
+                <br><br> ​Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of
+                disruptive innovation. </p>
+        <!-- </div> -->
+    </div>
+</section>
+
+<!-- TEACHERS -->
+<section class="py-5" id="#scroll-target">
+    <div class = "programs-header">
+        <h1> OUR TEACHERS </h1>
+    </div>
+
+    <div class = "card-align" >
+        <div class="card">
+                                
+            <img src="{% static 'djauth/media/programImage1.jpeg' %}"alt="Lago di Braies">
+                <div class="card__details">
+                    <div class="name"> Teacher1 </div>
+                        <p> little blurb ... </p>
+                </div>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
+                <div class="card__details">
+                    <div class="name"> Teacher2 </div>
+                        <p> little blurb ... </p>
+                </div>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
+                <div class="card__details">
+                    <div class="name"> Teacher3 </div>
+                        <p> little blurb ... </p>
+                </div>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
+                <div class="card__details">
+                    <div class="name"> Teacher4 </div>
+                        <p> little blurb ... </p>
+                </div>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
+                <div class="card__details">
+                    <div class="name"> Teacher5</div>
+                        <p> little blurb ... </p>
+                </div>
+        </div>
+    </div>
+</section>
+
+<!-- LOCATION -->
+<section class="py-5 bg-light" >
+    <div class="container px-5 my-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="{% static 'djauth/media/programImage1.jpeg' %}" alt="..." /></div>
+            <h1> LOCATION </h1>
+            <div class="col-lg-6">
+                <p class="location-text" > Visit us at: <br> 268 Broad Ave. 2nd Floor, Palisades Park, NJ 07650​S </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JOB INTEREST CONTACT US-->
+<section class="py-5">
+    <h1 class="job-interest-header-centering"> INTERESTED IN WORKING FOR US? </h1> <br>
+    <form class="job-interest-centering">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</section>
+
+<script>
+    function sendToForm() {
+    var name = $("#Name").val();
+    var email = $("#Email").val();
+
+    $.ajax({
+        url: "",     
+        data: {
+        "entry.1502403719": name,
+        "entry.445941044": email
+        },
+        type: "POST",
+        dataType: "xml",
+        success: function (d) {
+        $('#contact').trigger('reset');
+        },
+        error: function (x, y, z) {
+        $('#contact').trigger('reset');
+        }
+    });
+    return false;
+    }
+</script>
+</body>
+{%endblock%}

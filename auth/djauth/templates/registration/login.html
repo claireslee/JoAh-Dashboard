@@ -1,0 +1,11 @@
+{%extends 'djauth/mainpage.html'%}
+{%block title%}Login{%endblock%}
+{%load static%}
+<link href="{% static 'djauth/logintab.css' %}" rel="stylesheet"> 
+{%load crispy_forms_tags %}{%block content%}
+<form method="post">
+    {%csrf_token%}{{form|crispy}}
+    <button class="submit" type="submit" class="btn"> Login </button>
+</form>
+{% endblock %}
+

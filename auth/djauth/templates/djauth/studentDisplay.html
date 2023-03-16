@@ -1,0 +1,17 @@
+{% extends 'djauth/mainpage.html' %}
+
+{% block content %}
+
+    <h1> Students </h1>
+
+    <!-- using django tags -->
+    {% for user in all_students %}
+        <strong>{{ user.firstname }} {{ user.lastname }}</strong><br/>
+        Username: {{ user.username }}<br/>
+        Classname: {{ user.classname }}<br/>
+        Grade: {{ user.gradelvl }}<br/>
+        {% comment %} Email: {{ item.email }}<br/><br/> {% endcomment %}
+        <hr> <br/>
+    {% endfor %}        
+{% endblock %}
+

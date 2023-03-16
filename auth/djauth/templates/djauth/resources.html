@@ -1,0 +1,89 @@
+{% extends 'djauth/mainpage.html'%}
+{% block title %} Resources {% endblock %}
+
+{%load static%} 
+<link href="{% static 'djauth/resources.css' %}" rel="stylesheet">
+<link href="{% static 'djauth/bootstrap.min' %}" rel="stylesheet">
+<link href="{% static 'djauth/line-icons.css'%}" rel="stylesheet">
+{% block content %} 
+
+   
+<div class = "top-color py-5">
+  <div class="container px-5">
+      <div class="row justify-content-center">
+          <div class="col-lg-8 col-xxl-6">
+              <div class="text-center my-5">
+                  <h1 class="fw-bolder mb-3 text-color-re"> RESOURCES </h1>
+                  <p class="lead fw-normal text-muted mb-4 text-color-re"> <strong> Find helpful information/registration links here!</strong></p>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+  <section id="services" class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-xs-12">
+          <div class="item-boxes services-item wow fadeInDown" data-wow-delay="0.2s">
+            <div class="icon color-1">
+              <i class="lni-pencil"></i>
+            </div>
+            <h4>SAT Registration</h4>
+            <a href="https://satsuite.collegeboard.org/sat/registration">Directly register for the SAT here!</a>
+          </div><br>
+        </div>
+        <div class="col-lg-4 col-md-6 col-xs-12">
+          <div class="item-boxes services-item wow fadeInDown" data-wow-delay="0.4s">
+            <div class="icon color-2">
+              <i class="lni-cog"></i>
+            </div>
+            <h4>College Board</h4>
+            <a href="http://collegeboard.org">Access your College Board account here to find information about upcoming tests and registration (SAT, PSAT) </a>
+          </div><br>
+        </div>
+        <div class="col-lg-4 col-md-6 col-xs-12">
+          <div class="item-boxes services-item wow fadeInDown" data-wow-delay="0.6s">
+            <div class="icon color-3">
+              <i class="lni-stats-up"></i>
+            </div>
+            <h4>ACT Registration</h4>
+            <a href="https://www.act.org/content/act/en/products-and-services/the-act/registration.html">Directly register for the ACT here!</a>
+          </div><br>
+        </div>
+        <div class="col-lg-4 col-md-6 col-xs-12">
+          <div class="item-boxes services-item wow fadeInDown" data-wow-delay="0.8s">
+            <div class="icon color-4">
+              <i class="lni-layers"></i>
+            </div>
+            <h4>Bergen Tech (BCA, BT, AT)</h4>
+            <a href="https://www.bergen.org/bcts">Find information and resources on the Bergen County Technical Schools and their application processes here.</a>
+          </div><br>
+        </div>
+        <div class="col-lg-4 col-md-6 col-xs-12">
+          <div class="item-boxes services-item wow fadeInDown" data-wow-delay="1s">
+            <div class="icon color-5">
+              <i class="lni-tab"></i>
+            </div>
+            <h4>Academies at Englewood</h4>
+            <a href="https://www.epsd.org/o/academies">Find information and resources on the Academies at Englewood and their application process here.</a>
+          </div><br>
+        </div>
+        <div class="col-lg-4 col-md-6 col-xs-12">
+          <div class="item-boxes services-item wow fadeInDown" data-wow-delay="1.2s">
+            <div class="icon color-6">
+              <i class="lni-briefcase"></i>
+            </div>
+            <h4>SSAT and PSAT </h4>
+            <a href="https://satsuite.collegeboard.org/psat-nmsqt">Find information and resources about the SSAT and PSAT, and their respective registrations, here.</a>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+    <br><br><br>
+  </section>
+  
+</body>
+  {%endblock%}
+</html>
