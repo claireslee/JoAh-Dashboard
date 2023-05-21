@@ -24,8 +24,5 @@ urlpatterns = [
     path('', include('djauth.urls')),
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
-    
-    
-    
-  
+    path("select2/", include("django_select2.urls")),
 ]

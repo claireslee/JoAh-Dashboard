@@ -1,41 +1,112 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
+{%load static%} 
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="stylesheets/pdfScanner.css">
     <title> joah project </title>
-</head>
 
-{%load static%}
-    <link href="{% static 'djauth/pdfScanner.css' %}" rel="stylesheet">
-<body>
-    <header>
-        <a class="logo" href="mainpage.html"> joah </a>
-       
-        <nav>
-            <ul class="navbar-links">
-                <li><a href="teacherDashboard.html"> << Back to Dashboard</a></li>
-            </ul>
-        </nav>
-        <a class="login-button" href="mainpage.html"> logout </a>
-    </header>
+    <!-- <link href="{% static 'djauth/pdfScanner.css' %}" rel="stylesheet">  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-        <div class="scannerArea">
-            <p class="select" align="center">Select a PDF to be scanned:</p>
-            <form action="/action_page.php">
-            <label class="choose-file">
-                <input class="fileSelect" type="file" id="myfile" name="myfile">
-                Choose File
-                
-                
-                
-            </label><br><br><br>
-            
-            <a class="submit" align="center">Submit</a>
-             
-            </form>
+    <style type="text/css" media="screen">   
+        .scannerArea {
+            background-color: #ffffff;
+            width: 400px;
+            height: 200px;
+            margin: 7em auto;
+            border-radius: 1.5em;
+            box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+        }
+        
+        .select {
+            padding-top: 40px;
+            color: #ffa600;
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: bold;
+            font-size: 30px;
+        }
+        
+        form{
+            padding-top: 20px;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        .choose-file{
+            cursor: pointer;
+            border-radius: 5em;
+            color: #fff;
+            background: linear-gradient(to right, #ff8000,#ffa600);
+            border: none;
+            padding-left: 40px;
+            padding-right: 40px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            font-family: 'Ubuntu', sans-serif;
+            margin: 0;
+            position: absolute;
+            left: 50%;
+            top: 43.5%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+        }
+        @media (max-width: 600px) {
+            .main {
+                border-radius: 0px;
+            }
+        }
+    </style>
+  </head>
+  
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+          <div>
+              <ul class="navbar-nav">
+                <a class="logo" href="/mainpage"> <img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"> </a>
+                                
+                <li class="nav-item"><a class="nav-link" href="/teacherCalendar"> admin calendar </a></li>
+                  <li class="nav-item"><a class="nav-link" href="/teacherAnnouncement"> Add an Announcement </a></li>
+                  <li class="nav-item"><a class="nav-link" href="/examList"> Digital Exams </a></li>
+                  <li class="nav-item"><a class="nav-link" href="/addQuestion"> Add Question </a></li>
+                  <li class="nav-item"><a class="nav-link" href="/addStudent"> Add a Student </a></li>
+                  <!-- <li><a href="#">About</a></li> -->
+              </ul>
+          </div>
+          <div>
+              <ul class="navbar-nav">
+                  <span class="navbar-text"> Welcome to JoAh, {{user.username}}! | </span>
+                  <li class="nav-item"><a class="nav-link" href="/logout"> logout </a></li>  
+            </div>
         </div>
-    </body>
+    </nav>
+
+    {% block content %}
+    <div class="scannerArea">
+      <p class="select" align="center">Select a PDF:</p>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label class="choose-file">
+          <input class="fileSelect" type="file" name="pdf" accept=".pdf">
+          Choose File
+        </label>
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+    
+    {% if pdf_file %}
+    <div class="pdfViewer">
+      <iframe src="{{ pdf_file.url }}" width="100%" height="500px"></iframe>
+    </div>
+    {% endif %}
+    {% endblock %}
+  
+</body>
+</html>

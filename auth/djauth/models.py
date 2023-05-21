@@ -1,15 +1,42 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
+from django import forms
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
+from django.core.validators import MaxValueValidator, MinValueValidator
+
+CLASS_CHOICES = (
+    ('sat 230', 'SAT 230'),
+    ('sat 450', 'SAT 450'),
+    ('ap calc 33', 'AP CALC 33'),
+    ('algebra 1 130', 'ALGEBRA 1 130'),
+    ('act 689', 'ACT 689'),
+)
+
+EXAM_CHOICES = (
+    ('sat 230', 'SAT 230'),
+    ('sat 450', 'SAT 450'),
+    ('ap calc 33', 'AP CALC 33'),
+    ('algebra 1 130', 'ALGEBRA 1 130'),
+    ('act 689', 'ACT 689'),
+)
 class checkLogin(models.Model):
     username = models.CharField(max_length = 50)
     password = models.CharField(max_length = 50)
 class Student(models.Model):
-    username = models.CharField(max_length = 50)
-    passwd = models.CharField(max_length = 50)
-    firstname = models.CharField(max_length = 50)
-    lastname = models.CharField(max_length = 100)
-    classname = models.CharField(max_length = 100)
-    gradelvl = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=50)
+    classes = models.CharField(max_length=255, default='ACT')
+    def get_classes_list(self):
+        return self.classes.split(',')
+    grade = models.CharField(max_length=10)
+    scores = models.CharField(max_length=100)
+    def get_scores_list(self):
+        return self.scores.split(',')
     def __str__(self): # what it returns
         return self.username
     
@@ -28,6 +55,8 @@ class Teacher(models.Model):
 
 
 class QuesModel(models.Model):
+    # exam = models.CharField(max_length=20, choices=EXAM_CHOICES, default='sat 230')
+    # test = models.ManyToManyField('Test', related_name="questions")
     question = models.CharField(max_length=200,null=True)
     op1 = models.CharField(max_length=200,null=True)
     op2 = models.CharField(max_length=200,null=True)
@@ -37,6 +66,17 @@ class QuesModel(models.Model):
     
     def __str__(self):
         return self.question
+class Test(models.Model):
+    title = models.CharField(max_length=200,null=True)
+    classes = models.CharField(max_length=20, choices=CLASS_CHOICES, default='sat 230')
+    number = models.IntegerField(default=1, validators=[MinValueValidator(1, message='Number of questions must be 1 or greater.'),])
+    questions = models.ManyToManyField(
+        'QuesModel',
+        related_name='Exams'
+    )
+
+    def __str__(self):
+        return self.question
 class Announcement(models.Model):
     teachername = models.CharField(max_length = 50, default="#")
     topic = models.CharField(max_length = 50, default="#")
@@ -44,3 +84,27 @@ class Announcement(models.Model):
     
     def __str__(self):
         return self.topic + ' by ' + self.teachername
+
+class PdfTest(models.Model):
+    name = models.CharField(max_length=255)
+    pdf = models.FileField(upload_to='pdfs/')
+    num_questions = models.PositiveIntegerField()
+    answers = models.JSONField()
+    def get_choices(self):
+        # assuming each question has four answer choices, A, B, C, and D
+        return [('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')]
+    def __str__(self):
+        return self.name
+    
+    
+class PDFTestSubmission(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    pdftest = models.ForeignKey(PdfTest, on_delete=models.CASCADE)
+    student_answers = models.JSONField()
+    def get_choices(self):
+        # assuming each question has four answer choices, A, B, C, and D
+        return [('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')]
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.student.username} - {self.pdftest.title}'

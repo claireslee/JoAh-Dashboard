@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> joah project </title>
+
+    {%load static%} 
+  
+    <link rel="stylesheet" type="text/css" href="{% static 'djauth/teacherDash.css' %}">
+
+    <link href="{% static 'djauth/mainpage.css' %}" rel="stylesheet">
+    <style>
+      #answer-fields {
+        text-align: center;
+      }
+      
+      #answer-fields label {
+        display: inline-block;
+        margin-right: 10px;
+      }
+    </style>
+  
+  </head>
+  
+  <header>
+    <a class="logo" href="/mainpage"> <img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"> </a>
+    <nav>
+        <ul class="navbar-links">
+          <li><a href="/teacherCalendar"> calendar </a></li>
+          <li><a href="/teacherAnnouncement"> add announcement </a></li>
+          <li><a href="/addQuestion"> create test </a></li>
+          <li><a href="/addStudent"> add student </a></li>
+          <li><a href="/fullStudentList"> View All Students </a></li>
+          
+            
+            {% if user.is_authenticated %}
+                    <li><a href="/dash"> dashboard </a></li>
+                    {%endif%}
+            </ul>
+            <!-- <li><a href="#">About</a></li> -->
+        </ul>
+    </nav>
+    <div>
+        <ul class="navbar-links">
+            {% if user.is_authenticated %}
+            <span> Welcome to JoAh, {{user.username}}! | </span>
+            <li><a href="/logout"> logout </a></li>
+            {% else %}
+            <li><a href="/login"> login </a></li>
+        {%endif%}
+    </div> 
+  </header>
+
+
+<body>
+<form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="button" id="create-answer-fields-btn">Create Answer Fields</button>
+    <div id="answer-fields"></div>
+    <button type="submit">Create Test</button>
+  </form>
+
+  {% block scripts %}
+  <script>
+    
+    const createAnswerFieldsBtn = document.querySelector('#create-answer-fields-btn');
+    const answerFieldsContainer = document.querySelector('#answer-fields');
+    console.log(createAnswerFieldsBtn);
+    console.log(answerFieldsContainer);
+    
+    createAnswerFieldsBtn.addEventListener('click', () => {
+      const numQuestionsInput = document.querySelector('#id_num_questions');
+      const numQuestions = numQuestionsInput.value;
+      
+      if (numQuestions && !isNaN(numQuestions)) {
+        answerFieldsContainer.innerHTML = '';
+        
+        for (let i = 1; i <= numQuestions; i++) {
+          const label = document.createElement('label');
+          label.innerHTML = `Answer for Question ${i}:`;
+  
+          const radioA = createRadioButton(`q${i}_answer`, 'A', false);
+          const radioB = createRadioButton(`q${i}_answer`, 'B', false);
+          const radioC = createRadioButton(`q${i}_answer`, 'C', false);
+          const radioD = createRadioButton(`q${i}_answer`, 'D', false);
+          
+          answerFieldsContainer.appendChild(label);
+          answerFieldsContainer.appendChild(radioA);
+          answerFieldsContainer.appendChild(radioB);
+          answerFieldsContainer.appendChild(radioC);
+          answerFieldsContainer.appendChild(radioD);
+          
+          answerFieldsContainer.appendChild(document.createElement('br'));
+        }
+      }
+    });
+
+    // Get a reference to the form element
+const form = document.querySelector('form');
+console.log("Event listener added"); 
+
+
+// Add an event listener to the form submission event
+form.addEventListener('submit', (event) => {
+  const numQuestionsInput = document.querySelector('#id_num_questions');
+  const numQuestions = numQuestionsInput.value;
+  console.log("submit pressed")
+  event.preventDefault();
+
+  const radioButtons = document.querySelectorAll('input[type="radio"]');
+  const student_answers = {};
+  let isAnyQuestionUnanswered = false;
+
+  radioButtons.forEach((radio) => {
+    const questionNum = radio.name.split('_')[0];
+    console.log(questionNum)
+    const selectedAnswer = radio.checked ? radio.value : null;
+
+    if (selectedAnswer) {
+      console.log(selectedAnswer)
+      student_answers[questionNum] = selectedAnswer;
+    } 
+  });
+
+  
+
+  const answersJson = JSON.stringify(answers);
+  console.log(answersJson)
+  const answersField = document.querySelector('#id_answers');
+  answersField.value = answersJson;
+
+  
+
+  form.submit();
+});
+
+    
+    function createRadioButton(name, value, checked) {
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = name;
+      radio.value = value;
+      radio.checked = checked;
+      
+      const label = document.createElement('label');
+      label.innerHTML = value;
+      label.appendChild(radio);
+      
+      return label;
+    }
+    
+  const pdfInput = document.querySelector('#id_pdf');
+  const nameInput = document.querySelector('#id_name');
+  pdfInput.addEventListener('change', (event) => {
+    const pdfFile = event.target.files[0];
+    
+});
+</script>
+{% endblock %}
+
+</body>
+
+

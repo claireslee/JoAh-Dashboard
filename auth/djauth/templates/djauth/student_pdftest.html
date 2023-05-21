@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> joah project </title>
+
+    {% load static %}
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'djauth/teacherDash.css' %}">
+
+    <link href="{% static 'djauth/mainpage.css' %}" rel="stylesheet">
+    <style>
+
+        /* Main content styles */
+        #left-half {
+        float: left;
+        width: 50%;
+        }
+
+        #pdf-viewer {
+        height: 100vh;
+        width: 100%;
+        }
+
+        #right-half {
+            height: 600px;
+            overflow-y: auto;
+        
+        };
+
+        
+        #answer-fields label {
+            display: inline-block;
+            margin-right: 10px;
+          }
+
+          form.answers input[type="radio"] {
+            display: inline-block;
+            margin-right: 10px;
+          }
+          
+          form.answers label {
+            display: inline-block;
+            margin-right: 10px;
+          }
+          .inline input[type='radio'] {
+            display: inline-block;
+            margin-right: 10px;
+          }
+      </style>
+  </head>
+    
+    <header>
+      <a class="logo" href="/mainpage"><img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"></a>
+      <nav>
+        <ul class="navbar-links">
+          <li><a href="/studentDashboard/studentCalendar">Calendar</a></li>
+          <li><a href="/studentDashboard/studentAnnouncement">Announcements</a></li>
+          <li><a href="/studentDashboard/home">Start Exam</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="/dash">dashboard</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+      <div>
+        <ul class="navbar-links">
+          {% if user.is_authenticated %}
+            <span>Welcome to JoAh, {{user.username}}! | </span>
+            <li><a href="/logout">logout</a></li>
+          {% else %}
+            <li><a href="/login">login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </header>
+
+    <body>
+    <div id="left-half">
+      <!-- Display PDF viewer -->
+      <iframe src="{% static 'djauth/media/pdfs/satPractice1.pdf' %}" width="100%" height="600px"></iframe>
+      
+    </div>
+    
+    <div id="right-half" style="overflow-y: scroll !important;">
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="button" id="create-answer-fields-btn">Create Answer Fields</button>
+            <div id="answer-fields"></div>
+            <button type="submit">Submit Test</button>
+          </form>
+      </div>
+      
+      {% block scripts %}
+      <script>
+        const form = document.querySelector('form');
+    
+        const createAnswerFieldsBtn = document.querySelector('#create-answer-fields-btn');
+        const answerFieldsContainer = document.querySelector('#answer-fields');
+        console.log(createAnswerFieldsBtn);
+        console.log(answerFieldsContainer);
+        
+        createAnswerFieldsBtn.addEventListener('click', () => {
+          const numQuestions = pdftest.num_questions;
+          console.log(numQuestions)
+          if (numQuestions && !isNaN(numQuestions)) {
+            answerFieldsContainer.innerHTML = '';
+            
+            for (let i = 1; i <= numQuestions; i++) {
+              const label = document.createElement('label');
+              label.innerHTML = `Answer for Question ${i}:`;
+      
+              const radioA = createRadioButton(`q${i}_answer`, 'A', false);
+              const radioB = createRadioButton(`q${i}_answer`, 'B', false);
+              const radioC = createRadioButton(`q${i}_answer`, 'C', false);
+              const radioD = createRadioButton(`q${i}_answer`, 'D', false);
+              
+              answerFieldsContainer.appendChild(label);
+              answerFieldsContainer.appendChild(radioA);
+              answerFieldsContainer.appendChild(radioB);
+              answerFieldsContainer.appendChild(radioC);
+              answerFieldsContainer.appendChild(radioD);
+              
+              answerFieldsContainer.appendChild(document.createElement('br'));
+            }
+          }
+        });
+    
+    
+    
+    // Add an event listener to the form submission event
+    form.addEventListener('submit', (event) => {
+      const numQuestionsInput = document.querySelector('#id_num_questions');
+      const numQuestions = nself.num_questions;
+      console.log("submit pressed")
+      event.preventDefault();
+    
+      const radioButtons = document.querySelectorAll('input[type="radio"]');
+      const answers = {};
+      let isAnyQuestionUnanswered = false;
+    
+      radioButtons.forEach((radio) => {
+        const questionNum = radio.name.split('_')[0];
+        console.log(questionNum)
+        const selectedAnswer = radio.checked ? radio.value : null;
+    
+        if (selectedAnswer) {
+          console.log(selectedAnswer)
+          answers[questionNum] = selectedAnswer;
+        } 
+      });
+    
+      
+    
+      const answersJson = JSON.stringify(answers);
+      console.log(answersJson)
+      const answersField = document.querySelector('#id_answers');
+      answersField.value = answersJson;
+    
+      
+    
+      form.submit();
+    });
+    
+        
+        function createRadioButton(name, value, checked) {
+          const radio = document.createElement('input');
+          radio.type = 'radio';
+          radio.name = name;
+          radio.value = value;
+          radio.checked = checked;
+          
+          const label = document.createElement('label');
+          label.innerHTML = value;
+          label.appendChild(radio);
+          
+          return label;
+        }
+        
+        
+    </script>
+    {% endblock %}
+    
+
+
+</body>
