@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" type="text/css" href="{% static 'djauth/teacherDash.css' %}">
 
-    <link href="{% static 'djauth/mainpage.css' %}" rel="stylesheet">
+    <link href="{% static 'djauth/student_pdftest.css' %}" rel="stylesheet">
     <style>
 
         /* Main content styles */
@@ -85,50 +85,23 @@
     </div>
     
     <div id="right-half" style="overflow-y: scroll !important;">
-        <form method="post" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="button" id="create-answer-fields-btn">Create Answer Fields</button>
-            <div id="answer-fields"></div>
-            <button type="submit">Submit Test</button>
-          </form>
-      </div>
+      <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div id="answer-fields" style="display: flex; flex-wrap: wrap;"></div>
+        <button type="submit">Submit Test</button>
+      </form>
+    </div>
       
       {% block scripts %}
       <script>
         const form = document.querySelector('form');
     
-        const createAnswerFieldsBtn = document.querySelector('#create-answer-fields-btn');
         const answerFieldsContainer = document.querySelector('#answer-fields');
         console.log(createAnswerFieldsBtn);
         console.log(answerFieldsContainer);
         
-        createAnswerFieldsBtn.addEventListener('click', () => {
-          const numQuestions = pdftest.num_questions;
-          console.log(numQuestions)
-          if (numQuestions && !isNaN(numQuestions)) {
-            answerFieldsContainer.innerHTML = '';
-            
-            for (let i = 1; i <= numQuestions; i++) {
-              const label = document.createElement('label');
-              label.innerHTML = `Answer for Question ${i}:`;
-      
-              const radioA = createRadioButton(`q${i}_answer`, 'A', false);
-              const radioB = createRadioButton(`q${i}_answer`, 'B', false);
-              const radioC = createRadioButton(`q${i}_answer`, 'C', false);
-              const radioD = createRadioButton(`q${i}_answer`, 'D', false);
-              
-              answerFieldsContainer.appendChild(label);
-              answerFieldsContainer.appendChild(radioA);
-              answerFieldsContainer.appendChild(radioB);
-              answerFieldsContainer.appendChild(radioC);
-              answerFieldsContainer.appendChild(radioD);
-              
-              answerFieldsContainer.appendChild(document.createElement('br'));
-            }
-          }
-        });
-    
+        
     
     
     // Add an event listener to the form submission event
@@ -166,19 +139,6 @@
     });
     
         
-        function createRadioButton(name, value, checked) {
-          const radio = document.createElement('input');
-          radio.type = 'radio';
-          radio.name = name;
-          radio.value = value;
-          radio.checked = checked;
-          
-          const label = document.createElement('label');
-          label.innerHTML = value;
-          label.appendChild(radio);
-          
-          return label;
-        }
         
         
     </script>

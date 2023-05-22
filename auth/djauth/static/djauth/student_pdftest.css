@@ -1,0 +1,238 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500;600&display=swap");
+
+/*!
+* Start Bootstrap - Modern Business v5.0.6 (https://startbootstrap.com/template-overviews/modern-business)
+* Copyright 2013-2022 Start Bootstrap
+* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-modern-business/blob/master/LICENSE)
+*/
+/*!
+ * Bootstrap v5.1.3 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+
+:root {
+  --bs-blue: #0d6efd;
+  --bs-indigo: #6610f2;
+  --bs-purple: #6f42c1;
+  --bs-pink: #d63384;
+  --bs-red: #dc3545;
+  --bs-orange: #fd7e14;
+  --bs-yellow: #ffc107;
+  --bs-green: #198754;
+  --bs-teal: #20c997;
+  --bs-cyan: #0dcaf0;
+  --bs-white: #fff;
+  --bs-gray: #6c757d;
+  --bs-gray-dark: #343a40;
+  --bs-gray-100: #f8f9fa;
+  --bs-gray-200: #e9ecef;
+  --bs-gray-300: #dee2e6;
+  --bs-gray-400: #ced4da;
+  --bs-gray-500: #adb5bd;
+  --bs-gray-600: #6c757d;
+  --bs-gray-700: #495057;
+  --bs-gray-800: #343a40;
+  --bs-gray-900: #212529;
+  --bs-primary: #0d6efd;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+  --bs-primary-rgb: 13, 110, 253;
+  --bs-secondary-rgb: 108, 117, 125;
+  --bs-success-rgb: 25, 135, 84;
+  --bs-info-rgb: 13, 202, 240;
+  --bs-warning-rgb: 255, 193, 7;
+  --bs-danger-rgb: 220, 53, 69;
+  --bs-light-rgb: 248, 249, 250;
+  --bs-dark-rgb: 33, 37, 41;
+  --bs-white-rgb: 255, 255, 255;
+  --bs-black-rgb: 0, 0, 0;
+  --bs-body-color-rgb: 33, 37, 41;
+  --bs-body-bg-rgb: 255, 255, 255;
+  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-font-size: 1rem;
+  --bs-body-font-weight: 400;
+  --bs-body-line-height: 1.5;
+  --bs-body-color: #212529;
+  --bs-body-bg: #fff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: smooth;
+  }
+}
+
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 10%;
+    background-color: #ffffff;
+}
+
+.logo {
+    margin-right: auto;
+}
+  
+.navbar-links {
+    list-style: none;
+    display: flex;
+}
+  
+.navbar-links a,
+.login-button {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 450;
+    color: #000000;
+    text-decoration: none;
+}
+  
+.navbar-links li {
+    padding: 0px 20px;
+}
+  
+.navbar-links li a {
+    transition: all 0.3s ease 0s;
+}
+  
+.navbar-links li a:hover {
+    color: #fd910d;
+}
+
+.login-button {
+    margin-left: 20px;
+    padding: 9px 25px;
+    background-color: #fd910d;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.login-button:hover {
+    background-color: rgba(233, 166, 107, 0.8);
+}
+
+
+
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-primary {
+  color: #ffffff;
+  background-color: #fd910d;
+  border-color: #fd910d;
+}
+
+.btn-primary:hover {
+  color: #f4f4f4;
+  background-color: #f69b2c;
+  border-color: #f1931f;
+}
+
+
+
+
+/* card */
+body,
+html {
+  height: 100%;
+}
+
+body {
+    background-color: #eaeff1;
+    font-family: "Raleway", sans-serif;
+}
+
+img {
+    width: 100%;
+}
+
+
+
+  
+button {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+  
+    font-weight: 600;
+    color: #f8f8f8;
+    background-color: #fd910d; 
+  
+    margin: 0 auto;
+    display: block;
+  
+    cursor: pointer;
+}
+
+
+
+
+
+ 
+
+  label {
+    display: inline-block;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  
+
+  input[type="submit"] {
+    background: #fd910d;
+    color: rgb(0, 0, 0);
+  }
+
+  input[type="submit"]:hover {
+    background: #eba249;
+  }
+
+  input[type="radio"] {
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  form.answers label {
+    display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+  
+  
+  form.answers input[type="radio"] {
+    display: inline-block;
+    margin-right: 5px;
+  }

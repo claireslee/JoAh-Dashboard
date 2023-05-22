@@ -69,9 +69,8 @@ def teacherDash(request):
 def studentDashboard(request):
     username = request.user.username
     student = Student.objects.get(username=username)
-    student_classes = (student.classes).split(',')
     
-    return render(request, 'studentDashboard/studentDashboard.html', {'classes': student_classes})
+    return render(request, 'studentDashboard/studentDashboard.html')
 
 
 def loggedin_view(request):

@@ -48,9 +48,7 @@
             <p><strong>Password:</strong> **********</p>
             <p><strong>First name:</strong> {{ user.first_name }}</p>
             <p><strong>Last name:</strong> {{ user.last_name }}</p>
-            <p><strong>Classes:</strong> {{ user.classes }}</p>
             <p><strong>Grade level:</strong> {{ user.grade }}</p>
-            <p><strong>Scores:</strong> {{ user.scores }}</p>
 
             <td><a href="{% url 'edit_student' username=user.username %}">Edit</a></td>
 
