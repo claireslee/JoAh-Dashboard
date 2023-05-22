@@ -194,3 +194,8 @@ class StudentPDFTestForm(forms.Form):
     class Meta:
         model = PdfTest
         fields = ['num_questions', 'pdf', 'file_name', 'answers']
+        
+class DeleteExamForm(forms.Form):
+    test = forms.ModelChoiceField(queryset=Test.objects.all(), label='Select Test')
+class DeletePDFForm(forms.Form):
+    test = forms.ModelChoiceField(queryset=PdfTest.objects.all(), label='Select Test')

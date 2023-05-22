@@ -71,7 +71,7 @@ class Test(models.Model):
     )
 
     def __str__(self):
-        return self.question
+        return self.title
 class Announcement(models.Model):
     teachername = models.CharField(max_length = 50, default="#")
     topic = models.CharField(max_length = 50, default="#")

@@ -57,6 +57,7 @@ urlpatterns = [
     path('confirmation/', views.confirmation ,name='confirmation.html'),
     path('teacherExamView/', views.teacherExamView, name="teacherExamView.html"),
     path('createExam/', views.createExam, name="createExam.html"),
+    path('deleteExam/', views.deleteExam, name="deleteExam.html"),
     path('examList/', views.examList, name='examList'),
     path('studentDashboard/studentExamList/', views.studentExamList, name='studentExamList'),
     path('examDetail/<int:test_id>/', views.examDetail, name='examDetail'),
@@ -66,6 +67,8 @@ urlpatterns = [
     path('delete_student/<str:username>/', views.delete_student, name='delete_student'),
     path('create_test/', views.create_test, name='create_test'),
     path('pdftest/<int:pk>/', views.take_pdftest, name='take_pdftest'),
+    path('delete_pdftest/', views.delete_pdftest, name="delete_pdftest.html"),
+    # path('delete_pdftest/<int:pk>/', views.delete_pdftest, name='delete_pdftest'),
     
     path('exam_list/', views.exam_list, name='exam_list'),
 ]

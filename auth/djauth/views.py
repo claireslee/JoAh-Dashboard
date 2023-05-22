@@ -33,6 +33,7 @@ from .forms import AnnouncementForm
 from .forms import HomeForm
 from django.contrib import messages
 from django.http import HttpResponse
+from .forms import DeleteExamForm
 
 
 def mainpage(request):
@@ -489,6 +490,19 @@ def delete_student(request, username):
         return HttpResponseRedirect('/fullStudentList')
     else:
         return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    
+@login_required(login_url="/login")    
+def delete_pdftest(request, pk):
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        pdftest = get_object_or_404(PdfTest, pk=pk)
+        if request.method == 'POST':
+            pdftest.delete()
+            return HttpResponseRedirect('/exam_list')
+        return HttpResponseRedirect('/exam_list')
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
 def acttestprep(request):
     return render(request, 'djauth/acttestprep.html')
@@ -592,3 +606,16 @@ def exam_list(request):
     print(exams)
     context = {'exams': exams}
     return render(request, 'djauth/exam_list.html', context)
+
+def deleteExam(request):
+    if request.method == 'POST':
+        form = DeleteExamForm(request.POST)
+        if form.is_valid():
+            test_title = form.cleaned_data['test']
+            test = Test.objects.get(title=test_title)
+            test.delete()
+            return redirect('/confirmation')  # Replace 'confirmation' with the appropriate URL name for the confirmation page
+    else:
+        form = DeleteExamForm()
+    
+    return render(request, 'djauth/deleteExam.html', {'form': form})
