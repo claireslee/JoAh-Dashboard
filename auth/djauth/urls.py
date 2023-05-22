@@ -67,7 +67,7 @@ urlpatterns = [
     path('delete_student/<str:username>/', views.delete_student, name='delete_student'),
     path('create_test/', views.create_test, name='create_test'),
     path('pdftest/<int:pk>/', views.take_pdftest, name='take_pdftest'),
-    path('delete_pdftest/', views.delete_pdftest, name="delete_pdftest.html"),
+    path('deletePDFExam', views.deletePDFExam, name="delete_pdftest.html"),
     # path('delete_pdftest/<int:pk>/', views.delete_pdftest, name='delete_pdftest'),
     
     path('exam_list/', views.exam_list, name='exam_list'),

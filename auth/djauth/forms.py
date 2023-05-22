@@ -103,6 +103,8 @@ class PdfTestForm(forms.ModelForm):
 
         # Check that there are enough answer choices for the number of questions
         if num_questions and len(answer_choices) < int(num_questions):
+            print(num_questions)
+            print(answer_choices)
             raise forms.ValidationError('Not enough answer choices for the number of questions.')
 
         # Retrieve the values of the answer choices
@@ -136,66 +138,54 @@ class PdfTestForm(forms.ModelForm):
 
 class StudentPDFTestForm(forms.Form):
             
-    def __init__(self, num_questions, *args, **kwargs):
+    def __init__(self, num_questions, answers, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.num_questions = num_questions
+        self.answers = answers
         if num_questions is not None:
-                for i in range(int(num_questions)):
-                    self.fields[f'q{i+1}'] = forms.ChoiceField(
-                    label=f'Answer for Question {i+1}',
+            for i in range(int(num_questions)):
+                question_num = i + 1
+                question_key = f'q{question_num}'
+                self.fields[question_key] = forms.ChoiceField(
+                    label=f'Answer for Question {question_num}',
                     choices=[('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')],
                     widget=forms.RadioSelect(attrs={'class': 'inline'}),
-                    required=False
+                    required=False,
+                    initial=f'{question_key}'
                 )
+            
+                    
     def clean(self):
-        
-        print("Starting clean method...")
+        print(self.answers)
         cleaned_data = super().clean()
-        num_questions = self.num_questions
         answer_choices = {}
         answer_choices_json = cleaned_data.get('student_answers')
-        print(num_questions)
-        print(answer_choices)
+        print('answer_choices_json:', answer_choices_json)
+        
+
         if answer_choices_json:
-            answer_choices = json.loads(answer_choices_json)
             print('num_questions:', num_questions)
-            print('answer_choices:', answer_choices)
+            print('answer_choices:', answer_choices_json)
+            answer_choices = json.loads(answer_choices_json)
 
-        # Check that there are enough answer choices for the number of questions
-        if num_questions and len(answer_choices) < int(num_questions):
-            raise forms.ValidationError('Not enough answer choices for the number of questions.')
-
-        # Retrieve the values of the answer choices
         student_answers = {}
-        print(num_questions)
-        for i in range(1, int(num_questions) + 1):
+        num_questions = self.num_questions
+
+        for i in range(1, num_questions + 1):
             question_key = f'q{i}'
-            answer = answer_choices[question_key]
+            answer = answer_choices.get(question_key)
+
             if answer not in ['A', 'B', 'C', 'D']:
-                
+                print('answer:', answer)
                 raise forms.ValidationError(f'Invalid answer choice for question {i}.')
-            print("current answer: ", answer)
+
             student_answers[question_key] = answer
-            
-            print("answers: ", student_answers)
-            print("answers[question_key]: ", student_answers[question_key])
-            
 
-
-        # Convert the answers to a JSON object
         cleaned_data['answers'] = json.dumps(student_answers)
-    
-
         return cleaned_data
-    
-    
-
-
-    class Meta:
-        model = PdfTest
-        fields = ['num_questions', 'pdf', 'file_name', 'answers']
+        
         
 class DeleteExamForm(forms.Form):
     test = forms.ModelChoiceField(queryset=Test.objects.all(), label='Select Test')
 class DeletePDFForm(forms.Form):
-    test = forms.ModelChoiceField(queryset=PdfTest.objects.all(), label='Select Test')
+    pdftest = forms.ModelChoiceField(queryset=PdfTest.objects.all(), label='Select Test')

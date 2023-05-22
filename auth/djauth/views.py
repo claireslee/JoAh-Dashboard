@@ -33,7 +33,7 @@ from .forms import AnnouncementForm
 from .forms import HomeForm
 from django.contrib import messages
 from django.http import HttpResponse
-from .forms import DeleteExamForm
+from .forms import DeleteExamForm, DeletePDFForm
 
 
 def mainpage(request):
@@ -491,18 +491,6 @@ def delete_student(request, username):
     else:
         return HttpResponseRedirect("/studentDashboard/studentDashboard")
     
-@login_required(login_url="/login")    
-def delete_pdftest(request, pk):
-    if request.user.is_authenticated:
-        usergroup = request.user.groups.values_list('name', flat=True).first()
-    if usergroup == "Teacher":
-        pdftest = get_object_or_404(PdfTest, pk=pk)
-        if request.method == 'POST':
-            pdftest.delete()
-            return HttpResponseRedirect('/exam_list')
-        return HttpResponseRedirect('/exam_list')
-    else:
-        return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
 def acttestprep(request):
     return render(request, 'djauth/acttestprep.html')
@@ -587,16 +575,20 @@ def create_test(request):
 def take_pdftest(request, pk):
     pdftest = get_object_or_404(PdfTest, pk=pk)
     if request.method == 'POST':
-        form = StudentPDFTestForm(pdftest.num_questions, request.POST)
+        form = StudentPDFTestForm(pdftest.num_questions, pdftest.answers, request.POST)
         if form.is_valid():
-            student_test = form.save(commit=False)
-            student_test.num_questions = request.POST['num_questions']
-            student_test.answers =  request.POST['student_answers']
+            num_questions = pdftest.num_questions
+            student_answers = form.cleaned_data['answers']
+            student_test = StudentPDFTestForm(
+                pdf_test=pdftest,
+                num_questions=num_questions,
+                answers=student_answers
+            )
             student_test.save()
 
             return redirect('pdftest_confirmation', pk=pdftest.pk)  # Redirect to the confirmation page
     else:
-        form = StudentPDFTestForm(pdftest.num_questions)
+        form = StudentPDFTestForm(pdftest.num_questions, pdftest.answers)
     return render(request, 'djauth/student_pdftest.html', {'pdftest': pdftest, 'form': form})
 
     
@@ -607,6 +599,8 @@ def exam_list(request):
     context = {'exams': exams}
     return render(request, 'djauth/exam_list.html', context)
 
+
+@login_required(login_url="/login") 
 def deleteExam(request):
     if request.method == 'POST':
         form = DeleteExamForm(request.POST)
@@ -619,3 +613,19 @@ def deleteExam(request):
         form = DeleteExamForm()
     
     return render(request, 'djauth/deleteExam.html', {'form': form})
+
+
+@login_required(login_url="/login") 
+def deletePDFExam(request):
+    if request.method == 'POST':
+        form = DeletePDFForm(request.POST)
+        if form.is_valid():
+            test_name = form.cleaned_data['pdftest']
+            pdftest = get_object_or_404(PdfTest, name=test_name)
+            pdftest.delete()
+            return redirect('/confirmation') # Replace 'confirmation' with the appropriate URL name for the confirmation page
+    else:
+        form = DeletePDFForm()
+    
+    return render(request, 'djauth/delete_pdftest.html', {'form': form})
+

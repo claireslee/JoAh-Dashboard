@@ -90,16 +90,4 @@ class PdfTest(models.Model):
         return [('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')]
     def __str__(self):
         return self.name
-    
-    
-class PDFTestSubmission(models.Model):
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
-    pdftest = models.ForeignKey(PdfTest, on_delete=models.CASCADE)
-    student_answers = models.JSONField()
-    def get_choices(self):
-        # assuming each question has four answer choices, A, B, C, and D
-        return [('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')]
-    submitted_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.student.username} - {self.pdftest.title}'
+     
