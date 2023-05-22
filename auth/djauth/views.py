@@ -212,7 +212,6 @@ def startExam(request):
     else:
         return render("studentDashboard/startExam.html")
 
-
 @login_required(login_url="/login")
 def addStudent(request):
     if request.user.is_authenticated:
@@ -277,39 +276,44 @@ def addStudent(request):
 # Create your views here.
 
 def home(request):
-    if request.method == 'POST':
-        print(request.POST)
-        questions=QuesModel.objects.all()
-        score=0
-        wrong=0
-        correct=0
-        total=0
-        for q in questions:
-            total+=1
-            print(request.POST.get(q.question))
-            print(q.ans)
-            print()
-            if q.ans ==  request.POST.get(q.question):
-                score+=10
-                correct+=1
-            else:
-                wrong+=1
-        percent = score/(total*10) *100
-        context = {
-            'score':score,
-            'time': request.POST.get('timer'),
-            'correct':correct,
-            'wrong':wrong,
-            'percent':percent,
-            'total':total
-        }
-        return render(request,'studentDashboard/result.html',context)
+    if request.user.is_authenticated:
+            usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        return HttpResponseRedirect("/teacherDash")
     else:
-        questions=QuesModel.objects.all()
-        context = {
-            'questions':questions
-        }
-        return render(request,'studentDashboard/home.html',context)
+        if request.method == 'POST':
+            print(request.POST)
+            questions=QuesModel.objects.all()
+            score=0
+            wrong=0
+            correct=0
+            total=0
+            for q in questions:
+                total+=1
+                print(request.POST.get(q.question))
+                print(q.ans)
+                print()
+                if q.ans ==  request.POST.get(q.question):
+                    score+=10
+                    correct+=1
+                else:
+                    wrong+=1
+            percent = score/(total*10) *100
+            context = {
+                'score':score,
+                'time': request.POST.get('timer'),
+                'correct':correct,
+                'wrong':wrong,
+                'percent':percent,
+                'total':total
+            }
+            return render(request,'studentDashboard/result.html',context)
+        else:
+            questions=QuesModel.objects.all()
+            context = {
+                'questions':questions
+            }
+            return render(request,'studentDashboard/home.html',context)
 
 def teacherExamView(request):
     if request.method == 'POST':
