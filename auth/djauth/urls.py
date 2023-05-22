@@ -66,4 +66,6 @@ urlpatterns = [
     path('delete_student/<str:username>/', views.delete_student, name='delete_student'),
     path('create_test/', views.create_test, name='create_test'),
     path('pdftest/<int:pk>/', views.take_pdftest, name='take_pdftest'),
+    
+    path('exam_list/', views.exam_list, name='exam_list'),
 ]

@@ -18,11 +18,12 @@ from django.urls import path, include
 from djauth.views import *
 from django.conf import settings
 from django.conf.urls.static import static
+from .hide import ADMIN_URL
 
 
 urlpatterns = [
     path('', include('djauth.urls')),
-    path('admin/', admin.site.urls),
+    path(ADMIN_URL, admin.site.urls),
     path('', include('django.contrib.auth.urls')),
     path("select2/", include("django_select2.urls")),
 ]

@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.views import View
 from .models import Student
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -571,7 +572,6 @@ def create_test(request):
     return render(request, 'djauth/create_test.html', {'form': form})
 
 def take_pdftest(request, pk):
-    print(pk)
     pdftest = get_object_or_404(PdfTest, pk=pk)
     if request.method == 'POST':
         form = StudentPDFTestForm(pdftest.num_questions, request.POST)
@@ -580,12 +580,16 @@ def take_pdftest(request, pk):
             student_test.num_questions = request.POST['num_questions']
             student_test.answers =  request.POST['student_answers']
             student_test.save()
-            # Store the student's answers and redirect to a confirmation page
-            # For example:
-            # student = request.user
-            # pdftest_submission = PDFTestSubmission.objects.create(student=student, pdftest=pdftest, answers=answers)
-            # return redirect('pdftest_confirmation', pk=pdftest_submission.pk)
+
+            return redirect('pdftest_confirmation', pk=pdftest.pk)  # Redirect to the confirmation page
     else:
         form = StudentPDFTestForm(pdftest.num_questions)
     return render(request, 'djauth/student_pdftest.html', {'pdftest': pdftest, 'form': form})
+
     
+
+def exam_list(request):
+    exams = PdfTest.objects.all()  # Assuming you want to fetch all PdfTest objects
+    print(exams)
+    context = {'exams': exams}
+    return render(request, 'djauth/exam_list.html', context)
