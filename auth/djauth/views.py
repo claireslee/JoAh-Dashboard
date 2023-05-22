@@ -212,67 +212,66 @@ def startExam(request):
     else:
         return render("studentDashboard/startExam.html")
 
+
 @login_required(login_url="/login")
 def addStudent(request):
     if request.user.is_authenticated:
         usergroup = request.user.groups.values_list('name', flat=True).first()
-    if usergroup == "Teacher":
-        if request.method == "POST":
-            form = StudentForm(request.POST or None) 
-            if form.is_valid():
-                first_name = request.POST['first_name']
-                last_name = request.POST['last_name']
-                username = request.POST['username']
-                password = request.POST['password']
-                grade = request.POST['grade']
-                classes = ','.join(request.POST.getlist('classes'))
-                scores = ', '.join(request.POST.getlist('scores'))
-                
-                User.objects.create_user(username=request.POST['username'],
-                                    password=request.POST['password'] )
-                
-        # create and save student object
-                student = Student(first_name=first_name, last_name=last_name, username=username,
-                          password=password, grade=grade, classes=classes, scores=scores)
-                student.save()
+        if usergroup == "Teacher":
+            if request.method == "POST":
+                form = StudentForm(request.POST or None) 
+                if form.is_valid():
+                    first_name = request.POST['first_name']
+                    last_name = request.POST['last_name']
+                    username = request.POST['username']
+                    password = request.POST['password']
+                    grade = request.POST['grade']
+                    
+                    
+                    User.objects.create_user(username=request.POST['username'],
+                                        password=request.POST['password'] )
+                    
+                    
+            
+            # create and save student object
+                    student = Student(first_name=first_name, last_name=last_name, username=username,
+                            password=password, grade=grade)
+                    student.save()
 
 
+                    
+                else:
+                    first_name = request.POST['first_name']
+                    last_name = request.POST['last_name']  
+                    username = request.POST['username']
+                    password = request.POST['password']    
+                    grade = request.POST['grade'] 
+                    # email = request.POST['email']  
+                    
+                    print(form.errors)
+                    messages.success(request, ('There was an error in your form! Please try again...'))
+                    return render(request, 'djauth/addStudent.html', {'first_name': first_name,
+                                                        'last_name': last_name,
+                                                        'username': username,
+                                                        'password': password,
+                                                        'grade': grade,
+                                                        # 'email': email,
+                                                        })
+                    
                 
-            else:
-                first_name = request.POST['first_name']
-                last_name = request.POST['last_name']  
-                username = request.POST['username']
-                password = request.POST['password']  
-                classes = request.POST['classes']    
-                grade = request.POST['grade'] 
-                scores = request.POST['scores'] 
-                # email = request.POST['email']  
+                messages.success(request, ('Student has been added to the database!'))
                 
-                messages.success(request, ('There was an error in your form! Please try again...'))
-                return render(request, 'djauth/addStudent.html', {'first_name': first_name,
-                                                    'last_name': last_name,
-                                                    'username': username,
-                                                    'password': password,
-                                                    'classes': classes,
-                                                    'grade': grade,
-                                                    'scores': scores
-                                                    # 'email': email,
-                                                    })
+                return HttpResponseRedirect("/teacherDash")
+            return render(request, 'djauth/addStudent.html', {'form': StudentForm})
+        
                 
-            
-            messages.success(request, ('Student has been added to the database!'))
-            
-            return HttpResponseRedirect("/teacherDash")
-        return render(request, 'djauth/addStudent.html', {'form': StudentForm})
-    
-              
             
             
     
     # otherwise, just return the page bc no info submission
         
-    else:
-        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+        else:
+            return HttpResponseRedirect("/studentDashboard/studentDashboard")
     # if someone posts + fill out form ... 
     
 # Create your views here.

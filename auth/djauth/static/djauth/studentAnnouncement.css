@@ -1,6 +1,7 @@
 .body{
-	background-color: #eaeff1; 
+	background-color: #000000; 
 }
+
 header {
     display: flex;
     justify-content: flex-end;

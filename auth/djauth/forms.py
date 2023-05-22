@@ -23,11 +23,10 @@ class AnnouncementForm(forms.ModelForm):
         model = Announcement
         fields = ['teachername', 'topic', 'announcement']
 class StudentForm(forms.ModelForm):
- 
+     
     class Meta:
         model = Student
-        fields = ['first_name', 'last_name', 'username', 'password', 'classes', 'grade', 'scores']
-
+        fields = ['first_name', 'last_name', 'username', 'password', 'grade']
 # QuestionFormSet = modelformset_factory(QuesModel, fields=('question', 'op1', 'op2', 'op3', 'op4', 'ans'), extra=1,)
 
 class addQuestionform(ModelForm):

@@ -113,7 +113,7 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const radioButtons = document.querySelectorAll('input[type="radio"]');
-  const student_answers = {};
+  const answers = {};
   let isAnyQuestionUnanswered = false;
 
   radioButtons.forEach((radio) => {
@@ -123,7 +123,7 @@ form.addEventListener('submit', (event) => {
 
     if (selectedAnswer) {
       console.log(selectedAnswer)
-      student_answers[questionNum] = selectedAnswer;
+      answers[questionNum] = selectedAnswer;
     } 
   });
 

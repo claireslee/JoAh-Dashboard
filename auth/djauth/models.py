@@ -25,18 +25,13 @@ EXAM_CHOICES = (
 class checkLogin(models.Model):
     username = models.CharField(max_length = 50)
     password = models.CharField(max_length = 50)
+
 class Student(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=50)
-    classes = models.CharField(max_length=255, default='ACT')
-    def get_classes_list(self):
-        return self.classes.split(',')
     grade = models.CharField(max_length=10)
-    scores = models.CharField(max_length=100)
-    def get_scores_list(self):
-        return self.scores.split(',')
     def __str__(self): # what it returns
         return self.username
     

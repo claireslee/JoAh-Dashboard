@@ -27,12 +27,18 @@
         </center>
 
 
-        <div id="content">
-
-            {% for item in all_announcements %} <br/>
-                <strong> Teacher:</strong> {{ item.teachername }} <br/>
-                <strong>Announcement:</strong> {{ item.announcement }} <hr>
-            {% endfor %}
+        <div id=" content">
+            <div class = "container">
+                <div class = "card">
+                    <div class = "content-card">
+                        {% for item in all_announcements %} <br/>
+                            <strong> Teacher:</strong> {{ item.teachername }} <br/>
+                            <strong>Announcement:</strong> {{ item.announcement }} <hr>
+                        
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
 
             {% comment %} {{ form.as_p }}
             <h1> New Announcement: <br> {{ announcement }} </h1> {% endcomment %}

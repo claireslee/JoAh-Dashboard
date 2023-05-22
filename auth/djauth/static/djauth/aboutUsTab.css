@@ -5,10 +5,36 @@
   --bs-body-font-family: var(--bs-font-sans-serif);
 }
 
+.teams .teacherimgstyle {
+  max-width: 70%;
+  height:auto;
+}
+
+  /* Popup content */
+  .modal-content {
+    background-color: rgb(203, 19, 19);
+    border-color: black;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #888;
+    width: 50%;
+  }
+
 html {
     background-color: #fff;
     font-family: var(--bs-body-font-family);
 }
+
+.sub-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -247,4 +273,3 @@ margin-bottom: 40px;
     margin-top: 10px;
     margin-bottom: 80px;
   }
-  

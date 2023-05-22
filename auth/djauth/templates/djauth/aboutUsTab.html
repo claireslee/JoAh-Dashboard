@@ -3,76 +3,258 @@
 {% block title %} About Us {% endblock %}
 {% block content %} 
 
+
 <link href="{% static 'djauth/aboutUsTab.css' %}" rel="stylesheet">
 
-<section class="py-5 bg-light" id="scroll-target">
+<div class="aboutuspagebg">
+<section class="py-5" id="scroll-target">
     <div class="container px-5 my-5">
         <!-- <div class="text-center my-5"> -->
             <h1> JOAH'S MISSION </h1> <br>
             <p class="lead fw-normal text-muted mb-4"> 
                 We at JoAh Academy believe that all students have the potential and skills to excel in their academics. All they need is to be showed with compliments, recognition, and relationship. 
                 <br><br> Both teachers and staff are committed not only to the helping students achieve their goals in middle school, high school, and college but also to cultivate deep, meaningful relationships that foster a more optimal learning experience.
-                <br><br> ​Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of
+                <br><br> Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of
                 disruptive innovation. </p>
         <!-- </div> -->
     </div>
 </section>
 
 <!-- TEACHERS -->
-<section class="py-5" id="#scroll-target">
-    <div class = "programs-header">
-        <h1> OUR TEACHERS </h1>
+<section class="py-5 bg-light" id="#scroll-target">
+    <div class="container-team">
+        <div class = "programs-header">
+            <h1> MEET THE TEAM </h1>
+        </div>
+    
+        <div class="sub-container">
+            <div class="teams">
+                <div class="teachercenter">
+                    <div class="teacherimgstyle">
+                        <img src="{% static 'djauth/media/hannahmun.jpeg' %}" alt="">
+                    </div>
+                </div>
+                <div class="name">Hannah Mun</div>
+                <div class="desig"> Teacher </div>
+                <div class="about">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum labore quam
+                    reprehenderit
+                    vitae aliquam dicta! </div>
+
+                <div class="social-links">
+                    <button class="show-modal"> Learn More </button>
+                    <div class="modal">
+                        <div class="modal-content">
+                          <span class="close"></span>
+                          <div class="nameCenter"> <h3> Hannah Mun </h3> </div> <br> 
+                          <p>
+                            Hannah Mun has a Bachelor’s in English Literature from Rutgers University, a Master’s 
+                            in Pastoral Care and Counseling from Biola University, and a Master’s in Social Work from 
+                            Columbia University. Teaching for over 20 years now, she loves it when students’ eyes 
+                            light up from understanding even the simplest grammar rule. These days, she closely 
+                            works with students through college consulting to guide them into their dream schools. 
+
+                            In Hannah’s free time, she binge-watches Netflix shows and goes on road trips with 
+                            her husband and young son. 
+
+                            <br> <br>
+                            <b>Hannah’s Pro Tip? </b> <br>
+                            Study your mistakes—without this step, little progress will be made. 
+
+                          </p>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="teams">
+                <div class="teachercenter">
+                    <div class="teacherimgstyle">
+                        <img src="{% static 'djauth/media/davidcho.jpg' %}" alt="">
+                    </div>
+                </div>
+                <div class="name"> David Cho </div>
+                <div class="desig"> Teacher </div>
+                <div class="about">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum labore quam
+                    reprehenderit
+                    vitae aliquam dicta! </div>
+
+                    <div class="social-links">
+                        <button class="show-modal"> Learn More </button>
+                        <div class="modal">
+                            <div class="modal-content">
+                                <span class="close"></span>
+                                <div class="nameCenter">
+                                    <h3> David Cho </h3>
+                                </div> 
+                                <br>
+                                <p>
+                                    David Cho, a Palisades Park High School teacher, has ten years of public school 
+                                    experience and more than 12 years in academies. He has a Bachelor’s degree in 
+                                    Chemistry from the University of Illinois Urbana-Champaign and a Master’s degree in 
+                                    Supervision/Teacher of Science Education from the Teacher’s College of Columbia University. 
+
+                                    In David’s free time, he babysit his newly born child, golfs, and plays basketball religiously. 
+         
+                                    <br> <br>
+                                    <b>David’s Pro Tip? </b> <br>
+                                    Create your own way of managing stress. More stress you can handle, more role and 
+                                    responsibility you will earn. All successful people are great at managing their stress.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="teams">
+                <div class="teachercenter">
+                    <div class="teacherimgstyle">
+                        <img src="{% static 'djauth/media/jessicakim.jpg' %}" alt="">
+                    </div>
+                </div>               
+                 <div class="name"> Jessica Kim </div>
+                <div class="desig"> Teacher </div>
+                <div class="about">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum labore quam
+                    reprehenderit
+                    vitae aliquam dicta! </div>
+
+                    <div class="social-links">
+                        <button class="show-modal"> Learn More </button>
+                        <div class="modal">
+                            <div class="modal-content">
+                                <span class="close"></span>
+                                <div class="nameCenter">
+                                    <h3> Jessica Kim </h3>
+                                </div> 
+                                <br>
+                                <p>
+                                    Jessica has been teaching high school Biological Science courses for nine years. She 
+                                    received her Bachelor's degree in Cell Biology and Neuroscience from Rutgers University. Also, 
+                                    she has a Master of Education Degree from Relay University and is finishing her Master's degree in 
+                                    Educational Leadership from Montclair State University. 
+
+                                    In Jessica’s free time, she enjoys traveling, cooking, watching movies, and hiking. 
+
+                                    <br> <br>
+                                    <b> Jessica’s Pro Tip? </b> <br>
+                                    No matter what you do, do your best so that you have no regrets and can take pride in your work.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="teams">
+                <img src="svg/profile2.svg" alt="">
+                <div class="name"> Brian Lew </div>
+                <div class="desig"> Teacher </div>
+                <div class="about">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum labore quam
+                    reprehenderit
+                    vitae aliquam dicta! </div>
+
+                    <div class="social-links">
+                        <button class="show-modal"> Learn More </button>
+                        <div class="modal">
+                            <div class="modal-content">
+                                <span class="close"></span>
+                                <div class="nameCenter">
+                                    <h3> Brian Lew </h3>
+                                </div> 
+                                <br>
+                                <p>
+                                    Brian Lew, currently a Leonia High School teacher, has 20 years experience in teaching. He 
+                                    started his education at Korea University and graduated with a Bachelor’s degree in Electrical 
+                                    Engineering from Rutgers University and a Master’s degree in Mathematics Education from Montclair University. 
+
+                                    In Brian’s free time, he coaches golf at school, golfs, golfs, and golfs. 
+         
+                                    <br> <br>
+                                    <b> Brian’s Pro Tip?  </b> <br>
+                                    SAT is asking about not how to reach the answer but how to find the correct answer ASAP.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="teams">
+                <img src="svg/profile2.svg" alt="">
+                <div class="name"> Mihyung Lee </div>
+                <div class="desig"> Teacher </div>
+                <div class="about">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum labore quam
+                    reprehenderit
+                    vitae aliquam dicta! </div>
+
+                    <div class="social-links">
+                        <button class="show-modal"> Learn More </button>
+                        <div class="modal">
+                            <div class="modal-content">
+                                <span class="close"></span>
+                                <div class="nameCenter">
+                                    <h3> Mihyung Lee </h3>
+                                </div> 
+                                <br>
+                                <p>
+                                    Mihyung has a Bachelor’s degree in Mathematics for Teaching from University of California Los Angeles 
+                                    and a Master’s degree in Applied Mathematics from California State University Los Angeles. She has 
+                                    10+ years of experience in teaching math at high school and college. Her passion is to help students who 
+                                    struggle in mathematics, so they can enjoy the subject as much as she does. 
+
+                                    In Mihyung’s free time, she likes to watch sports games, going to the beach, and hanging out with her 
+                                    two young children.
+
+                                    <br> <br>
+                                    <b> Mihyung’s Pro Tip?  </b> <br>
+                                    “Never say ‘I hate math’ or ‘I’ve never been good at math.’ Instead, tell yourself ‘I’m not good at 
+                                    math, YET.’ It’s all about a growth mindset, and all people can be good at math as long as they believe 
+                                    in themselves.”
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="teams">
+                <img src="svg/profile2.svg" alt="">
+                <div class="name"> Alanna Hwang </div>
+                <div class="desig"> Teacher </div>
+                <div class="about">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum labore quam
+                    reprehenderit
+                    vitae aliquam dicta! </div>
+
+                    <div class="social-links">
+                        <button class="show-modal"> Learn More </button>
+                        <div class="modal">
+                            <div class="modal-content">
+                                <span class="close"></span>
+                                <div class="nameCenter">
+                                    <h3> Alanna Hwang </h3>
+                                </div> 
+                                <br>
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum labore quam reprehenderit
+                                    vitae aliquam dicta!
+         
+                                    <br> <br>
+                                    <b> Alanna’s Pro Tip?  </b> <br>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum labore quam reprehenderit vitae aliquam dicta!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class = "card-align" >
-        <div class="card">
-                                
-            <img src="{% static 'djauth/media/programImage1.jpeg' %}"alt="Lago di Braies">
-                <div class="card__details">
-                    <div class="name"> Teacher1 </div>
-                        <p> little blurb ... </p>
-                </div>
-        </div>
 
-        <div class="card">
-            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
-                <div class="card__details">
-                    <div class="name"> Teacher2 </div>
-                        <p> little blurb ... </p>
-                </div>
-        </div>
-
-        <div class="card">
-            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
-                <div class="card__details">
-                    <div class="name"> Teacher3 </div>
-                        <p> little blurb ... </p>
-                </div>
-        </div>
-
-        <div class="card">
-            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
-                <div class="card__details">
-                    <div class="name"> Teacher4 </div>
-                        <p> little blurb ... </p>
-                </div>
-        </div>
-
-        <div class="card">
-            <img src="{% static 'djauth/media/programImage1.jpeg' %}" alt="Lago di Braies">
-                <div class="card__details">
-                    <div class="name"> Teacher5</div>
-                        <p> little blurb ... </p>
-                </div>
-        </div>
-    </div>
 </section>
 
 <!-- LOCATION -->
-<section class="py-5 bg-light" >
+<section class="py-5" >
     <div class="container px-5 my-5">
         <div class="row gx-5 align-items-center">
-            <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="{% static 'djauth/media/programImage1.jpeg' %}" alt="..." /></div>
+            <div class="col-lg-6 order-first order-lg-last"><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12072.409532488682!2d-73.9976743!3d40.8476759!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2f7af7ba1fa4f%3A0xffb479bed33b643c!2sJoah%20Academy!5e0!3m2!1sen!2sus!4v1679421691053!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
             <h1> LOCATION </h1>
             <div class="col-lg-6">
                 <p class="location-text" > Visit us at: <br> 268 Broad Ave. 2nd Floor, Palisades Park, NJ 07650​S </p>
@@ -82,24 +264,253 @@
 </section>
 
 <!-- JOB INTEREST CONTACT US-->
-<section class="py-5">
+<section class="py-5 bg-light">
+    <br> <br>
     <h1 class="job-interest-header-centering"> INTERESTED IN WORKING FOR US? </h1> <br>
-    <form class="job-interest-centering">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    
+    <form class="job-interest-centering" method="POST" action="{% url 'aboutUsTab.html' %}">
+        {% csrf_token %}
+        <div class="mb-2">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-control" aria-describedby="emailHelp" name="inqteacherfirstname">
         </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+
+        <div class="mb-2">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-control" name="inqteacherlastname">
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" name="inqteacheremail">
+        </div>
+
+        {% comment %} <div class="mb-2">
+            <label class="form-label">Message</label>
+            <input type="text" class="form-control" name="inqteachermessage">
+        </div> {% endcomment %}
+
+        <div class="mb-2">
+            <label class="form-label">Message</label>
+            <textarea class="form-control" placeholder="Leave your message here" name="inqteachermessage"></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+
+      <br>
+
 </section>
 
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        /* box-sizing: border-box; */
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+    }
+    
+    .button {
+        padding: 14px 22px;
+    
+    }
+    
+    .show-modal {
+        border-radius: 5px;
+        color: black;
+        border: 1px solid #e3e0e0;
+        padding: 4px 16px;
+        background: rgb(255, 255, 255);
+        font-size: 0.75em;
+        cursor: pointer;
+    }
+    
+    .button .show-modal{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-color: #000000;
+    }
+    
+    .container-team {
+        text-align: center;
+    }
+
+    .header {
+        padding-top: 30px;
+        color: #444;
+        font-size: 20px;
+        margin: auto;
+        line-height: 50px;
+    }
+    
+    .sub-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 10px 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .teams {
+        margin: 10px;
+        padding: 22px;
+        max-width: 25%;
+        cursor: pointer;
+        transition: 0.4s;
+        box-sizing: border-box;
+    }
+    
+    .teams:hover {
+        background: #ddd;
+        border-radius: 12px;
+    }
+
+    .teachercenter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 250px; /* Adjust the height as needed */
+      }
+      
+      .teachercenter img {
+        max-width: 100%;
+        max-height: 100%;
+        margin: auto;
+      } 
+        
+    {% comment %} .teachercenter {
+        max-width: 70%;
+        height:auto;
+    }  {% endcomment %}
+    
+    .name {
+        padding: 12px;
+        font-weight: bold;
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+    
+    .desig {
+        font-style: italic;
+        color: #888;
+    }
+    
+    .about {
+        margin: 20px 0;
+        font-weight: lighter;
+        color: #4e4e4e;
+    }
+    
+    .social-links {
+        margin: 14px;
+    }
+    
+    .social-links a {
+        display: inline-block;
+        height: 30px;
+        width: 30px;
+        transition: .4s;
+    }
+    
+    .social-links a:hover {
+        transform: scale(1.5);
+    }
+    
+    .social-links a i {
+        color: #444;
+    }
+    
+    @media screen and (max-width: 600px) {
+        .teams {
+            max-width: 100%;
+        }
+    }
+    
+    /* Popup container */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+      }
+      
+      /* Popup content */
+      .modal-content {
+        background-color: rgb(255, 255, 255);
+        border-color: black;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid #888;
+        width: 50%;
+      }
+      
+      /* Close button */
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    
+      .nameCenter {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+</style>
+
 <script>
+
+    // Get all the modal elements
+    var modals = document.querySelectorAll('.modal');
+    
+    // Get all the buttons that open the modals
+    var buttons = document.querySelectorAll('.show-modal');
+
+    // Get all the <span> elements that close the modals
+    var spans = document.querySelectorAll('.close');
+
+    // Loop through each button and add click event listeners
+    buttons.forEach(function(button, index) {
+        button.onclick = function() {
+            modals[index].style.display = 'block';
+        };
+    });
+
+    // Loop through each span and add click event listeners
+    spans.forEach(function(span, index) {
+        span.onclick = function() {
+            modals[index].style.display = 'none';
+        };
+    });
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        modals.forEach(function(modal) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+    };
+
     function sendToForm() {
     var name = $("#Name").val();
     var email = $("#Email").val();
@@ -122,5 +533,6 @@
     return false;
     }
 </script>
-</body>
+<div>
+
 {%endblock%}

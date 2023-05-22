@@ -25,6 +25,12 @@
        <script src="js/scripts.js"></script>
     </head>
     
+    <style>
+        .testimonial-text {
+            color: black !important ; 
+          }
+    </style>
+
     <body>
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
@@ -52,8 +58,8 @@
                     </div>
                 </nav>
             
-
-            <div class="container">{%block content%}
+                {%block content%}
+            <div class="container">
 
                 <div class = "py-5">
                     <div class="container px-5">
@@ -62,7 +68,7 @@
                                 <div class="text-center my-5">
                                     <h1 class="section-one-position fw-bolder mb-3"> OUR FOCUS IS ON OUR STUDENTS ... </h1>
                                     <p class="section-one-position lead fw-normal text-muted mb-4"> 
-                                         JoAh Academy invites you to study with the best teachers and caring staff members... <br> 
+                                        Joah Academy invites you to study with the best teachers and the most caring staff. <br> 
                                      </p>
                                     <a class="btn btn-primary btn-lg" href="/contactus"> Register! </a>
                                 </div>
@@ -78,13 +84,22 @@
                             <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="{% static 'djauth/media/joahphoto2.jpg' %}" alt="..." /></div>
                             <div class="col-lg-6">
                                 <h2 class="fw-bolder">ABOUT US</h2>
-                                <p class="lead fw-normal text-muted mb-0"> The word joah can be used
-                                 in three distinct ways:
-                                 <br>1. Bravo! (잘한다!)
-                                 <br>2. Okay! (알았어!)
-                                 <br>3. I like you! (좋아해!)
-                                 <br><br>JoAh Academy invites you to study with some of the best teachers
-                                 and caring staff members. </p>
+                                {% comment %} <p class="lead fw-normal text-muted mb-0">  {% endcomment %}
+                                <h6>
+                                    Joah Academy was established in 2022 with one mission: provide the best education and 
+                                    best care. We pride ourselves on creating a solid foundation in education and on 
+                                    providing individualized care and attention to students.
+                                </h6>
+
+                                <h6>
+                                    We provide 5-12th extra-curricular learning services in-person and remotely in the US. 
+                                    Offering accelerated learning in math, science and language, JoAh Academy fosters 
+                                    students’ ability to think critically, strengthens their logic skills, and helps them 
+                                    fulfill their goals through innovative teaching techniques.
+                                </h6>
+
+
+
                                 <a class="btn btn-primary btn-lg" href="/aboutUs"> Learn More </a>
                             </div>
                         </div>
@@ -102,21 +117,67 @@
                                  </div>
                              
                                  <div class="early-acc-position">
+                                    <p class="lead fw-normal text-muted mb-0">
+                                        Acceptances at: Bergen County Academies, Bergen County Technical Schools, Academies at Englewood
+                                    </p>
+                                </div>
+                                
+                                <br>
+                                
+                                 <div class="early-acc-position">
                                      <p class="lead fw-normal text-muted mb-0">
-                                         <em> CLASS OF 2023 EARLY ACCEPTANCES: </em>
+                                         <b> <em> Joah Consulting College Acceptances - Class of 2023 </em> </b>
                                          <br>
-                                         Brown University, Cornell University, Northwestern University, University of Michigan, 
-                                         Tufts University. Rice University, NYU, Villanova University, 
-                                         University of Illinois Urbana-Champaign
+                                         Brown University, Cornell University, Northwestern University, Johns Hopkins University, Duke University, 
+                                         University of Michigan, Tufts University, Rice University, New York University, Boston College, Boston University,
+                                         University of North Carolina, Villanova University, University of Illinois Urbana-Champaign, Northeastern University, 
+                                         Colorado College, UC Berkeley, UC Los Angeles, UC Irvine, UC San Diego, King's College of London, Peabody Institute
                                      </p>
                                  </div>
+
+                                 
                              </div>
                         </div>
                     </div>
                 </section>
+
+                <!-- TESTIMONIALS -->
+                <section class="py-5 bg-light container text-center">
+                    <div class = "programs-header"> 
+                        <h2 class="fw-bolder"> TESTIMONIALS </h2>
+                    </div>
+
+                    <div class="row">
+                        <div class="col box-design">
+                            <h5 class="testimonial-text" style="margin-top: 10px;"><strong><en>Jessica</strong></h5>
+                            <p><em> "...I'm happy to say that this is the best academy that I've gone to. During my time here my 
+                                SAT score was boosted significantly (300 points) with the help of the teachers and director there. 
+                                The director and the teachers there are very friendly and anybody can tell that 
+                                their students' well-being comes first over anything else..."</em></p>
+                            <p> [ SAT Prep ] <p>
+                        </div>
+
+                        <div class="col box-design">
+                            <h5 class="testimonial-text" style="margin-top: 10px;"><strong>Hannah Cui</strong></h5>
+                            <p><em> "What sets Joah Academy apart from other private education institutes is that the director and teachers... truly value students 
+                                and care about their future endeavors. I personally felt compassion for all 
+                                the teachers that have taught me, which I believe is the biggest reason for my success."</em></p>
+                            <p> [ SAT Prep + College Consulting ] <p>
+                            </div>
+
+                        <div class="col box-design">
+                            <h5 class="testimonial-text" style="margin-top: 10px;"><strong>Eric Cho</strong></h5>
+                            <p><em> "You will find the best strategy for you here. Also, I'm sure that this place will be helpful even if 
+                                you are learning English as a second language. Any teacher can teach a student with a high score already,
+                                but the teachers who can make students with low to get a high score are rare."</em></p>
+                                <p> [ SAT Prep ] <p>
+                        </div>
+                    </div>
+                </section>
+
       
                 <!-- Programs / Cards -->
-                <section class="py-5 bg-light" id="#scroll-target">
+                <section class="py-5" id="#scroll-target">
                     <div class = "programs-header"> 
                         <h2 class="fw-bolder"> PROGRAMS </h2>
                     </div>
@@ -160,8 +221,8 @@
                     </div>
                 </section>
       
-                <!-- About -- section three -->
-                 <section id="contact-form">
+                <!-- About -- section five -->
+                 <section class="py-5 bg-light" id="contact-form">
                      <div class="contact-header-center ">
                          <h2 class="fw-bolder">Contact Us</h2>
                      </div>

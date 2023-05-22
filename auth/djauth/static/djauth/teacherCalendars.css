@@ -1,63 +1,159 @@
-html {
-    background-color:rgb(210, 216, 224);
-}
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 30px 10%;
-    background-color: #ffffff;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Rowdies&family=Titillium+Web&display=swap');
 
-  h2 {
-  text-align: center;
+  /* CALENDAR */
+  .strike {
+    text-decoration: line-through;
   }
   
-  .logo {
-    margin-right: auto;
+  td{
+    border: 1px solid black;
+    padding: 5px;
   }
   
-  .navbar-links {
-    list-style: none;
-    display: flex;
+  .todo-input{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 1rem;
   }
   
-  .navbar-links a,
-  .login-button {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-    color: #0a1c80;
-    text-decoration: none;
+  .todoTable-block{
+    margin-top: 1rem;
   }
   
-  .navbar-links li {
-    padding: 0px 20px;
+  .pagination-pages{
+    text-align: right;
   }
   
-  .navbar-links li a {
-    transition: all 0.3s ease 0s;
-  }
-  
-  .navbar-links li a:hover {
-    color: #8b73e3;
-  }
-  
-  .login-button {
-    margin-left: 20px;
-    padding: 9px 25px;
-    background-color: rgb(71, 132, 218);
-    border: none;
-    border-radius: 50px;
+  .pagination-pages > * {
+    margin-right: 0.5rem;
     cursor: pointer;
-    transition: all 0.3s ease 0s;
   }
   
-  .login-button:hover {
-    background-color: rgba(94, 149, 226, 0.8);
+  .material-icons{
+    cursor: pointer;
+  }
+  
+  ::-ms-input-placeholder{
+    color: #ed6a5e;
+  }
+  
+  ::-webkit-input-placeholder{
+    color: #ed6a5e;
+  }
+  
+  ::placeholder{
+    color: #ed6a5e;
+  }
+  
+  input {
+    color:#a11e12;
+  }
+  
+  h3 {
+    color:#000000;
+    font-family: 'Rowdies', cursive;
+  }
+  
+  
+  body{
+  
+    font-family: 'Titillium Web', sans-serif;
+  }
+  
+  .todo-block{
+    border: 1px solid #ff8e72;
+    padding: 1rem;
+    border-radius: 20px;
+    color: #a11e12;
+  }
+  
+  @media screen and (max-width: 767px) {
+    /* for mobile or small screen device */
+    #todoTable, .todo-calendar{
+      margin-top: 1rem;
+    }
+  }
+  
+  @media screen and (min-width: 768px) {
+    /* for tablets or laptops or desktops */
+    .todo-grid-parent{
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      column-gap: 1rem;
+    }
+  
+    #calendar{
+      position: sticky;
+      top: 0;
+    }
+  }
+  
+  .todo-overlay{
+    width: 100vw;
+    height: 100vh;
+    background-color: #ddd;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100vw);
+    transition: transform 250ms;
+    z-index: 2;
+  }
+  
+  .todo-modal{
+    min-width: 50vw;
+    height: 50vh;
+    /*border: 1px solid green;*/
+    background-color: #ffd6cc;
+  }
+  
+  .todo-modal-close-btn{
+    background-color: red;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .slidedIntoView {
+    transform: translateX(0);
+    transition: transform 650ms;
+  }
+  
+  #todoTable tr:nth-child(even) {
+    background-color: #ffd6cc;
+  }
+  
+  button{
+    background-color: #ffd6cc;
+    color: #a11e12;
+    border: 1px outset #ed6a5e;
+  }
+  
+  button:active{
+    border: 1px inset #ed6a5e;
+  }
+  
+  button:hover{
+    background-color: #ffad99;
+  }
+  
+  .chevron{
+    transform: translateY(0.4rem);
+  }
+  
+  .itemsPerPage{
+    text-align: right;
+    margin-bottom: 0.5rem;
   }
