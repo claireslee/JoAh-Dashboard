@@ -699,29 +699,40 @@ def create_test(request):
 
 def take_pdftest(request, pk):
     pdftest = get_object_or_404(PdfTest, pk=pk)
-    if request.method == 'POST':
-        print("pdftest answers:", pdftest.answers)
-        print("request.POST:", request.POST)
-        student_answers = request.POST.getlist('answers')[0] 
-        print("student_answers", student_answers)
-        real_answers = json.loads(pdftest.answers)
-        form = StudentPDFTestForm(pdftest.num_questions, real_answers, student_answers, request.POST)
-        print(form.is_valid())
-        print(form.errors)
-        print(form.non_field_errors())
-        print("print(form.data)", form.data)
-        if form.is_valid():
-            
-            student_test = StudentPDFTestForm(pdftest.num_questions, pdftest.answers, student_answers)
-            confirmation_url = reverse('studentDashboard/pdftest_confirmation', args=[pdftest.pk])
-            confirmation_url += f'?student_answers={student_answers}&real_answers={real_answers}'
-            return HttpResponseRedirect(confirmation_url)
-            
-    else:
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
         initial_answers = json.dumps(pdftest.answers)  # Convert dictionary to JSON string
 
         form = StudentPDFTestForm(pdftest.num_questions, pdftest.answers, initial_answers)
-    return render(request, 'djauth/student_pdftest.html', {'pdftest': pdftest, 'form': form})
+        return render(request, 'djauth/teacher_pdftest.html', {'pdftest': pdftest, 'form': form})
+
+    else:
+        
+        if request.method == 'POST':
+            print("pdftest answers:", pdftest.answers)
+            print("request.POST:", request.POST)
+            student_answers = request.POST.getlist('answers')[0] 
+            print("student_answers", student_answers)
+            real_answers = json.loads(pdftest.answers)
+            form = StudentPDFTestForm(pdftest.num_questions, real_answers, student_answers, request.POST)
+           
+            print(form.is_valid())
+            print(form.errors)
+            print(form.non_field_errors())
+            print("print(form.data)", form.data)
+            if form.is_valid():
+                
+                student_test = StudentPDFTestForm(pdftest.num_questions, pdftest.answers, student_answers)
+                confirmation_url = reverse('studentDashboard/pdftest_confirmation', args=[pdftest.pk])
+                confirmation_url += f'?student_answers={student_answers}&real_answers={real_answers}'
+                return HttpResponseRedirect(confirmation_url)
+                
+        else:
+            initial_answers = json.dumps(pdftest.answers)  # Convert dictionary to JSON string
+
+            form = StudentPDFTestForm(pdftest.num_questions, pdftest.answers, initial_answers)
+        return render(request, 'djauth/student_pdftest.html', {'pdftest': pdftest, 'form': form})
 
 def pdftest_confirmation(request, pk):
     pdftest = get_object_or_404(PdfTest, pk=pk)
