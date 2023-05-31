@@ -63,8 +63,6 @@ class QuesModel(models.Model):
         return self.question
 class Test(models.Model):
     title = models.CharField(max_length=200,null=True)
-    classes = models.CharField(max_length=20, choices=CLASS_CHOICES, default='sat 230')
-    number = models.IntegerField(default=1, validators=[MinValueValidator(1, message='Number of questions must be 1 or greater.'),])
     questions = models.ManyToManyField(
         'QuesModel',
         related_name='Exams'

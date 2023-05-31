@@ -16,12 +16,16 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import PdfTest
+from django.db.models import Max
 from .forms import PdfTestForm, StudentPDFTestForm
 from django.forms import formset_factory
 from django.forms import BaseFormSet
 from .models import TeacherInquirie
 from .forms import TeacherInquirieForm
 from django import template
+from .forms import DeleteExamForm
+from .forms import DeleteQuestionForm
+from .forms import EditExamForm
 
 
 from django.contrib import messages
@@ -171,6 +175,7 @@ def studentExamDetail(request, test_id):
         wrong=0
         correct=0
         total=0
+        incorrect_questions = []
         for q in questions:
             total+=1
             print(request.POST.get(q.question))
@@ -181,6 +186,7 @@ def studentExamDetail(request, test_id):
                 correct+=1
             else:
                 wrong+=1
+                incorrect_questions.append(q)
         percent = score/(total*10) *100
         context = {
             'score':score,
@@ -188,7 +194,8 @@ def studentExamDetail(request, test_id):
             'correct':correct,
             'wrong':wrong,
             'percent':percent,
-            'total':total
+            'total':total,
+            'incorrect_questions':incorrect_questions,
         }
         return render(request,'studentDashboard/result.html',context)
     else:
@@ -384,55 +391,151 @@ def addQuestion(request):
         return render(request,'djauth/addQuestion.html',context)
 
 def createExam(request):
+    number_of_questions = 10  # Default value for displaying ten question fields
+
     if request.method == 'POST':
-        print("request.POST")
-        print(request.POST)
         form = ExamForm(request.POST)
-        print("form")
-        print(form)
         if form.is_valid():
             test = form.save(commit=False)
             test.save()
-            
-            number_of_questions = int(request.POST.get('number', 1))
-            print("number of questions")
-            print(number_of_questions)
-            # number_of_questions = form.cleaned_data['number']
             QuestionFormSet = formset_factory(addQuestionform, formset=BaseFormSet, extra=number_of_questions)
-            
-            print("question form set")
-            print(QuestionFormSet)
             formset = QuestionFormSet(request.POST, prefix='questions')
-            print("formset")
-            print(formset)
 
-            if formset.is_valid():
-                for question_form in formset.forms:
-                    print("question_form")
-                    print(question_form)
-                    if question_form.is_valid():
-                        question = question_form.cleaned_data.get('question')
-                        op1 = question_form.cleaned_data.get('op1')
-                        op2 = question_form.cleaned_data.get('op2')
-                        op3 = question_form.cleaned_data.get('op3')
-                        op4 = question_form.cleaned_data.get('op4')
-                        ans = question_form.cleaned_data.get('ans')
-                        ques_model = QuesModel(question=question, op1=op1, op2=op2, op3=op3, op4=op4, ans=ans)
-                        ques_model.save()
-                        test.questions.add(ques_model)
-                        # question = form.save(commit=False)
-                        # question.test = test
-                        # question.save()
-                        # test.questions.add(question)
-                test.save()
-        return HttpResponseRedirect('/confirmation')
+            for question_form in formset.forms:
+                if question_form.is_valid():
+                    question = question_form.cleaned_data.get('question')
+                    op1 = question_form.cleaned_data.get('op1')
+                    op2 = question_form.cleaned_data.get('op2')
+                    op3 = question_form.cleaned_data.get('op3')
+                    op4 = question_form.cleaned_data.get('op4')
+                    ans = question_form.cleaned_data.get('ans')
+                    ques_model = QuesModel(question=question, op1=op1, op2=op2, op3=op3, op4=op4, ans=ans)
+                    ques_model.save()
+                    test.questions.add(ques_model)
+
+            test.save()
+        return HttpResponseRedirect('/examList')
     else:
         form = ExamForm()
-        number_of_questions = int(request.POST.get('number', 1))
         QuestionFormSet = formset_factory(addQuestionform, formset=BaseFormSet, extra=number_of_questions)
         formset = QuestionFormSet(prefix='questions')
 
-    return render(request, 'djauth/createExam.html', {'form': form, 'formset': formset})
+    return render(request, 'djauth/createExam.html', {'form': form, 'formset': formset, 'number_of_questions': range(number_of_questions)})
+
+def deleteExam(request):
+    if request.method == 'POST':
+        form = DeleteExamForm(request.POST)
+        if form.is_valid():
+            test_title = form.cleaned_data['test']
+            test = Test.objects.get(title=test_title)
+            test.delete()
+            return redirect('/examList')  # Replace 'confirmation' with the appropriate URL name for the confirmation page
+    else:
+        form = DeleteExamForm()
+    
+    return render(request, 'djauth/deleteExam.html', {'form': form})
+
+def addQuestionToExam(request, exam_id):
+    test = get_object_or_404(Test, id=exam_id)
+    
+    # Retrieve all the existing questions
+    all_questions = QuesModel.objects.all()
+    
+    if request.method == 'POST':
+        form = AddQuestionForm(request.POST)
+        if form.is_valid():
+            question_id = form.cleaned_data['question']
+            question = get_object_or_404(QuesModel, id=question_id)
+            test.questions.add(question)  # Add the question to the test's questions field
+            test.save()  # Save the test object
+            # Redirect to the exam detail page
+            return redirect('/examDetail/' + str(test.id))
+    else:
+        form = AddQuestionForm()
+    
+    context = {
+        'test': test,
+        'form': form,
+        'all_questions': all_questions,
+    }
+    return render(request, 'djauth/addQuestionToExam.html', context)
+
+def deleteQuestion(request):
+    all_questions = QuesModel.objects.all()
+    
+    if request.method == 'POST':
+        form = DeleteQuestionForm(request.POST)
+        if form.is_valid():
+            ques = form.cleaned_data['question']
+            question = QuesModel.objects.get(question=ques)
+            question.delete()
+            return redirect('/examList')
+    else:
+        form = DeleteQuestionForm()
+    
+    context = {
+        'form': form,
+        'all_questions': all_questions,
+    }
+    return render(request, 'djauth/deleteQuestion.html', context)
+
+def deleteQuestionFromExam(request, exam_id):
+    test = get_object_or_404(Test, id=exam_id)
+    questions = test.questions.all()  # Get the questions associated with the exam
+
+    if request.method == 'POST':
+        form = DeleteQuestionFromExamForm(request.POST, exam_id=exam_id)
+        if form.is_valid():
+            ques = form.cleaned_data['question']
+            question = QuesModel.objects.get(question=ques)
+            test.questions.remove(question)  # Remove the question from the test's questions field
+            test.save()  # Save the test object
+            return redirect('/examDetail/' + str(test.id))
+    else:
+        form = DeleteQuestionFromExamForm(exam_id=exam_id)
+
+    context = {
+        'test': test,
+        'questions': questions,
+        'form': form,
+    }
+    return render(request, 'djauth/deleteQuestionFromExam.html', context)
+
+def editExam(request):
+    if request.method == 'POST':
+        form = EditExamForm(request.POST)
+        if form.is_valid():
+            test = form.cleaned_data['test']
+            new_title = form.cleaned_data['title']
+            test.title = new_title
+            test.save()
+            return redirect('/examList')
+    else:
+        form = EditExamForm()
+    return render(request, 'djauth/editExam.html', {'form': form})
+
+def editQuestion(request):
+    if request.method == 'POST':
+        form = EditQuestionForm(request.POST)
+        if form.is_valid():
+            question = form.cleaned_data['question']
+            new_title = form.cleaned_data['questionTitle']
+            new_op1 = form.cleaned_data['op1']
+            new_op2 = form.cleaned_data['op2']
+            new_op3= form.cleaned_data['op3']
+            new_op4= form.cleaned_data['op4']
+            new_ans = form.cleaned_data['ans']
+            question.question = new_title
+            question.op1 = new_op1
+            question.op2 = new_op2
+            question.op3 = new_op3
+            question.op4 = new_op4
+            question.ans = new_ans
+            question.save()
+            return redirect('/examList')
+    else:
+        form = EditQuestionForm()
+    return render(request, 'djauth/editQuestion.html', {'form': form})
 
 def confirmation(request):
     if request.user.is_authenticated:
@@ -642,7 +745,7 @@ def pdftest_confirmation(request, pk):
             num_correct += 1
             i+=1
         else:
-            incorrect_answers[question_number] = {
+            incorrect_answers[i] = {
                 'correct_answer': real_answers.get(question_number),
                 'your_answer': student_answer
             }
@@ -677,21 +780,6 @@ def studentExam_List(request):
     exams = PdfTest.objects.all()
     context = {'exams': exams}
     return render(request, 'studentDashboard/studentExam_List.html', context)
-
-
-@login_required(login_url="/login") 
-def deleteExam(request):
-    if request.method == 'POST':
-        form = DeleteExamForm(request.POST)
-        if form.is_valid():
-            test_title = form.cleaned_data['test']
-            test = Test.objects.get(title=test_title)
-            test.delete()
-            return redirect('/confirmation')  # Replace 'confirmation' with the appropriate URL name for the confirmation page
-    else:
-        form = DeleteExamForm()
-    
-    return render(request, 'djauth/deleteExam.html', {'form': form})
 
 def addQuestionToExam(request, exam_id):
     test = get_object_or_404(Test, id=exam_id)

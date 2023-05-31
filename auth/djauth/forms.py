@@ -35,6 +35,9 @@ class addQuestionform(ModelForm):
         model=QuesModel
         fields="__all__"
         # widgets={'test':forms.HiddenInput(),}
+        widgets = {
+            'ans': forms.Select(choices=[('option1', 'Option 1'), ('option2', 'Option 2'), ('option3', 'Option 3'), ('option4', 'Option 4')])
+        }
 
 class HomeForm(forms.Form):
     post = forms.CharField()
@@ -43,11 +46,58 @@ class ExamForm(ModelForm):
     class Meta:
         model=Test
         # fields=['title', 'classes', 'number', 'questions']
-        fields=['title', 'number']
-        
+        fields=['title']
+class EditExamForm(forms.ModelForm):
+    test = forms.ModelChoiceField(queryset=Test.objects.all(), label='Select Test')
+    title = forms.CharField(label='New Title')
+
+    class Meta:
+        model = Test
+        fields = ['test', 'title']
+class EditQuestionForm(forms.ModelForm):
+    question = forms.ModelChoiceField(queryset=QuesModel.objects.all(), label='Select Question')
+    questionTitle = forms.CharField(label='New Question', required=False)
+    op1 = forms.CharField(label='New Option 1', required=False)
+    op2 = forms.CharField(label='New Option 2', required=False)
+    op3 = forms.CharField(label='New Option 3', required=False)
+    op4 = forms.CharField(label='New Option 4', required=False)
+    ans = forms.ChoiceField(choices=[('option1', 'Option 1'), ('option2', 'Option 2'), ('option3', 'Option 3'), ('option4', 'Option 4')], required=False)
+
+    class Meta:
+        model = QuesModel
+        fields = ['question', 'questionTitle', 'op1', 'op2', 'op3', 'op4', 'ans']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        question_title = cleaned_data.get('questionTitle')
+        op1 = cleaned_data.get('op1')
+        op2 = cleaned_data.get('op2')
+        op3 = cleaned_data.get('op3')
+        op4 = cleaned_data.get('op4')
+        ans = cleaned_data.get('ans')
+
+        if not any([question_title, op1, op2, op3, op4, ans]):
+            raise forms.ValidationError("At least one field must be filled.")
+
+        return cleaned_data
+
+class DeleteExamForm(forms.Form):
+    test = forms.ModelChoiceField(queryset=Test.objects.all(), label='Select Test')
+
 class AddQuestionForm(forms.Form):
-    question = forms.ModelChoiceField(queryset=QuesModel.objects.all(), empty_label=None, widget=forms.Select(attrs={'class': 'form-control'}))
+    question = forms.ModelChoiceField(queryset=Test.objects.all(), empty_label=None, widget=forms.Select(attrs={'class': 'form-control'}))
     
+class DeleteQuestionForm(forms.Form):
+    question = forms.ModelChoiceField(queryset=QuesModel.objects.all(), empty_label=None)
+
+class DeleteQuestionFromExamForm(forms.Form):
+    question = forms.ModelChoiceField(queryset=QuesModel.objects.all(), empty_label=None)
+
+    def __init__(self, *args, **kwargs):
+        exam_id = kwargs.pop('exam_id')
+        super(DeleteQuestionFromExamForm, self).__init__(*args, **kwargs)
+        # Update the queryset of the question field based on the exam_id
+        self.fields['question'].queryset = QuesModel.objects.filter(Exams__id=exam_id)
 class HomeForm(forms.Form):
     post = forms.CharField()
 
@@ -183,9 +233,6 @@ class StudentPDFTestForm(forms.Form):
             
         return cleaned_data
         
-        
-class DeleteExamForm(forms.Form):
-    test = forms.ModelChoiceField(queryset=Test.objects.all(), label='Select Test')
 class DeletePDFForm(forms.Form):
     pdftest = forms.ModelChoiceField(queryset=PdfTest.objects.all(), label='Select Test')
     

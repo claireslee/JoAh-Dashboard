@@ -85,27 +85,13 @@
 <div class="main">
     <center>
     <div class="col-md-6">
-        <p class="sign" align="center">Add a Question</p>
+        <p class="sign" align="center">Delete a Question</p>
         <div class="card card-body">
-            <form method="POST" action="{% url 'examDetail' test.id %}">
+              <form method="post">
                 {% csrf_token %}
-                <h2>Select a Question:</h2>
-                <select name="question">
-                  {% for ques in all_questions %}
-                    <option value="{{ ques.id }}">{{ ques.question }}</option>
-                  {% endfor %}
-                </select>
-                <br><br>
-                <button type="submit" class="submit">Add Question to Exam</button>
+                {{ form.as_p }}
+                <button type="submit">Delete</button>
               </form>
-           <!-- <form action="" method="POST">
-              {% csrf_token %}
-              <div class="user">
-               <span class="user">{{form.as_p}}</span>
-               </div>
-               <br>
-             <input type="submit" class = "submit" name="Submit">
-             </form> -->
             </div>
         </div>
     </div>
