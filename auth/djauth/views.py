@@ -16,9 +16,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import PdfTest
-from .forms import PdfTestForm
+from .forms import PdfTestForm, StudentPDFTestForm
 from django.forms import formset_factory
 from django.forms import BaseFormSet
+from .models import TeacherInquirie
+from .forms import TeacherInquirieForm
+from django import template
+
 
 from django.contrib import messages
 
@@ -33,7 +37,7 @@ from .forms import AnnouncementForm
 from .forms import HomeForm
 from django.contrib import messages
 from django.http import HttpResponse
-from .forms import DeleteExamForm, DeletePDFForm
+from .forms import DeleteExamForm, DeletePDFForm, AddQuestionForm
 
 
 def mainpage(request):
@@ -42,7 +46,23 @@ def mainpage(request):
     return render(request, 'djauth/mainpage.html',{'all':all_students})
 
 def aboutUs(request):
-    return render(request, 'djauth/aboutUsTab.html')
+    if request.method == "POST":
+        form = TeacherInquirieForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+        messages.success(request, ('Your message has been submitted!'))
+        
+        return HttpResponseRedirect("/teacherDash")
+        #return render(request, 'teacherAnnouncement.html', {})
+        
+    else:
+        return render(request, 'djauth/aboutUsTab.html')
+    
+    
+@login_required(login_url="/login")
+def newTeacher(request):
+    all_teacherinqs = TeacherInquirie.objects.all
+    return render(request, 'djauth/newTeacher.html',{'all':all_teacherinqs})
     
 def resources(request):
     return render(request, 'djauth/resources.html')
@@ -128,14 +148,16 @@ def studentExamList(request):
     return render(request, 'studentDashboard/studentExamList.html', context)
 
 @login_required(login_url="/login")
-# def examDetail(request, test_id):
-#     test = Test.objects.get(id=test_id)
-#     questions = test.questions.all()
-#     context = {'test': test, 'questions':questions}
-#     return render(request, 'djauth/examDetail.html', context)
 def examDetail(request, test_id):
     test = get_object_or_404(Test, id=test_id)
     questions = test.questions.all()
+
+    if request.method == 'POST':
+        question_id = request.POST.get('question')
+        question = get_object_or_404(QuesModel, id=question_id)
+        test.questions.add(question)  # Add the selected question to the exam
+        test.save()
+
     context = {'test': test, 'questions': questions}
     return render(request, 'djauth/examDetail.html', context)
 
@@ -575,22 +597,73 @@ def create_test(request):
 def take_pdftest(request, pk):
     pdftest = get_object_or_404(PdfTest, pk=pk)
     if request.method == 'POST':
-        form = StudentPDFTestForm(pdftest.num_questions, pdftest.answers, request.POST)
+        print("pdftest answers:", pdftest.answers)
+        print("request.POST:", request.POST)
+        student_answers = request.POST.getlist('answers')[0] 
+        print("student_answers", student_answers)
+        real_answers = json.loads(pdftest.answers)
+        form = StudentPDFTestForm(pdftest.num_questions, real_answers, student_answers, request.POST)
+        print(form.is_valid())
+        print(form.errors)
+        print(form.non_field_errors())
+        print("print(form.data)", form.data)
         if form.is_valid():
-            num_questions = pdftest.num_questions
-            student_answers = form.cleaned_data['answers']
-            student_test = StudentPDFTestForm(
-                pdf_test=pdftest,
-                num_questions=num_questions,
-                answers=student_answers
-            )
-            student_test.save()
-
-            return redirect('pdftest_confirmation', pk=pdftest.pk)  # Redirect to the confirmation page
+            
+            student_test = StudentPDFTestForm(pdftest.num_questions, pdftest.answers, student_answers)
+            confirmation_url = reverse('studentDashboard/pdftest_confirmation', args=[pdftest.pk])
+            confirmation_url += f'?student_answers={student_answers}&real_answers={real_answers}'
+            return HttpResponseRedirect(confirmation_url)
+            
     else:
-        form = StudentPDFTestForm(pdftest.num_questions, pdftest.answers)
+        initial_answers = json.dumps(pdftest.answers)  # Convert dictionary to JSON string
+
+        form = StudentPDFTestForm(pdftest.num_questions, pdftest.answers, initial_answers)
     return render(request, 'djauth/student_pdftest.html', {'pdftest': pdftest, 'form': form})
 
+def pdftest_confirmation(request, pk):
+    pdftest = get_object_or_404(PdfTest, pk=pk)
+    student_answers_str = request.GET.get('student_answers', '{}')
+    real_answers_str = request.GET.get('real_answers', '{}')
+
+    # Replace single quotes with double quotes in the JSON strings
+    student_answers_str = student_answers_str.replace("'", '"')
+    real_answers_str = real_answers_str.replace("'", '"')
+
+    # Parse the JSON strings into dictionaries
+    student_answers = json.loads(student_answers_str)
+    real_answers = json.loads(real_answers_str)
+
+    num_correct = 0
+    incorrect_answers = {}
+
+    i=1
+    for question_number, student_answer in student_answers.items():
+        if student_answer == real_answers.get(question_number):
+            num_correct += 1
+            i+=1
+        else:
+            incorrect_answers[question_number] = {
+                'correct_answer': real_answers.get(question_number),
+                'your_answer': student_answer
+            }
+            i+=1
+
+    score = num_correct
+    percentage = round((score / pdftest.num_questions) * 100, 2)
+
+    
+
+
+    # Process the student_answers and real_answers as needed
+    context = {
+        'pdftest': pdftest,
+        'real_answers': real_answers,
+        'student_answers': student_answers,
+        'percentage': percentage,
+        'incorrect_answers': incorrect_answers,
+    }
+
+    return render(request, 'studentDashboard/pdftest_confirmation.html', context)
     
 
 def exam_list(request):
@@ -598,6 +671,12 @@ def exam_list(request):
     print(exams)
     context = {'exams': exams}
     return render(request, 'djauth/exam_list.html', context)
+
+@login_required(login_url="/login")
+def studentExam_List(request):
+    exams = PdfTest.objects.all()
+    context = {'exams': exams}
+    return render(request, 'studentDashboard/studentExam_List.html', context)
 
 
 @login_required(login_url="/login") 
@@ -613,6 +692,28 @@ def deleteExam(request):
         form = DeleteExamForm()
     
     return render(request, 'djauth/deleteExam.html', {'form': form})
+
+def addQuestionToExam(request, exam_id):
+    test = get_object_or_404(Test, id=exam_id)
+# Retrieve all the existing questions
+    all_questions = QuesModel.objects.all()
+    if request.method == 'POST':
+        form = AddQuestionForm(request.POST)
+        if form.is_valid():
+            question_id = form.cleaned_data['question']
+            question = get_object_or_404(QuesModel, id=question_id)
+            test.questions.add(question) # Add the question to the test's questions field
+            test.save() # Save the test object
+            # Redirect to the exam detail page
+            return redirect('/examDetail/' + str(test.id))
+    else:
+        form = AddQuestionForm()
+    context = {
+        'test': test,
+        'form': form,
+        'all_questions': all_questions,
+    }
+    return render(request, 'djauth/addQuestionToExam.html', context)
 
 
 @login_required(login_url="/login") 

@@ -6,6 +6,7 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import modelformset_factory
+from .models import TeacherInquirie
 from .models import Announcement
 import json
 
@@ -42,7 +43,10 @@ class ExamForm(ModelForm):
     class Meta:
         model=Test
         # fields=['title', 'classes', 'number', 'questions']
-        fields=['title', 'classes', 'number']
+        fields=['title', 'number']
+        
+class AddQuestionForm(forms.Form):
+    question = forms.ModelChoiceField(queryset=QuesModel.objects.all(), empty_label=None, widget=forms.Select(attrs={'class': 'form-control'}))
     
 class HomeForm(forms.Form):
     post = forms.CharField()
@@ -137,51 +141,46 @@ class PdfTestForm(forms.ModelForm):
         fields = ['num_questions', 'pdf', 'file_name', 'answers']
 
 class StudentPDFTestForm(forms.Form):
+    answers = forms.CharField(widget=forms.HiddenInput(), required=False)
             
-    def __init__(self, num_questions, answers, *args, **kwargs):
+    def __init__(self, num_questions, real_answers, student_answers, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.num_questions = num_questions
-        self.answers = answers
-        if num_questions is not None:
-            for i in range(int(num_questions)):
-                question_num = i + 1
-                question_key = f'q{question_num}'
-                self.fields[question_key] = forms.ChoiceField(
-                    label=f'Answer for Question {question_num}',
-                    choices=[('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')],
-                    widget=forms.RadioSelect(attrs={'class': 'inline'}),
-                    required=False,
-                    initial=f'{question_key}'
-                )
-            
+        self.real_answers = real_answers
+        self.student_answers = student_answers
+        print("real_answers:", real_answers)
+        print("studentans:", student_answers)
+        print("numq:", num_questions)
+        
+                    
                     
     def clean(self):
-        print(self.answers)
+        print("starting clean method...")
+        print("self.answers:", self.real_answers)
         cleaned_data = super().clean()
-        answer_choices = {}
-        answer_choices_json = cleaned_data.get('student_answers')
-        print('answer_choices_json:', answer_choices_json)
-        
+        answers_json = json.loads(self.student_answers)
+        print("answers_json:", answers_json)
+        if answers_json:
+            answers = answers_json
+            print('answers:', answers)           
+            num_questions = self.num_questions
+            print("len(answers):", len(answers))
+            if num_questions and len(answers) < int(num_questions):
+                print("number of questions:", num_questions)
+                print("answersjson", answers_json)
+                raise forms.ValidationError('Not enough answer choices for the number of questions.')
 
-        if answer_choices_json:
-            print('num_questions:', num_questions)
-            print('answer_choices:', answer_choices_json)
-            answer_choices = json.loads(answer_choices_json)
+            for i in range(1, int(num_questions) + 1):
+                question_key = f'q{i}'
+                answer = answers.get(question_key)
+                if answer not in ['A', 'B', 'C', 'D']:
+                    
+                    raise forms.ValidationError(f'Invalid answer choice for question {i}.')
+                print("current answer: ", answer)
+                answers[question_key] = answer
 
-        student_answers = {}
-        num_questions = self.num_questions
-
-        for i in range(1, num_questions + 1):
-            question_key = f'q{i}'
-            answer = answer_choices.get(question_key)
-
-            if answer not in ['A', 'B', 'C', 'D']:
-                print('answer:', answer)
-                raise forms.ValidationError(f'Invalid answer choice for question {i}.')
-
-            student_answers[question_key] = answer
-
-        cleaned_data['answers'] = json.dumps(student_answers)
+            cleaned_data['answers'] = json.dumps(answers)
+            
         return cleaned_data
         
         
@@ -189,3 +188,9 @@ class DeleteExamForm(forms.Form):
     test = forms.ModelChoiceField(queryset=Test.objects.all(), label='Select Test')
 class DeletePDFForm(forms.Form):
     pdftest = forms.ModelChoiceField(queryset=PdfTest.objects.all(), label='Select Test')
+    
+    
+class TeacherInquirieForm(forms.ModelForm):
+    class Meta:
+        model = TeacherInquirie
+        fields = ['inqteacherfirstname', 'inqteacherlastname', 'inqteacheremail', 'inqteachermessage']

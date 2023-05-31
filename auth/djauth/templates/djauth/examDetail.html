@@ -69,9 +69,6 @@
         }
         }
     </style>
-  </head>
-  
-  <body>
     <nav class="navbar navbar-expand-lg">
       <div class="container">
           <div>
@@ -96,6 +93,10 @@
     </div>
   </nav>
 
+  </head>
+  
+  <body>
+    
 {% load static %}
 <body style="background-color:#f8ddbb">
 <div class="title container ">
@@ -106,9 +107,8 @@
  <form method='post' action=''>
     {% csrf_token %}
     <h1>{{ test.title }}</h1>
-    <p>Class: {{ test.classes }}</p>
     <h2>Questions:</h2>
-    {% for question in test.questions.all %}
+    {% for question in questions %}
         <h3>{{ question.question }}</h3>
         <p>{{ question.op1 }}</p>
         <p>{{ question.op2 }}</p>
@@ -124,8 +124,8 @@
         <p>{{ form.op4.value }}</p>
     {% endfor %} -->
     <center>
-        <a class ="class-links" href="/addQuestion">Add a Question<br></a>
-        <button type="submit" class="submit">Delete a Question</button>
+      <a class="class-links" href="/addQuestionToExam/{{ test.id }}">Add Question</a>
+      <button type="submit" class="submit">Delete a Question</button>
     </center>
     <br><br>
   </form>

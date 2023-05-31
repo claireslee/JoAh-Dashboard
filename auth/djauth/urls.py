@@ -68,7 +68,11 @@ urlpatterns = [
     path('create_test/', views.create_test, name='create_test'),
     path('pdftest/<int:pk>/', views.take_pdftest, name='take_pdftest'),
     path('deletePDFExam', views.deletePDFExam, name="delete_pdftest.html"),
+    path('addQuestionToExam/<int:exam_id>/', views.addQuestionToExam, name='addQuestionToExam'),
     # path('delete_pdftest/<int:pk>/', views.delete_pdftest, name='delete_pdftest'),
-    
+    path('newTeacher/', views.newTeacher ,name='newTeacher.html'),
     path('exam_list/', views.exam_list, name='exam_list'),
+    path('studentDashboard/studentExam_List/', views.studentExam_List, name='studentDashboard/studentExam_List'),
+    path('studentDashboard/pdftest_confirmation/<int:pk>/', views.pdftest_confirmation, name='studentDashboard/pdftest_confirmation'),
+
 ]

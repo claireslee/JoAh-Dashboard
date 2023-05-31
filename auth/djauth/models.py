@@ -91,3 +91,13 @@ class PdfTest(models.Model):
     def __str__(self):
         return self.name
      
+     
+     
+class TeacherInquirie(models.Model):
+    inqteacherfirstname = models.CharField(max_length = 50, default="#")
+    inqteacherlastname = models.CharField(max_length = 50, default="#")
+    inqteacheremail = models.EmailField(max_length = 200, default = "#")
+    inqteachermessage = models.CharField(max_length = 500, default="#")
+    
+    def __str__(self):
+        return self.inqteacherfirstname + ' ' + self.inqteacherlastname

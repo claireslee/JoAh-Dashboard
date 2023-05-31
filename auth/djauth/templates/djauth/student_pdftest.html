@@ -1,134 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>joah project</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'djauth/teacherDash.css' %}">
+  <link href="{% static 'djauth/student_pdftest.css' %}" rel="stylesheet">
+  <style>
+    /* Main content styles */
+    #left-half {
+      float: left;
+      width: 50%;
+    }
 
-    <title> joah project </title>
+    #pdf-viewer {
+      height: 100vh;
+      width: 100%;
+    }
 
-    {% load static %}
-    
-    <link rel="stylesheet" type="text/css" href="{% static 'djauth/teacherDash.css' %}">
+    #right-half {
+      height: 600px;
+      overflow-y: auto;
+    }
 
-    <link href="{% static 'djauth/student_pdftest.css' %}" rel="stylesheet">
-    <style>
+    #answer-fields label {
+      display: inline-block;
+      margin-right: 10px;
+    }
 
-        /* Main content styles */
-        #left-half {
-        float: left;
-        width: 50%;
-        }
+    form.answers input[type="radio"] {
+      display: inline-block;
+      margin-right: 10px;
+    }
 
-        #pdf-viewer {
-        height: 100vh;
-        width: 100%;
-        }
+    form.answers label {
+      display: inline-block;
+      margin-right: 10px;
+    }
 
-        #right-half {
-            height: 600px;
-            overflow-y: auto;
-        
-        };
-
-        
-        #answer-fields label {
-            display: inline-block;
-            margin-right: 10px;
-          }
-
-          form.answers input[type="radio"] {
-            display: inline-block;
-            margin-right: 10px;
-          }
-          
-          form.answers label {
-            display: inline-block;
-            margin-right: 10px;
-          }
-          .inline input[type='radio'] {
-            display: inline-block;
-            margin-right: 10px;
-          }
-      </style>
-  </head>
-    
-    <header>
-      <a class="logo" href="/mainpage"><img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"></a>
-      <nav>
-        <ul class="navbar-links">
-          <li><a href="/studentDashboard/studentCalendar">Calendar</a></li>
-          <li><a href="/studentDashboard/studentAnnouncement">Announcements</a></li>
-          <li><a href="/studentDashboard/home">Start Exam</a></li>
-          {% if user.is_authenticated %}
-            <li><a href="/dash">dashboard</a></li>
-          {% endif %}
-        </ul>
-      </nav>
-      <div>
-        <ul class="navbar-links">
-          {% if user.is_authenticated %}
-            <span>Welcome to JoAh, {{user.username}}! | </span>
-            <li><a href="/logout">logout</a></li>
-          {% else %}
-            <li><a href="/login">login</a></li>
-          {% endif %}
-        </ul>
+    .inline input[type='radio'] {
+      display: inline-block;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<header>
+  <a class="logo" href="/mainpage"><img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"></a>
+  <nav>
+    <ul class="navbar-links">
+      <li><a href="/studentDashboard/studentCalendar">Calendar</a></li>
+      <li><a href="/studentDashboard/studentAnnouncement">Announcements</a></li>
+      <li><a href="/studentDashboard/home">Start Exam</a></li>
+      {% if user.is_authenticated %}
+        <li><a href="/dash">dashboard</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  <div>
+    <ul class="navbar-links">
+      {% if user.is_authenticated %}
+        <span>Welcome to JoAh, {{user.username}}! | </span>
+        <li><a href="/logout">logout</a></li>
+      {% else %}
+        <li><a href="/login">login</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</header>
+<body>
+  <div id="left-half">
+    <!-- Display PDF viewer -->
+    <iframe src="{% static 'djauth/media/' %}{{ pdftest.pdf.url }}" width="100%" height="600px"></iframe>
+  </div>
+  <div id="right-half" style="overflow-y: scroll !important;">
+    <form method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div id="answer-fields">
+        <!-- Radio buttons will be generated here -->
       </div>
-    </header>
+      <input type="hidden" name="answers" id="id_answers" value=""> <!-- Hidden input field for answers -->
+      <button type="submit">Submit Test</button>
+    </form>
+  </div>
+  {% block scripts %}
 
-    <body>
-    <div id="left-half">
-      <!-- Display PDF viewer -->
-      <iframe src="{% static 'djauth/media/' %}{{ pdftest.pdf.url }}" width="100%" height="600px"></iframe>
-      
-    </div>
+
+
+  <script>
+    const form = document.querySelector('form');
+    const answerFieldsContainer = document.querySelector('#answer-fields');
+    const numQuestions = {{pdftest.num_questions}}
     
-    <div id="right-half" style="overflow-y: scroll !important;">
-      <form method="post" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div id="answer-fields" style="display: flex; flex-wrap: wrap;"></div>
-        <input type="hidden" name="student_answers" id="id_student_answers">
-        <button type="submit">Submit Test</button>
-      </form>
-    </div>
-      
-      {% block scripts %}
-      <script>
-        const form = document.querySelector('form');
+    // Generate answer fields when the page loads
+    window.addEventListener('DOMContentLoaded', () => {
+      for (let i = 1; i <= numQuestions; i++) {
+        const questionNum = `q${i}`;
+        const label = document.createElement('label');
+        label.innerHTML = `Answer for Question ${i}:`;
+    
+        const radioA = createRadioButton(`${questionNum}_answer`, 'A', false);
+        const radioB = createRadioButton(`${questionNum}_answer`, 'B', false);
+        const radioC = createRadioButton(`${questionNum}_answer`, 'C', false);
+        const radioD = createRadioButton(`${questionNum}_answer`, 'D', false);
         
+        const questionContainer = document.createElement('span');
+        questionContainer.appendChild(label);
+        questionContainer.appendChild(radioA);
+        questionContainer.appendChild(radioB);
+        questionContainer.appendChild(radioC);
+        questionContainer.appendChild(radioD);
+        
+        answerFieldsContainer.appendChild(questionContainer);
+        answerFieldsContainer.appendChild(document.createElement('br'));
+      }
+    });
 
 
-        // Add an event listener to the form submission event
-        form.addEventListener('submit', (event) => {
-          console.log("Event listener added"); 
-          const numQuestions = {{pdftest.num_questions}};
-          console.log("submit pressed")
-          event.preventDefault();
-
-          const radioButtons = document.querySelectorAll('input[type="radio"]');
-          const student_answers = {};
-          let isAnyQuestionUnanswered = false;
-
-          radioButtons.forEach((radio) => {
-            const questionNum = radio.name.split('_')[0];
-            console.log(`Question: ${questionNum}`);
-            const selectedAnswer = radio.checked ? radio.value : null;
-
-            if (selectedAnswer) {
-              console.log(`Answer: ${selectedAnswer}`);
-              student_answers[questionNum] = selectedAnswer;
-            } 
-          });
-          const answersJson = JSON.stringify(student_answers);
-          console.log(`Answers JSON: ${answersJson}`);
-          const answersField = document.querySelector('#id_student_answers');
-          console.log(`Answers Field: ${answersField}`);
-          answersField.value = answersJson;
-          console.log(`Answers Field Value: ${answersField.value}`);
-          form.submit();
-        });
-      </script>
-    {% endblock %}
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      
+      const radioButtons = document.querySelectorAll('input[type="radio"]');
+      const answers = {};
+      
+      radioButtons.forEach((radio) => {
+        const questionNum = radio.name.split('_')[0];
+        const selectedAnswer = radio.checked ? radio.value : null;
+    
+        if (selectedAnswer) {
+          console.log(selectedAnswer)
+          answers[questionNum] = selectedAnswer;
+        }
+      });
+      
+      const answersJson = JSON.stringify(answers);
+      const answersField = document.querySelector('#id_answers');
+      answersField.value = answersJson;
+    
+      form.submit();
+    });
+    
+    function createRadioButton(name, value, checked) {
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = name;
+      radio.value = value;
+      radio.checked = checked;
+      
+      const label = document.createElement('label');
+      label.innerHTML = value;
+      label.appendChild(radio);
+      
+      return label;
+    }
+  </script>
+  {% endblock %}
 </body>
+</html>
