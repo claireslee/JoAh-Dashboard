@@ -462,8 +462,12 @@ def addQuestion(request):
         if(request.method=='POST'):
             form=addQuestionform(request.POST)
             if(form.is_valid()):
-                form.save()
-                return HttpResponseRedirect('/examList')
+                question = form.cleaned_data['question']
+                if QuesModel.objects.filter(question=question).exists():
+                    form.add_error('question', ValidationError('A question with this name already exists. Please choose a different name.'))
+                else:
+                    form.save()
+                    return HttpResponseRedirect('/examList')
         context={'form':form}
         return render(request,'djauth/addQuestion.html',context)
     else:
@@ -481,24 +485,27 @@ def createExam(request):
             form = ExamForm(request.POST)
             if form.is_valid():
                 test = form.save(commit=False)
-                test.save()
-                QuestionFormSet = formset_factory(addQuestionform, formset=BaseFormSet, extra=number_of_questions)
-                formset = QuestionFormSet(request.POST, prefix='questions')
+                if Test.objects.filter(title=test.title).exists():
+                    form.add_error('title', ValidationError('A test with this name already exists. Please choose a different name.'))
+                else:
+                    test.save()
+                    QuestionFormSet = formset_factory(addQuestionform, formset=BaseFormSet, extra=number_of_questions)
+                    formset = QuestionFormSet(request.POST, prefix='questions')
 
-                for question_form in formset.forms:
-                    if question_form.is_valid():
-                        question = question_form.cleaned_data.get('question')
-                        op1 = question_form.cleaned_data.get('op1')
-                        op2 = question_form.cleaned_data.get('op2')
-                        op3 = question_form.cleaned_data.get('op3')
-                        op4 = question_form.cleaned_data.get('op4')
-                        ans = question_form.cleaned_data.get('ans')
-                        ques_model = QuesModel(question=question, op1=op1, op2=op2, op3=op3, op4=op4, ans=ans)
-                        ques_model.save()
-                        test.questions.add(ques_model)
+                    for question_form in formset.forms:
+                        if question_form.is_valid():
+                            question = question_form.cleaned_data.get('question')
+                            op1 = question_form.cleaned_data.get('op1')
+                            op2 = question_form.cleaned_data.get('op2')
+                            op3 = question_form.cleaned_data.get('op3')
+                            op4 = question_form.cleaned_data.get('op4')
+                            ans = question_form.cleaned_data.get('ans')
+                            ques_model = QuesModel(question=question, op1=op1, op2=op2, op3=op3, op4=op4, ans=ans)
+                            ques_model.save()
+                            test.questions.add(ques_model)
 
-                test.save()
-            return HttpResponseRedirect('/examList')
+                    test.save()
+                return HttpResponseRedirect('/examList')
         else:
             form = ExamForm()
             QuestionFormSet = formset_factory(addQuestionform, formset=BaseFormSet, extra=number_of_questions)
@@ -626,9 +633,12 @@ def editExam(request):
             if form.is_valid():
                 test = form.cleaned_data['test']
                 new_title = form.cleaned_data['title']
-                test.title = new_title
-                test.save()
-                return redirect('/examList')
+                if Test.objects.filter(title=new_title).exists():
+                    form.add_error('title', ValidationError('A test with this name already exists. Please choose a different name.'))
+                else:
+                    test.title = new_title
+                    test.save()
+                    return redirect('/examList')
         else:
             form = EditExamForm()
         return render(request, 'djauth/editExam.html', {'form': form})
@@ -650,14 +660,17 @@ def editQuestion(request):
                 new_op3= form.cleaned_data['op3']
                 new_op4= form.cleaned_data['op4']
                 new_ans = form.cleaned_data['ans']
-                question.question = new_title
-                question.op1 = new_op1
-                question.op2 = new_op2
-                question.op3 = new_op3
-                question.op4 = new_op4
-                question.ans = new_ans
-                question.save()
-                return redirect('/examList')
+                if QuesModel.objects.filter(question=new_title).exclude(pk=question.pk).exists():
+                    form.add_error('questionTitle', ValidationError('A question with this title already exists. Please choose a different title.'))
+                else:
+                    question.question = new_title
+                    question.op1 = new_op1
+                    question.op2 = new_op2
+                    question.op3 = new_op3
+                    question.op4 = new_op4
+                    question.ans = new_ans
+                    question.save()
+                    return redirect('/examList')
         else:
             form = EditQuestionForm()
         return render(request, 'djauth/editQuestion.html', {'form': form})
