@@ -14,31 +14,33 @@
          {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> {% endcomment %}
     </head>
     <body>        
-          <header>
-        <a class="logo" href="/mainpage"> <img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"> </a>
-        <nav>
-            <ul class="navbar-links">
-                <li><a href="/teacherCalendar"> about us </a></li>
-                            <li><a href="/teacherAnnouncement"> add announcement </a></li>
-                            <li><a href="/addQuestion"> create test </a></li>
-                            <li><a href="/addStudent"> add student </a></li>
+        <header>
+            <a class="logo" href="/mainpage"> <img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"> </a>
+            <nav>
+                <ul class="navbar-links">
+                    {% if user.is_authenticated %}
+                    <li><a href="/dash"> Dashboard </a></li>
+                    {%endif%}
+                  <li><a href="/teacherAnnouncement"> Add Announcement </a></li>
+                  <li><a href="/examList"> Create Test </a></li>
+                  <li><a href="/addStudent"> Add Student </a></li>
+                  <li><a href="/fullStudentList"> View All Students </a></li>
+                  <li><a href="/newTeacher"> View Inquiries </a></li>
+                  <li><a href="/exam_list"> Create PDF Test </a></li>
+                  
                 
-                {% if user.is_authenticated %}
-                        <li><a href="/dash"> dashboard </a></li>
-                        {%endif%}
+                    </ul>
                 </ul>
-                <!-- <li><a href="#">About</a></li> -->
-            </ul>
-        </nav>
-        <div>
-            <ul class="navbar-links">
-                {% if user.is_authenticated %}
-                <span> Welcome to JoAh, {{user.username}}! | </span>
-                <li><a href="/logout"> logout </a></li>
-                {% else %}
-                <li><a href="/login"> login </a></li>
-            {%endif%}
-    </div> </header>
+            </nav>
+            <div>
+                <ul class="navbar-links">
+                    {% if user.is_authenticated %}
+                    <span> Welcome to JoAh, {{user.username}}! | </span>
+                    <li><a href="/logout"> logout </a></li>
+                    {% else %}
+                    <li><a href="/login"> login </a></li>
+                {%endif%}
+        </div> </header>
                
 
         {% block content %}
