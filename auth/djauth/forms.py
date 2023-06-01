@@ -241,3 +241,8 @@ class TeacherInquirieForm(forms.ModelForm):
     class Meta:
         model = TeacherInquirie
         fields = ['inqteacherfirstname', 'inqteacherlastname', 'inqteacheremail', 'inqteachermessage']
+
+class ToDoListForm(forms.ModelForm):
+    class Meta:
+        model = ToDoList
+        fields = ['item', 'completed']

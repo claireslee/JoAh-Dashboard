@@ -12,18 +12,6 @@
 
     {% comment %} <link href="{% static 'djauth/mainpage.css' %}" rel="stylesheet"> {% endcomment %}
   </head>
-
-  <style>
-    .striker {
-        text-decoration: line-through;
-    }
-
-    .alert .close {
-      border: none;
-      background: none;
-      box-shadow: none;
-    }
-  </style>
   
   <body>
        <nav class="navbar navbar-expand-lg">
@@ -56,6 +44,9 @@
   <br>
   <br>
 
+  <div class = "d-flex justify-content-around">
+    <h1 class="display-3"> WELCOME {{user.username}}! </h1>
+  </div>
 
   <br>
 
@@ -110,18 +101,11 @@
 
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  
-  <script>
-    $(document).ready(function() {
-        $(".alert .close").on("click", function() {
-            $(this).parent().fadeOut("slow");
-        });
-    });
-</script>
-
-
+  <style>
+    .striker {
+        text-decoration: line-through;
+    }
+  </style>
 
 
 <div>
