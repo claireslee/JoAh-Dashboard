@@ -866,7 +866,7 @@ def create_test(request):
                     pdf_test.num_questions = request.POST['num_questions']
                     pdf_test.answers = request.POST['answers']
                     pdf_test.save()
-                    return HttpResponseRedirect("/teacherDash")
+                    return HttpResponseRedirect("/exam_list")
             else:
                 print(form.errors)
         else:
