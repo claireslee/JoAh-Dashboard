@@ -71,8 +71,14 @@ def aboutUs(request):
     
 @login_required(login_url="/login")
 def newTeacher(request):
-    all_teacherinqs = TeacherInquirie.objects.all
-    return render(request, 'djauth/newTeacher.html',{'all':all_teacherinqs})
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        all_teacherinqs = TeacherInquirie.objects.all
+        return render(request, 'djauth/newTeacher.html',{'all':all_teacherinqs})
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+
     
 def resources(request):
     return render(request, 'djauth/resources.html')
@@ -98,9 +104,16 @@ def contactus(request):
     
 @login_required(login_url="/login")
 def newContactUs(request):
-    all_contactus = ContactUs.objects.all
-    return render(request, 'djauth/newContactUs.html',{'all':all_contactus})
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        all_contactus = ContactUs.objects.all
+        return render(request, 'djauth/newContactUs.html',{'all':all_contactus})
 
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+
+    
 
 @login_required(login_url="/login")
 def teacherDash(request):
@@ -114,12 +127,18 @@ def teacherDash(request):
 
 @login_required(login_url="/login")
 def studentDashboard(request):
-    username = request.user.username
-    student = Student.objects.get(username=username)
-    
-    return render(request, 'studentDashboard/studentDashboard.html')
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        return HttpResponseRedirect("/teacherDash")
+    else:
+        username = request.user.username
+        student = Student.objects.get(username=username)
+        
+        return render(request, 'studentDashboard/studentDashboard.html')
+        
 
-
+@login_required(login_url="/login") 
 def loggedin_view(request):
     
     all_students = Student.objects.all
@@ -153,80 +172,104 @@ def teacherAnnouncement(request):
 
 @login_required(login_url="/login")
 def studentDisplay(request):
-    all_students = Student.objects.all
-    return render(request, 'djauth/studentDisplay.html',{'all':all_students} )
-
-@login_required(login_url="/login")
-def studentDisplay(request):
-    all_students = Student.objects.all
-    return render(request, 'djauth/studentDisplay.html',{'all':all_students} )
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        all_students = Student.objects.all
+        return render(request, 'djauth/studentDisplay.html',{'all':all_students} )
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    
 
 @login_required(login_url="/login")
 def examList(request):
-    tests = Test.objects.all()
-    context = {'tests': tests}
-    return render(request, 'djauth/examList.html', context)
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        tests = Test.objects.all()
+        context = {'tests': tests}
+        return render(request, 'djauth/examList.html', context)
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    
 
 @login_required(login_url="/login")
 def studentExamList(request):
-    tests = Test.objects.all()
-    context = {'tests': tests}
-    return render(request, 'studentDashboard/studentExamList.html', context)
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        return HttpResponseRedirect("/teacherDash")
+    else:
+        tests = Test.objects.all()
+        context = {'tests': tests}
+        return render(request, 'studentDashboard/studentExamList.html', context)
 
 @login_required(login_url="/login")
 def examDetail(request, test_id):
-    test = get_object_or_404(Test, id=test_id)
-    questions = test.questions.all()
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        test = get_object_or_404(Test, id=test_id)
+        questions = test.questions.all()
 
-    if request.method == 'POST':
-        question_id = request.POST.get('question')
-        question = get_object_or_404(QuesModel, id=question_id)
-        test.questions.add(question)  # Add the selected question to the exam
-        test.save()
+        if request.method == 'POST':
+            question_id = request.POST.get('question')
+            question = get_object_or_404(QuesModel, id=question_id)
+            test.questions.add(question)  # Add the selected question to the exam
+            test.save()
 
-    context = {'test': test, 'questions': questions}
-    return render(request, 'djauth/examDetail.html', context)
+        context = {'test': test, 'questions': questions}
+        return render(request, 'djauth/examDetail.html', context)
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+
+   
 
 @login_required(login_url="/login")
 def studentExamDetail(request, test_id):
-    if request.method == 'POST':
-        print(request.POST)
-        test = Test.objects.get(id=test_id)
-        questions = test.questions.all()
-        score=0
-        wrong=0
-        correct=0
-        total=0
-        incorrect_questions = []
-        for q in questions:
-            total+=1
-            print(request.POST.get(q.question))
-            print(q.ans)
-            print()
-            if q.ans ==  request.POST.get(q.question):
-                score+=10
-                correct+=1
-            else:
-                wrong+=1
-                incorrect_questions.append(q)
-        percent = score/(total*10) *100
-        context = {
-            'score':score,
-            'time': request.POST.get('timer'),
-            'correct':correct,
-            'wrong':wrong,
-            'percent':percent,
-            'total':total,
-            'incorrect_questions':incorrect_questions,
-        }
-        return render(request,'studentDashboard/result.html',context)
+    if request.user.is_authenticated:
+            usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        return HttpResponseRedirect("/teacherDash")
     else:
-        test = Test.objects.get(id=test_id)
-        questions = test.questions.all()
-        context = {
-            'test': test, 'questions':questions
-        }
-        return render(request,'studentDashboard/studentExamDetail.html',context)
+        if request.method == 'POST':
+            print(request.POST)
+            test = Test.objects.get(id=test_id)
+            questions = test.questions.all()
+            score=0
+            wrong=0
+            correct=0
+            total=0
+            incorrect_questions = []
+            for q in questions:
+                total+=1
+                print(request.POST.get(q.question))
+                print(q.ans)
+                print()
+                if q.ans ==  request.POST.get(q.question):
+                    score+=10
+                    correct+=1
+                else:
+                    wrong+=1
+                    incorrect_questions.append(q)
+            percent = score/(total*10) *100
+            context = {
+                'score':score,
+                'time': request.POST.get('timer'),
+                'correct':correct,
+                'wrong':wrong,
+                'percent':percent,
+                'total':total,
+                'incorrect_questions':incorrect_questions,
+            }
+            return render(request,'studentDashboard/result.html',context)
+        else:
+            test = Test.objects.get(id=test_id)
+            questions = test.questions.all()
+            context = {
+                'test': test, 'questions':questions
+            }
+            return render(request,'studentDashboard/studentExamDetail.html',context)
 
 @login_required(login_url="/login")
 def createTest(request):
@@ -266,6 +309,7 @@ def startExam(request):
 
 @login_required(login_url="/login")
 def addStudent(request):
+    
     if request.user.is_authenticated:
         usergroup = request.user.groups.values_list('name', flat=True).first()
         if usergroup == "Teacher":
@@ -327,6 +371,7 @@ def addStudent(request):
     
 # Create your views here.
 
+@login_required(login_url="/login") 
 def home(request):
     if request.user.is_authenticated:
             usergroup = request.user.groups.values_list('name', flat=True).first()
@@ -367,42 +412,52 @@ def home(request):
             }
             return render(request,'studentDashboard/home.html',context)
 
+@login_required(login_url="/login") 
 def teacherExamView(request):
-    if request.method == 'POST':
-        print(request.POST)
-        questions=QuesModel.objects.all()
-        score=0
-        wrong=0
-        correct=0
-        total=0
-        for q in questions:
-            total+=1
-            print(request.POST.get(q.question))
-            print(q.ans)
-            print()
-            if q.ans ==  request.POST.get(q.question):
-                score+=10
-                correct+=1
-            else:
-                wrong+=1
-        percent = score/(total*10) *100
-        context = {
-            'score':score,
-            'time': request.POST.get('timer'),
-            'correct':correct,
-            'wrong':wrong,
-            'percent':percent,
-            'total':total
-        }
-        return render(request,'studentDashboard/result.html',context)
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        if request.method == 'POST':
+            print(request.POST)
+            questions=QuesModel.objects.all()
+            score=0
+            wrong=0
+            correct=0
+            total=0
+            for q in questions:
+                total+=1
+                print(request.POST.get(q.question))
+                print(q.ans)
+                print()
+                if q.ans ==  request.POST.get(q.question):
+                    score+=10
+                    correct+=1
+                else:
+                    wrong+=1
+            percent = score/(total*10) *100
+            context = {
+                'score':score,
+                'time': request.POST.get('timer'),
+                'correct':correct,
+                'wrong':wrong,
+                'percent':percent,
+                'total':total
+            }
+            return render(request,'studentDashboard/result.html',context)
+        else:
+            questions=QuesModel.objects.all()
+            context = {
+                'questions':questions
+            }
+            return render(request,'djauth/teacherExamView.html',context)
     else:
-        questions=QuesModel.objects.all()
-        context = {
-            'questions':questions
-        }
-        return render(request,'djauth/teacherExamView.html',context)
-
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    
+@login_required(login_url="/login") 
 def addQuestion(request):    
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
         form=addQuestionform()
         if(request.method=='POST'):
             form=addQuestionform(request.POST)
@@ -411,154 +466,206 @@ def addQuestion(request):
                 return HttpResponseRedirect('/examList')
         context={'form':form}
         return render(request,'djauth/addQuestion.html',context)
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
+        
+@login_required(login_url="/login") 
 def createExam(request):
-    number_of_questions = 10  # Default value for displaying ten question fields
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        number_of_questions = 10  # Default value for displaying ten question fields
 
-    if request.method == 'POST':
-        form = ExamForm(request.POST)
-        if form.is_valid():
-            test = form.save(commit=False)
-            test.save()
+        if request.method == 'POST':
+            form = ExamForm(request.POST)
+            if form.is_valid():
+                test = form.save(commit=False)
+                test.save()
+                QuestionFormSet = formset_factory(addQuestionform, formset=BaseFormSet, extra=number_of_questions)
+                formset = QuestionFormSet(request.POST, prefix='questions')
+
+                for question_form in formset.forms:
+                    if question_form.is_valid():
+                        question = question_form.cleaned_data.get('question')
+                        op1 = question_form.cleaned_data.get('op1')
+                        op2 = question_form.cleaned_data.get('op2')
+                        op3 = question_form.cleaned_data.get('op3')
+                        op4 = question_form.cleaned_data.get('op4')
+                        ans = question_form.cleaned_data.get('ans')
+                        ques_model = QuesModel(question=question, op1=op1, op2=op2, op3=op3, op4=op4, ans=ans)
+                        ques_model.save()
+                        test.questions.add(ques_model)
+
+                test.save()
+            return HttpResponseRedirect('/examList')
+        else:
+            form = ExamForm()
             QuestionFormSet = formset_factory(addQuestionform, formset=BaseFormSet, extra=number_of_questions)
-            formset = QuestionFormSet(request.POST, prefix='questions')
+            formset = QuestionFormSet(prefix='questions')
 
-            for question_form in formset.forms:
-                if question_form.is_valid():
-                    question = question_form.cleaned_data.get('question')
-                    op1 = question_form.cleaned_data.get('op1')
-                    op2 = question_form.cleaned_data.get('op2')
-                    op3 = question_form.cleaned_data.get('op3')
-                    op4 = question_form.cleaned_data.get('op4')
-                    ans = question_form.cleaned_data.get('ans')
-                    ques_model = QuesModel(question=question, op1=op1, op2=op2, op3=op3, op4=op4, ans=ans)
-                    ques_model.save()
-                    test.questions.add(ques_model)
+        return render(request, 'djauth/createExam.html', {'form': form, 'formset': formset, 'number_of_questions': range(number_of_questions)})
 
-            test.save()
-        return HttpResponseRedirect('/examList')
     else:
-        form = ExamForm()
-        QuestionFormSet = formset_factory(addQuestionform, formset=BaseFormSet, extra=number_of_questions)
-        formset = QuestionFormSet(prefix='questions')
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
-    return render(request, 'djauth/createExam.html', {'form': form, 'formset': formset, 'number_of_questions': range(number_of_questions)})
-
+@login_required(login_url="/login")     
 def deleteExam(request):
-    if request.method == 'POST':
-        form = DeleteExamForm(request.POST)
-        if form.is_valid():
-            test_title = form.cleaned_data['test']
-            test = Test.objects.get(title=test_title)
-            test.delete()
-            return redirect('/examList')  # Replace 'confirmation' with the appropriate URL name for the confirmation page
-    else:
-        form = DeleteExamForm()
-    
-    return render(request, 'djauth/deleteExam.html', {'form': form})
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        if request.method == 'POST':
+            form = DeleteExamForm(request.POST)
+            if form.is_valid():
+                test_title = form.cleaned_data['test']
+                test = Test.objects.get(title=test_title)
+                test.delete()
+                return redirect('/examList')  # Replace 'confirmation' with the appropriate URL name for the confirmation page
+        else:
+            form = DeleteExamForm()
+        
+        return render(request, 'djauth/deleteExam.html', {'form': form})
 
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+
+@login_required(login_url="/login") 
 def addQuestionToExam(request, exam_id):
-    test = get_object_or_404(Test, id=exam_id)
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        test = get_object_or_404(Test, id=exam_id)
     
-    # Retrieve all the existing questions
-    all_questions = QuesModel.objects.all()
-    
-    if request.method == 'POST':
-        form = AddQuestionForm(request.POST)
-        if form.is_valid():
-            question_id = form.cleaned_data['question']
-            question = get_object_or_404(QuesModel, id=question_id)
-            test.questions.add(question)  # Add the question to the test's questions field
-            test.save()  # Save the test object
-            # Redirect to the exam detail page
-            return redirect('/examDetail/' + str(test.id))
+        # Retrieve all the existing questions
+        all_questions = QuesModel.objects.all()
+        
+        if request.method == 'POST':
+            form = AddQuestionForm(request.POST)
+            if form.is_valid():
+                question_id = form.cleaned_data['question']
+                question = get_object_or_404(QuesModel, id=question_id)
+                test.questions.add(question)  # Add the question to the test's questions field
+                test.save()  # Save the test object
+                # Redirect to the exam detail page
+                return redirect('/examDetail/' + str(test.id))
+        else:
+            form = AddQuestionForm()
+        
+        context = {
+            'test': test,
+            'form': form,
+            'all_questions': all_questions,
+        }
+        return render(request, 'djauth/addQuestionToExam.html', context)
     else:
-        form = AddQuestionForm()
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
     
-    context = {
-        'test': test,
-        'form': form,
-        'all_questions': all_questions,
-    }
-    return render(request, 'djauth/addQuestionToExam.html', context)
-
+    
+@login_required(login_url="/login") 
 def deleteQuestion(request):
-    all_questions = QuesModel.objects.all()
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        all_questions = QuesModel.objects.all()
     
-    if request.method == 'POST':
-        form = DeleteQuestionForm(request.POST)
-        if form.is_valid():
-            ques = form.cleaned_data['question']
-            question = QuesModel.objects.get(question=ques)
-            question.delete()
-            return redirect('/examList')
+        if request.method == 'POST':
+            form = DeleteQuestionForm(request.POST)
+            if form.is_valid():
+                ques = form.cleaned_data['question']
+                question = QuesModel.objects.get(question=ques)
+                question.delete()
+                return redirect('/examList')
+        else:
+            form = DeleteQuestionForm()
+        
+        context = {
+            'form': form,
+            'all_questions': all_questions,
+        }
+        return render(request, 'djauth/deleteQuestion.html', context)
     else:
-        form = DeleteQuestionForm()
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
     
-    context = {
-        'form': form,
-        'all_questions': all_questions,
-    }
-    return render(request, 'djauth/deleteQuestion.html', context)
-
+    
+@login_required(login_url="/login") 
 def deleteQuestionFromExam(request, exam_id):
-    test = get_object_or_404(Test, id=exam_id)
-    questions = test.questions.all()  # Get the questions associated with the exam
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        test = get_object_or_404(Test, id=exam_id)
+        questions = test.questions.all()  # Get the questions associated with the exam
 
-    if request.method == 'POST':
-        form = DeleteQuestionFromExamForm(request.POST, exam_id=exam_id)
-        if form.is_valid():
-            ques = form.cleaned_data['question']
-            question = QuesModel.objects.get(question=ques)
-            test.questions.remove(question)  # Remove the question from the test's questions field
-            test.save()  # Save the test object
-            return redirect('/examDetail/' + str(test.id))
+        if request.method == 'POST':
+            form = DeleteQuestionFromExamForm(request.POST, exam_id=exam_id)
+            if form.is_valid():
+                ques = form.cleaned_data['question']
+                question = QuesModel.objects.get(question=ques)
+                test.questions.remove(question)  # Remove the question from the test's questions field
+                test.save()  # Save the test object
+                return redirect('/examDetail/' + str(test.id))
+        else:
+            form = DeleteQuestionFromExamForm(exam_id=exam_id)
+
+        context = {
+            'test': test,
+            'questions': questions,
+            'form': form,
+        }
+        return render(request, 'djauth/deleteQuestionFromExam.html', context)
     else:
-        form = DeleteQuestionFromExamForm(exam_id=exam_id)
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
-    context = {
-        'test': test,
-        'questions': questions,
-        'form': form,
-    }
-    return render(request, 'djauth/deleteQuestionFromExam.html', context)
-
+    
+@login_required(login_url="/login") 
 def editExam(request):
-    if request.method == 'POST':
-        form = EditExamForm(request.POST)
-        if form.is_valid():
-            test = form.cleaned_data['test']
-            new_title = form.cleaned_data['title']
-            test.title = new_title
-            test.save()
-            return redirect('/examList')
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        if request.method == 'POST':
+            form = EditExamForm(request.POST)
+            if form.is_valid():
+                test = form.cleaned_data['test']
+                new_title = form.cleaned_data['title']
+                test.title = new_title
+                test.save()
+                return redirect('/examList')
+        else:
+            form = EditExamForm()
+        return render(request, 'djauth/editExam.html', {'form': form})
     else:
-        form = EditExamForm()
-    return render(request, 'djauth/editExam.html', {'form': form})
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
+@login_required(login_url="/login") 
 def editQuestion(request):
-    if request.method == 'POST':
-        form = EditQuestionForm(request.POST)
-        if form.is_valid():
-            question = form.cleaned_data['question']
-            new_title = form.cleaned_data['questionTitle']
-            new_op1 = form.cleaned_data['op1']
-            new_op2 = form.cleaned_data['op2']
-            new_op3= form.cleaned_data['op3']
-            new_op4= form.cleaned_data['op4']
-            new_ans = form.cleaned_data['ans']
-            question.question = new_title
-            question.op1 = new_op1
-            question.op2 = new_op2
-            question.op3 = new_op3
-            question.op4 = new_op4
-            question.ans = new_ans
-            question.save()
-            return redirect('/examList')
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        if request.method == 'POST':
+            form = EditQuestionForm(request.POST)
+            if form.is_valid():
+                question = form.cleaned_data['question']
+                new_title = form.cleaned_data['questionTitle']
+                new_op1 = form.cleaned_data['op1']
+                new_op2 = form.cleaned_data['op2']
+                new_op3= form.cleaned_data['op3']
+                new_op4= form.cleaned_data['op4']
+                new_ans = form.cleaned_data['ans']
+                question.question = new_title
+                question.op1 = new_op1
+                question.op2 = new_op2
+                question.op3 = new_op3
+                question.op4 = new_op4
+                question.ans = new_ans
+                question.save()
+                return redirect('/examList')
+        else:
+            form = EditQuestionForm()
+        return render(request, 'djauth/editQuestion.html', {'form': form})
     else:
-        form = EditQuestionForm()
-    return render(request, 'djauth/editQuestion.html', {'form': form})
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
+    
+@login_required(login_url="/login") 
 def confirmation(request):
     if request.user.is_authenticated:
             usergroup = request.user.groups.values_list('name', flat=True).first()
@@ -566,7 +673,8 @@ def confirmation(request):
         return HttpResponseRedirect("/teacherDash")
     else:
         return HttpResponseRedirect("/confirmation")
-
+    
+@login_required(login_url="/login") 
 def result(request):
     if request.user.is_authenticated:
             usergroup = request.user.groups.values_list('name', flat=True).first()
@@ -585,6 +693,7 @@ def result(request):
 #         return render(request, 'djauth/pdfScanner.html', {'pdf_url': pdf_url})
 #     return render(request, 'djauth/pdfScanner.html')
 
+@login_required(login_url="/login") 
 def dash(request):
     usergroup = None
     if request.user.is_authenticated:
@@ -679,46 +788,62 @@ def tutor(request):
     return render(request, 'djauth/tutor.html')
 
 
-    
+@login_required(login_url="/login")    
 def studentAnnouncement(request):
-    all_announcements = Announcement.objects.all
-    return render(request, 'studentDashboard/studentAnnouncement.html', {'all_announcements': all_announcements})
-
-def teacherAnnouncement(request):
-    if request.method == "POST":
-        form = AnnouncementForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-        messages.success(request, ('Your Announcement Has Been Uploaded!'))
-        
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
         return HttpResponseRedirect("/teacherDash")
-        #return render(request, 'teacherAnnouncement.html', {})
-    
     else:
-        return render(request, 'djauth/teacherAnnouncement.html', {})
-    
-def create_test(request):
-    if request.method == 'POST':
-        print("AAAAAAAAAAAAAAAAA")
-        form = PdfTestForm(request.POST, request.FILES)
-        print(request.POST['file_name'])
-        print(request.POST['num_questions'])
-        if form.is_valid():
-            print("BBBBBBBBBBBBBBBB")
-            pdf_test = form.save(commit=False)
-            pdf_test.pdf = request.FILES['pdf']
-            pdf_test.name = request.POST['file_name']
-            pdf_test.num_questions = request.POST['num_questions']
-            pdf_test.answers =  request.POST['answers']
-            pdf_test.save()
-            return HttpResponseRedirect("/teacherDash")
-        else:
-            print(form.errors)
-    else:
-        form = PdfTestForm()
-    
-    return render(request, 'djauth/create_test.html', {'form': form})
+        all_announcements = Announcement.objects.all
+        return render(request, 'studentDashboard/studentAnnouncement.html', {'all_announcements': all_announcements})
 
+
+
+@login_required(login_url="/login")     
+def teacherAnnouncement(request):
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        if request.method == "POST":
+            form = AnnouncementForm(request.POST or None)
+            if form.is_valid():
+                form.save()
+            messages.success(request, ('Your Announcement Has Been Uploaded!'))
+            
+            return HttpResponseRedirect("/teacherDash")
+            #return render(request, 'teacherAnnouncement.html', {})
+        
+        else:
+            return render(request, 'djauth/teacherAnnouncement.html', {})
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    
+@login_required(login_url="/login") 
+def create_test(request):
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        if request.method == 'POST':
+            form = PdfTestForm(request.POST, request.FILES)
+            if form.is_valid():
+                pdf_test = form.save(commit=False)
+                pdf_test.pdf = request.FILES['pdf']
+                pdf_test.name = request.POST['file_name']
+                pdf_test.num_questions = request.POST['num_questions']
+                pdf_test.answers =  request.POST['answers']
+                pdf_test.save()
+                return HttpResponseRedirect("/teacherDash")
+            else:
+                print(form.errors)
+        else:
+            form = PdfTestForm()
+        
+        return render(request, 'djauth/create_test.html', {'form': form})
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    
+@login_required(login_url="/login") 
 def take_pdftest(request, pk):
     pdftest = get_object_or_404(PdfTest, pk=pk)
     if request.user.is_authenticated:
@@ -732,17 +857,10 @@ def take_pdftest(request, pk):
     else:
         
         if request.method == 'POST':
-            print("pdftest answers:", pdftest.answers)
-            print("request.POST:", request.POST)
             student_answers = request.POST.getlist('answers')[0] 
-            print("student_answers", student_answers)
             real_answers = json.loads(pdftest.answers)
             form = StudentPDFTestForm(pdftest.num_questions, real_answers, student_answers, request.POST)
            
-            print(form.is_valid())
-            print(form.errors)
-            print(form.non_field_errors())
-            print("print(form.data)", form.data)
             if form.is_valid():
                 
                 student_test = StudentPDFTestForm(pdftest.num_questions, pdftest.answers, student_answers)
@@ -756,134 +874,183 @@ def take_pdftest(request, pk):
             form = StudentPDFTestForm(pdftest.num_questions, pdftest.answers, initial_answers)
         return render(request, 'djauth/student_pdftest.html', {'pdftest': pdftest, 'form': form})
 
+@login_required(login_url="/login") 
 def pdftest_confirmation(request, pk):
-    pdftest = get_object_or_404(PdfTest, pk=pk)
-    student_answers_str = request.GET.get('student_answers', '{}')
-    real_answers_str = request.GET.get('real_answers', '{}')
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        return HttpResponseRedirect("/teacherDash")
+    else:
+        pdftest = get_object_or_404(PdfTest, pk=pk)
+        student_answers_str = request.GET.get('student_answers', '{}')
+        real_answers_str = request.GET.get('real_answers', '{}')
 
-    # Replace single quotes with double quotes in the JSON strings
-    student_answers_str = student_answers_str.replace("'", '"')
-    real_answers_str = real_answers_str.replace("'", '"')
+        # Replace single quotes with double quotes in the JSON strings
+        student_answers_str = student_answers_str.replace("'", '"')
+        real_answers_str = real_answers_str.replace("'", '"')
 
-    # Parse the JSON strings into dictionaries
-    student_answers = json.loads(student_answers_str)
-    real_answers = json.loads(real_answers_str)
+        # Parse the JSON strings into dictionaries
+        student_answers = json.loads(student_answers_str)
+        real_answers = json.loads(real_answers_str)
 
-    num_correct = 0
-    incorrect_answers = {}
+        num_correct = 0
+        incorrect_answers = {}
 
-    i=1
-    for question_number, student_answer in student_answers.items():
-        if student_answer == real_answers.get(question_number):
-            num_correct += 1
-            i+=1
-        else:
-            incorrect_answers[i] = {
-                'correct_answer': real_answers.get(question_number),
-                'your_answer': student_answer
-            }
-            i+=1
+        i=1
+        for question_number, student_answer in student_answers.items():
+            if student_answer == real_answers.get(question_number):
+                num_correct += 1
+                i+=1
+            else:
+                incorrect_answers[i] = {
+                    'correct_answer': real_answers.get(question_number),
+                    'your_answer': student_answer
+                }
+                i+=1
 
-    score = num_correct
-    percentage = round((score / pdftest.num_questions) * 100, 2)
+        score = num_correct
+        percentage = round((score / pdftest.num_questions) * 100, 2)
 
-    
+        
 
 
-    # Process the student_answers and real_answers as needed
-    context = {
-        'pdftest': pdftest,
-        'real_answers': real_answers,
-        'student_answers': student_answers,
-        'percentage': percentage,
-        'incorrect_answers': incorrect_answers,
-    }
+        # Process the student_answers and real_answers as needed
+        context = {
+            'pdftest': pdftest,
+            'real_answers': real_answers,
+            'student_answers': student_answers,
+            'percentage': percentage,
+            'incorrect_answers': incorrect_answers,
+        }
 
-    return render(request, 'studentDashboard/pdftest_confirmation.html', context)
-    
-
+        return render(request, 'studentDashboard/pdftest_confirmation.html', context)
+        
+@login_required(login_url="/login") 
 def exam_list(request):
-    exams = PdfTest.objects.all()  # Assuming you want to fetch all PdfTest objects
-    print(exams)
-    context = {'exams': exams}
-    return render(request, 'djauth/exam_list.html', context)
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        exams = PdfTest.objects.all()  # Assuming you want to fetch all PdfTest objects
+        context = {'exams': exams}
+        return render(request, 'djauth/exam_list.html', context)
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    
 
 @login_required(login_url="/login")
 def studentExam_List(request):
-    exams = PdfTest.objects.all()
-    context = {'exams': exams}
-    return render(request, 'studentDashboard/studentExam_List.html', context)
-
-def addQuestionToExam(request, exam_id):
-    test = get_object_or_404(Test, id=exam_id)
-# Retrieve all the existing questions
-    all_questions = QuesModel.objects.all()
-    if request.method == 'POST':
-        form = AddQuestionForm(request.POST)
-        if form.is_valid():
-            question_id = form.cleaned_data['question']
-            question = get_object_or_404(QuesModel, id=question_id)
-            test.questions.add(question) # Add the question to the test's questions field
-            test.save() # Save the test object
-            # Redirect to the exam detail page
-            return redirect('/examDetail/' + str(test.id))
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        return HttpResponseRedirect("/teacherDash")
     else:
-        form = AddQuestionForm()
-    context = {
-        'test': test,
-        'form': form,
-        'all_questions': all_questions,
-    }
-    return render(request, 'djauth/addQuestionToExam.html', context)
+        exams = PdfTest.objects.all()
+        context = {'exams': exams}
+        return render(request, 'studentDashboard/studentExam_List.html', context)
+
+@login_required(login_url="/login") 
+def addQuestionToExam(request, exam_id):
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        test = get_object_or_404(Test, id=exam_id)
+# Retrieve all the existing questions
+        all_questions = QuesModel.objects.all()
+        if request.method == 'POST':
+            form = AddQuestionForm(request.POST)
+            if form.is_valid():
+                question_id = form.cleaned_data['question']
+                question = get_object_or_404(QuesModel, id=question_id)
+                test.questions.add(question) # Add the question to the test's questions field
+                test.save() # Save the test object
+                # Redirect to the exam detail page
+                return redirect('/examDetail/' + str(test.id))
+        else:
+            form = AddQuestionForm()
+        context = {
+            'test': test,
+            'form': form,
+            'all_questions': all_questions,
+        }
+        return render(request, 'djauth/addQuestionToExam.html', context)
+    else:
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    
 
 
 @login_required(login_url="/login") 
 def deletePDFExam(request):
-    if request.method == 'POST':
-        form = DeletePDFForm(request.POST)
-        if form.is_valid():
-            test_name = form.cleaned_data['pdftest']
-            pdftest = get_object_or_404(PdfTest, name=test_name)
-            pdftest.delete()
-            return redirect('/confirmation') # Replace 'confirmation' with the appropriate URL name for the confirmation page
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        if request.method == 'POST':
+            form = DeletePDFForm(request.POST)
+            if form.is_valid():
+                test_name = form.cleaned_data['pdftest']
+                pdftest = get_object_or_404(PdfTest, name=test_name)
+                pdftest.delete()
+                return redirect('/confirmation') # Replace 'confirmation' with the appropriate URL name for the confirmation page
+        else:
+            form = DeletePDFForm()
+        
+        return render(request, 'djauth/delete_pdftest.html', {'form': form})
     else:
-        form = DeletePDFForm()
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
     
-    return render(request, 'djauth/delete_pdftest.html', {'form': form})
 
 @login_required(login_url="/login") 
 def toDoList(request):
-    if request.method == 'POST':
-        form = ToDoListForm(request.POST or None)
-        
-        if form.is_valid():
-            form.save()
-            all_items = ToDoList.objects.all
-            messages.success(request, ('Item has been added to the list'))
-            return render(request, 'studentDashboard/studentDashboard.html', {'all_items': all_items})
-        
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        return HttpResponseRedirect("/teacherDash")
     else:
-        all_items = ToDoList.objects.all
-        return render(request, 'studentDashboard/studentDashboard.html', {'all_items': all_items})
+        if request.method == 'POST':
+            form = ToDoListForm(request.POST or None)
+            
+            if form.is_valid():
+                form.save()
+                all_items = ToDoList.objects.all
+                messages.success(request, ('Item has been added to the list'))
+                return render(request, 'studentDashboard/studentDashboard.html', {'all_items': all_items})
+            
+        else:
+            all_items = ToDoList.objects.all
+            return render(request, 'studentDashboard/studentDashboard.html', {'all_items': all_items})
 
 @login_required(login_url="/login") 
 def deleteToDo(request, list_id):
-    item = ToDoList.objects.get(pk=list_id)
-    item.delete()
-    messages.success(request, ('Item has been deleted!'))
-    return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        return HttpResponseRedirect("/teacherDash")
+    else:
+        item = ToDoList.objects.get(pk=list_id)
+        item.delete()
+        messages.success(request, ('Item has been deleted!'))
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
 @login_required(login_url="/login") 
 def crossoff(request, list_id):
-    item = ToDoList.objects.get(pk=list_id)
-    item.completed = True
-    item.save()
-    return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        return HttpResponseRedirect("/teacherDash")
+    else:
+        item = ToDoList.objects.get(pk=list_id)
+        item.completed = True
+        item.save()
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
 @login_required(login_url="/login") 
 def uncross(request, list_id):
-    item = ToDoList.objects.get(pk=list_id)
-    item.completed = False
-    item.save()
-    return HttpResponseRedirect("/studentDashboard/studentDashboard")
+    if request.user.is_authenticated:
+        usergroup = request.user.groups.values_list('name', flat=True).first()
+    if usergroup == "Teacher":
+        return HttpResponseRedirect("/teacherDash")
+    else:
+        item = ToDoList.objects.get(pk=list_id)
+        item.completed = False
+        item.save()
+        return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
