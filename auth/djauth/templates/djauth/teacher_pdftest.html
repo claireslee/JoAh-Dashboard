@@ -46,14 +46,69 @@
       display: inline-block;
       margin-right: 10px;
     }
+    .inline input[type='radio'] {
+      display: inline-block;
+      left: 10px;
+      
+    }
+
+    input[type='radio']:after {
+      width: 18px;
+      height: 18px;
+      border-radius: 18px;
+      top: -6px;
+      left: 0px;
+      position: relative;
+      background-color: #d1d3d1;
+      content: '';
+      display: inline-block;
+      visibility: visible;
+      border: 2px solid white;
+  }
+
+  input[type='radio']:checked:after {
+      width: 18px;
+      height: 18px;
+      border-radius: 18px;
+      top: -6px;
+      left: 0px;
+      position: relative;
+      background-color: #ffa500;
+      content: '';
+      display: inline-block;
+      visibility: visible;
+      border: 2px solid white;
+  }
+  .create-test {
+    display: block;
+    width: 40%;
+    padding: 10px;
+    text-align: center;
+    background-color: rgba(192, 146, 242, 0.8);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    height: 40px;
+    vertical-align: middle;
+     /* Add this line to center-align the button */
+  }
+  
+  .create-test:hover {
+    background-color: rgb(170, 150, 237);
+
+  }
   </style>
 </head>
 <header>
+  <a class="logo" href="/mainpage"> <img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"> </a>
+
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
         <div>
             <ul class="navbar-nav">
-                <a class="logo" href="/mainpage"> <img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"> </a>
                 <li class="nav-item"><a class="nav-link" href="/teacherAnnouncement"> Announcements </a></li>
                 <li class="nav-item"><a class="nav-link" href="/examList"> Custom Test</a></li>
                 <li class="nav-item"><a class="nav-link" href="/fullStudentList"> View Students </a></li>
@@ -114,11 +169,24 @@
         const questionNum = `q${i}`;
         const label = document.createElement('label');
         label.innerHTML = `Answer for Question ${i}:`;
+        label.style.fontSize = "18px";
     
         const radioA = createRadioButton(`${questionNum}_answer`, 'A', false);
         const radioB = createRadioButton(`${questionNum}_answer`, 'B', false);
         const radioC = createRadioButton(`${questionNum}_answer`, 'C', false);
         const radioD = createRadioButton(`${questionNum}_answer`, 'D', false);
+        radioA.style.fontSize = "18px";
+        radioB.style.fontSize = "18px";
+        radioC.style.fontSize = "18px";
+        radioD.style.fontSize = "18px";
+        radioA.style.padding = "5px"; // Change the padding value as desired
+        radioB.style.padding = "5px";
+        radioC.style.padding = "5px";
+        radioD.style.padding = "5px";
+        radioA.style.marginLeft = "5px"; // Change the margin value as desired
+        radioB.style.marginLeft = "5px";
+        radioC.style.marginLeft = "5px";
+        radioD.style.marginLeft = "5px";
         
         const questionContainer = document.createElement('span');
         questionContainer.appendChild(label);

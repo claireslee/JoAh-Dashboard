@@ -81,38 +81,52 @@
           .exam-button:hover {
             background-color: rgb(170, 150, 237);
           }
-    
+          .navbar-nav {
+      margin: 0; /* Remove default margin */
+      padding: 0; /* Remove default padding */
+      display: flex; /* Add flexbox display */
+      align-items: center; /* Center items vertically */
+    }
+
+    .navbar-nav .nav-item {
+      margin-right: 10px; /* Add some right margin between nav items */
+    }
+
+    .navbar-nav .nav-item:last-child {
+      margin-right: 0; /* Remove margin from the last nav item */
+      margin-left: auto; /* Push the last nav item to the right */
+    }
       </style>
   </head>
   
   <header>
     <a class="logo" href="/mainpage"> <img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"> </a>
-    <nav>
-        <ul class="navbar-links">
-            {% if user.is_authenticated %}
-            <li><a href="/dash"> Dashboard </a></li>
-            {%endif%}
-          <li><a href="/teacherAnnouncement"> Add Announcement </a></li>
-          <li><a href="/examList"> Create Test </a></li>
-          <li><a href="/addStudent"> Add Student </a></li>
-          <li><a href="/fullStudentList"> View All Students </a></li>
-          <li><a href="/newTeacher"> View Inquiries </a></li>
-          <li><a href="/exam_list"> Create PDF Test </a></li>
-          
-        
-            </ul>
-            <!-- <li><a href="#">About</a></li> -->
-        </ul>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <div>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/studentDashboard/studentAnnouncement"> Announcements </a></li>
+                    <li class="nav-item"><a class="nav-link" href="/studentDashboard/studentExamList"> Digital Exam </a></li>
+                    <li class="nav-item"><a class="nav-link" href="/studentDashboard/studentExam_List"> PDF Tests </a></li>
+
+                  
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="/dash"> Dashboard </a></li>
+                        {%endif%}
+                </ul>
+            </div>
+            <div>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <span class="navbar-text"> Welcome to JoAh, {{user.username}}! | </span>
+                    <li class="nav-item"><a class="nav-link" href="/logout"> logout </a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="/login"> login </a></li>
+                {%endif%}
+        </div>
     </nav>
-    <div>
-        <ul class="navbar-links">
-            {% if user.is_authenticated %}
-            <span> Welcome to JoAh, {{user.username}}! | </span>
-            <li><a href="/logout"> logout </a></li>
-            {% else %}
-            <li><a href="/login"> login </a></li>
-        {%endif%}
-</div> </header>
+  </header>
 
     {% block content %}
     
