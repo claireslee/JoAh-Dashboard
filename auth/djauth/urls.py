@@ -27,7 +27,7 @@ urlpatterns = [
     path('programs/', views.programs, name="programs.html"),
     path('contactus/', views.contactus, name="contactus.html"),
     path('teacherDash/', views.teacherDash, name="teacherDash.html"),
-    path('studentDashboard/studentDashboard/', views.studentDashboard, name="studentDashboard/studentDashboard.html"),
+    # path('studentDashboard/studentDashboard/', views.studentDashboard, name="studentDashboard/studentDashboard.html"),
     path('loggedin_view/', views.loggedin_view),
     path('teacherCalendar/', views.teacherCalendar, name="teacherCalendar.html"),
     path('teacherAnnouncement/', views.teacherAnnouncement, name="teacherAnnouncement.html"),
@@ -80,4 +80,8 @@ urlpatterns = [
     path('studentDashboard/studentExam_List/', views.studentExam_List, name='studentDashboard/studentExam_List'),
     path('studentDashboard/pdftest_confirmation/<int:pk>/', views.pdftest_confirmation, name='studentDashboard/pdftest_confirmation'),
 
+    path('studentDashboard/studentDashboard/', views.toDoList, name='toDoList.html'),
+    path('deleteToDo/<int:list_id>', views.deleteToDo, name='deleteToDo'),
+    path('crossoff/<int:list_id>', views.crossoff, name='crossoff'),
+    path('uncross/<int:list_id>', views.uncross, name='uncross'),
 ]

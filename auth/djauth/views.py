@@ -42,6 +42,10 @@ from .forms import HomeForm
 from django.contrib import messages
 from django.http import HttpResponse
 from .forms import DeleteExamForm, DeletePDFForm, AddQuestionForm
+from .forms import ToDoListForm
+from .models import ToDoList
+from .models import TeacherInquirie
+from .forms import TeacherInquirieForm
 
 
 def mainpage(request):
@@ -828,4 +832,40 @@ def deletePDFExam(request):
         form = DeletePDFForm()
     
     return render(request, 'djauth/delete_pdftest.html', {'form': form})
+
+@login_required(login_url="/login") 
+def toDoList(request):
+    if request.method == 'POST':
+        form = ToDoListForm(request.POST or None)
+        
+        if form.is_valid():
+            form.save()
+            all_items = ToDoList.objects.all
+            messages.success(request, ('Item has been added to the list'))
+            return render(request, 'studentDashboard/studentDashboard.html', {'all_items': all_items})
+        
+    else:
+        all_items = ToDoList.objects.all
+        return render(request, 'studentDashboard/studentDashboard.html', {'all_items': all_items})
+
+@login_required(login_url="/login") 
+def deleteToDo(request, list_id):
+    item = ToDoList.objects.get(pk=list_id)
+    item.delete()
+    messages.success(request, ('Item has been deleted!'))
+    return HttpResponseRedirect("/studentDashboard/studentDashboard")
+
+@login_required(login_url="/login") 
+def crossoff(request, list_id):
+    item = ToDoList.objects.get(pk=list_id)
+    item.completed = True
+    item.save()
+    return HttpResponseRedirect("/studentDashboard/studentDashboard")
+
+@login_required(login_url="/login") 
+def uncross(request, list_id):
+    item = ToDoList.objects.get(pk=list_id)
+    item.completed = False
+    item.save()
+    return HttpResponseRedirect("/studentDashboard/studentDashboard")
 
