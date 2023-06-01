@@ -312,7 +312,7 @@ def addStudent(request):
                 
                 messages.success(request, ('Student has been added to the database!'))
                 
-                return HttpResponseRedirect("/teacherDash")
+                return HttpResponseRedirect("/fullStudentList")
             return render(request, 'djauth/addStudent.html', {'form': StudentForm})
         
                 
