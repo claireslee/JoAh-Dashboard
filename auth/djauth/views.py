@@ -408,7 +408,7 @@ def addQuestion(request):
             form=addQuestionform(request.POST)
             if(form.is_valid()):
                 form.save()
-                return HttpResponseRedirect('/confirmation')
+                return HttpResponseRedirect('/examList')
         context={'form':form}
         return render(request,'djauth/addQuestion.html',context)
 
