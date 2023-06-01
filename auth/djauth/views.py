@@ -693,7 +693,7 @@ def create_test(request):
             pdf_test.num_questions = request.POST['num_questions']
             pdf_test.answers =  request.POST['answers']
             pdf_test.save()
-            return HttpResponseRedirect("/teacherDash")
+            return HttpResponseRedirect("/exam_list")
         else:
             print(form.errors)
     else:
@@ -827,7 +827,7 @@ def deletePDFExam(request):
             test_name = form.cleaned_data['pdftest']
             pdftest = get_object_or_404(PdfTest, name=test_name)
             pdftest.delete()
-            return redirect('/confirmation') # Replace 'confirmation' with the appropriate URL name for the confirmation page
+            return HttpResponseRedirect('/exam_list') # Replace 'confirmation' with the appropriate URL name for the confirmation page
     else:
         form = DeletePDFForm()
     
