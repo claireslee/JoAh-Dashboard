@@ -1,84 +1,110 @@
-{% extends 'djauth/dependencies.html' %}
-
-
-{% load static %}
-
-{% block content %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'django_select2/css/select2.css' %}">
-    <script type="text/javascript" src="{% static 'django_select2/js/select2.full.min.js' %}"></script>
-    
-    <style type="text/css" media="screen">
-
-        .main { 
-        background-color: #FFFFFF;
-        width: 485px;
-        height: 230px;
-        margin: 6em auto;
-        border-radius: 1.5em;
-        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
-        }
-
-        .sign {
-        padding-top: 40px;
-        color: #ffa600;
-        font-family: 'Ubuntu', sans-serif;
-        font-weight: bold;
-        font-size: 40px;
-        }
-
-        .user {
-        width: 85%;
-        color: rgb(64, 72, 78);
-        font-weight: 600;
-        font-size: 15px;
-        letter-spacing: 3px;
-        padding: 0px 0px;
-        border: none;
-        border-radius: 30px;
-        outline: none;
-        box-sizing: border-box;
-        margin-bottom: 0px;
-        margin-left: 10px;
-        text-align: center;
-        margin-bottom: 0px;
-        font-family: 'Ubuntu', sans-serif;
-        }
-
-        .submit {
-        cursor: pointer;
-        border-radius: 5em;
-        color: #fff;
-        background: linear-gradient(to right, #ff8000,#ffa600);
-        border: none;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        font-family: 'Ubuntu', sans-serif;
-        margin-left: 0%;
-        font-size: 20px;
-        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
-        }
-
-        @media (max-width: 600px) {
-        .main {
-            border-radius: 0px;
-        }
-        
-        
-        }
-    </style>
     <title> joah project </title>
 
-</head>
-<header>
+    {%load static%} 
+  
+    <link rel="stylesheet" type="text/css" href="{% static 'djauth/teacherDash.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  
+    <link href="{% static 'djauth/mainpage.css' %}" rel="stylesheet">
+    <style>
+
+  
+      #answer-fields {
+        text-align: center;
+      }
+      
+      #answer-fields label {
+        display: inline-block;
+        margin-right: 10px;
+      }
+      body{
+        background-color: #eaeff1;
+      }
+      .create-test {
+        display: block;
+        width: 50%;
+        padding: 10px;
+        text-align: center;
+        background-color: rgba(192, 146, 242, 0.8);
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        height: 40px;
+        vertical-align: middle;
+         /* Add this line to center-align the button */
+      }
+      
+      .create-test:hover {
+        background-color: rgb(170, 150, 237);
+
+      }
+      .create-answer {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        background-color: rgba(192, 146, 242, 0.8);
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        height: 40px;
+        vertical-align: middle;
+         /* Add this line to center-align the button */
+      }
+      
+      .create-answer:hover {
+        background-color: rgb(170, 150, 237);
+
+      }
+      
+      .form-group {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+        margin-top: 10px;
+        margin-left: 40%; /* Add margin-left to create space */
+        margin-right: 40px;
+
+        vertical-align: middle;
+        
+        
+      }
+
+      .create-pdf {
+        
+        vertical-align: middle;
+        font-family: Montserrat;
+        width: 50%;
+        padding: 20px;
+        margin-top: 20px;
+        background-color: rgba(255, 255, 255, 0.92);
+        border-radius: 30px;
+        position: relative;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .form-group input[type="number"] {
+        outline: 1px solid #ced4da;
+      }
+    </style>
+  
+  </head>
+  
+  <header>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
           <div>
@@ -114,19 +140,21 @@
   </nav>
 </header>
 
-  
-<body style="background-color:#fde4c9">
+  <center>
+<body>
     
 <div class="main">
     <center>
-    <div class="col-md-6">
-        <p class="sign" align="center">Delete an Exam</p>
-        <div class="card card-body">
+    <div class="create-pdf">
+        <h3 align="center">Delete an Exam</h3>
+        <center>
+            <div class="form-group">
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit">Delete</button>
+                <button class="create-answer" type="submit">Delete</button>
               </form>
+            
            <!-- <form action="" method="POST">
               {% csrf_token %}
               <div class="user">
@@ -136,6 +164,7 @@
              <input type="submit" class = "submit" name="Submit">
              </form> -->
             </div>
+        </center>
         </div>
     </div>
     </center>
@@ -143,5 +172,5 @@
 </div>
 
 </body>
-
-{% endblock %}
+</center>
+</html>
