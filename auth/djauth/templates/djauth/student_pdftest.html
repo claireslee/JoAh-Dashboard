@@ -106,26 +106,21 @@
 </head>
 <header>
   <a class="logo" href="/mainpage"><img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"></a>
-  <nav>
-    <ul class="navbar-links">
-      <li><a href="/studentDashboard/studentCalendar">Calendar</a></li>
-      <li><a href="/studentDashboard/studentAnnouncement">Announcements</a></li>
-      <li><a href="/studentDashboard/home">Start Exam</a></li>
-      {% if user.is_authenticated %}
-        <li><a href="/dash">dashboard</a></li>
-      {% endif %}
-    </ul>
-  </nav>
-  <div>
-    <ul class="navbar-links">
-      {% if user.is_authenticated %}
-        <span>Welcome to JoAh, {{user.username}}! | </span>
-        <li><a href="/logout">logout</a></li>
-      {% else %}
-        <li><a href="/login">login</a></li>
-      {% endif %}
-    </ul>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <div>
+            <ul class="navbar-nav">
+
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-nav">
+                <span class="navbar-text"> Welcome to JoAh, {{user.username}}! | </span>
+                <li class="nav-item"><a class="nav-link" href="/logout"> logout </a></li>
+               
+    </div>
   </div>
+
 </header>
 <body>
   <div id="left-half">
