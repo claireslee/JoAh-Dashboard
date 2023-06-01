@@ -316,22 +316,26 @@ def addStudent(request):
             if request.method == "POST":
                 form = StudentForm(request.POST or None) 
                 if form.is_valid():
-                    first_name = request.POST['first_name']
-                    last_name = request.POST['last_name']
-                    username = request.POST['username']
-                    password = request.POST['password']
-                    grade = request.POST['grade']
-                    
-                    
-                    User.objects.create_user(username=request.POST['username'],
-                                        password=request.POST['password'] )
-                    
-                    
-            
-            # create and save student object
-                    student = Student(first_name=first_name, last_name=last_name, username=username,
-                            password=password, grade=grade)
-                    student.save()
+                    username = form.cleaned_data['username']
+                    if User.objects.filter(username=username).exists():
+                        messages.error(request, 'Username already exists. Please choose a different username.')
+                    else:
+                        first_name = request.POST['first_name']
+                        last_name = request.POST['last_name']
+                        username = request.POST['username']
+                        password = request.POST['password']
+                        grade = request.POST['grade']
+                        
+                        
+                        User.objects.create_user(username=request.POST['username'],
+                                            password=request.POST['password'] )
+                        
+                        
+                
+                # create and save student object
+                        student = Student(first_name=first_name, last_name=last_name, username=username,
+                                password=password, grade=grade)
+                        student.save()
 
 
                     
@@ -840,13 +844,17 @@ def create_test(request):
         if request.method == 'POST':
             form = PdfTestForm(request.POST, request.FILES)
             if form.is_valid():
-                pdf_test = form.save(commit=False)
-                pdf_test.pdf = request.FILES['pdf']
-                pdf_test.name = request.POST['file_name']
-                pdf_test.num_questions = request.POST['num_questions']
-                pdf_test.answers =  request.POST['answers']
-                pdf_test.save()
-                return HttpResponseRedirect("/teacherDash")
+                name = request.POST['file_name']
+                if PdfTest.objects.filter(name=name).exists():
+                    form.add_error('file_name', 'A test with this name already exists.')
+                else:
+                    pdf_test = form.save(commit=False)
+                    pdf_test.pdf = request.FILES['pdf']
+                    pdf_test.name = name
+                    pdf_test.num_questions = request.POST['num_questions']
+                    pdf_test.answers = request.POST['answers']
+                    pdf_test.save()
+                    return HttpResponseRedirect("/teacherDash")
             else:
                 print(form.errors)
         else:

@@ -158,6 +158,15 @@
       </div>
       
       {{ form.answers }}
+      {% if form.errors %}
+      <div class="alert alert-danger">
+        {% for field in form %}
+            {% for error in field.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    {% endif %}
       
       <button type="button" class="create-answer" id="create-answer-fields-btn">Create Answer Fields</button><br>
       <div id="answer-fields"></div><br>
