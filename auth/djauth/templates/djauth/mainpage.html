@@ -105,42 +105,52 @@
                         </div>
                     </div>
                 </section>
-               
-                <!-- About -- section three -->
-                <section class="py-5">
-                    <div class="container px-5 my-5">
-                        <div class="row gx-5 align-items-center">
-                            <!-- <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div> -->
-                            <div > <!-- class="col-lg-6" -->
-                                 <div class="results-position"> 
-                                     <h2 class="fw-bolder"> OUR RESULTS</h2>
-                                 </div>
-                             
-                                 <div class="early-acc-position">
-                                    <p class="lead fw-normal text-muted mb-0">
-                                        Acceptances at: Bergen County Academies, Bergen County Technical Schools, Academies at Englewood
-                                    </p>
-                                </div>
-                                
-                                <br>
-                                
-                                 <div class="early-acc-position">
-                                     <p class="lead fw-normal text-muted mb-0">
-                                         <b> <em> Joah Consulting College Acceptances - Class of 2023 </em> </b>
-                                         <br>
-                                         Brown University, Cornell University, Northwestern University, Johns Hopkins University, Duke University, 
-                                         University of Michigan, Tufts University, Rice University, New York University, Boston College, Boston University,
-                                         University of North Carolina, Villanova University, University of Illinois Urbana-Champaign, Northeastern University, 
-                                         Colorado College, UC Berkeley, UC Los Angeles, UC Irvine, UC San Diego, King's College of London, Peabody Institute
-                                     </p>
-                                 </div>
 
-                                 
-                             </div>
+                <!-- Programs / Cards -->
+                <section class="py-5" id="#scroll-target">
+                    <div class = "programs-header"> 
+                        <h2 class="fw-bolder"> PROGRAMS </h2>
+                    </div>
+      
+                    <div class = "card-align" >
+                        <div class="card">
+                            <div class="mainpageicons"><img src="{% static 'djauth/media/satclasses.png' %}" alt="Lago di Braies"> </div>
+                                <div class="card__details">
+                                    <div class="name"> SAT/ACT </div>
+                                    <button> <a href="/satbasic"> Learn More </a></button>
+                                </div>
+                        </div>
+      
+                        <div class="card">
+                            <img src="{% static 'djauth/media/mathclasses.png' %}" alt="Lago di Braies">
+                                <div class="card__details">
+                                    <div class="name"> MATH CLASSES </div>
+                                     
+                                    <button> <a href="/geometry"> Learn More </a></button>
+                                </div>
+                        </div>
+      
+                        <div class="card">
+                            <img src="{% static 'djauth/media/jrclasses.png' %}" alt="Lago di Braies">
+                                <div class="card__details">
+                                    <div class="name"> JUNIOR CLASSES </div>
+                                    
+                                    <button> <a href="/jr1"> Learn More </a></button>
+                                </div>
+                         </div>
+      
+                        <div class="card">
+                            <img src="{% static 'djauth/media/apclasses.png' %}" alt="Lago di Braies">
+                                <div class="card__details">
+                                    <div class="name"> AP CLASSES </div>
+                                     
+                                    <button> <a href="/aplang"> Learn More </a></button>
+                                </div>
                         </div>
                     </div>
                 </section>
-
+               
+                
                 <!-- TESTIMONIALS -->
                 <section class="py-5 bg-light container text-center">
                     <div class = "programs-header"> 
@@ -176,51 +186,9 @@
                 </section>
 
       
-                <!-- Programs / Cards -->
-                <section class="py-5" id="#scroll-target">
-                    <div class = "programs-header"> 
-                        <h2 class="fw-bolder"> PROGRAMS </h2>
-                    </div>
+                
       
-                    <div class = "card-align" >
-                        <div class="card">
-                            <div class="mainpageicons"><img src="{% static 'djauth/media/satclasses.png' %}" alt="Lago di Braies"> </div>
-                                <div class="card__details">
-                                    <div class="name"> SAT/ACT </div>
-                                    <button href="/geometry"> Learn More </button>
-                                </div>
-                        </div>
-      
-                        <div class="card">
-                            <img src="{% static 'djauth/media/mathclasses.png' %}" alt="Lago di Braies">
-                                <div class="card__details">
-                                    <div class="name"> MATH CLASSES </div>
-                                     
-                                    <button> <a href="/geometry"> Learn More </a></button>
-                                </div>
-                        </div>
-      
-                        <div class="card">
-                            <img src="{% static 'djauth/media/jrclasses.png' %}" alt="Lago di Braies">
-                                <div class="card__details">
-                                    <div class="name"> JUNIOR CLASSES </div>
-                                    
-                                    <button href="/jr3"> Learn More </button>
-                                </div>
-                         </div>
-      
-                        <div class="card">
-                            <img src="{% static 'djauth/media/apclasses.png' %}" alt="Lago di Braies">
-                                <div class="card__details">
-                                    <div class="name"> AP CLASSES </div>
-                                     
-                                    <button href="/aplang"> Learn More </button>
-                                </div>
-                        </div>
-                    </div>
-                </section>
-      
-                <!-- About -- section five -->
+                {% comment %} <!-- About -- section five -->
                  <section class="py-5 bg-light" id="contact-form">
                      <div class="contact-header-center ">
                          <h2 class="fw-bolder">Contact Us</h2>
@@ -232,7 +200,7 @@
                          <input name="submit" type="submit" value="Send"/>
                      </form>
                  </section>
-                 <!-- <aside> </aside> ??-->
+                 <!-- <aside> </aside> ??--> {% endcomment %}
             </main>
       
             <!-- Footer-->

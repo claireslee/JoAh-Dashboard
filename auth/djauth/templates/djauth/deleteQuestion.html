@@ -19,7 +19,7 @@
         .main { 
         background-color: #FFFFFF;
         width: 485px;
-        height: 230px;
+        height: 250px;
         margin: 6em auto;
         border-radius: 1.5em;
         box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
@@ -27,7 +27,7 @@
 
         .sign {
         padding-top: 40px;
-        color: #ffa600;
+        color: rgb(139, 108, 243);
         font-family: 'Ubuntu', sans-serif;
         font-weight: bold;
         font-size: 40px;
@@ -74,19 +74,24 @@
         
         
         }
+
+        .select2-container--default .select2-selection--single {
+            width: auto;
+            min-width: 150px; /* Set a minimum width for smaller questions */
+            max-width: 300px; /* Set a maximum width for larger questions */
+        }
     </style>
     <title> joah project </title>
 
 </head>
   
-<body style="background-color:#fde4c9">
+<body>
     
-<a  href="/dash"> Back to Dashboard </a>
 <div class="main">
     <center>
     <div class="col-md-6">
         <p class="sign" align="center">Delete a Question</p>
-        <div class="card card-body">
+        <div class="user">
               <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}

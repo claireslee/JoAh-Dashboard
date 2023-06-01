@@ -1,13 +1,15 @@
 {% extends 'djauth/teacherDash.html'%}
 
 {% block content %} 
-    <br> <br>
-    <h1> All Employee Inquiries </h1> 
-
+    <div class="container">
+        <br> 
+        <h1> Employee Inquiries </h1> 
+        <br>
     {% for x in all %}
-        <strong>{{ x.inqteacherfirstname }} {{x.inqteacherlastname }} </strong><br>
-        Email: {{ x.inqteacheremail }} <br>
+    <strong>{{ x.inqteacherfirstname }} {{x.inqteacherlastname }} </strong><br>
+        <p>Email: {{ x.inqteacheremail }} <br>
         Message: {{ x.inqteachermessage }} <br>
+        </p>
         <hr>
     {% endfor %}
 {%endblock%}
