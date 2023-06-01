@@ -104,8 +104,11 @@
     {% block content %}
     
     <div class="content">
+
+      <h1 class="exam-title">All Students</h1>
+      <center><a class="exam-button" href="/addStudent"> Add Student </a></li></center><br><br>
       <div class="exam-boxes">
-          <h1 class="exam-title">All Students</h1>
+
 
         {% if users %}
         {% for user in users %}
