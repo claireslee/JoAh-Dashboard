@@ -106,3 +106,13 @@ class ToDoList(models.Model):
     
     def __str__(self):
         return self.item + ' | ' + str(self.completed)
+    
+
+class ContactUs(models.Model):
+    fullname = models.CharField(max_length = 50, default="#")
+    email = models.EmailField(max_length = 200, default = "#")
+    subject = models.CharField(max_length = 50, default="#")
+    message = models.CharField(max_length = 500, default="#")
+    
+    def __str__(self):
+        return self.fullname

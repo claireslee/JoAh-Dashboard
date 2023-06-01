@@ -37,13 +37,12 @@
                         <div>
                             <ul class="navbar-nav">
                                 <a class="logo" href="/mainpage"> <img src="{% static 'djauth/media/joah-logo.png' %}" style="width:95px; height:55px"> </a>
-                                <li class="nav-item"><a class="nav-link" href="/aboutUs"> about us </a></li>
-                                <li class="nav-item"><a class="nav-link" href="/resources"> resources </a></li>
-                                <li class="nav-item"><a class="nav-link" href="/calendar"> calendar </a></li>
-                                <li class="nav-item"><a class="nav-link" href="/programs"> programs </a></li>
-                                <li class="nav-item"><a class="nav-link" href="/contactus"> contact us </a></li>
+                                <li class="nav-item"><a class="nav-link" href="/aboutUs"> About </a></li>
+                                <li class="nav-item"><a class="nav-link" href="/resources"> Resources </a></li>
+                                <li class="nav-item"><a class="nav-link" href="/programs"> Programs </a></li>
+                                <li class="nav-item"><a class="nav-link" href="/contactus"> Contact Us </a></li>
                                 {% if user.is_authenticated %}
-                                    <li class="nav-item"><a class="nav-link" href="/dash"> dashboard </a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/dash"> Dashboard </a></li>
                                     {%endif%}
                             </ul>
                         </div>

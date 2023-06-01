@@ -26,6 +26,7 @@ urlpatterns = [
     path('calendar/', views.calendar, name="calendar.html"),
     path('programs/', views.programs, name="programs.html"),
     path('contactus/', views.contactus, name="contactus.html"),
+    path('newContactUs/', views.newContactUs ,name='newContactUs.html'),
     path('teacherDash/', views.teacherDash, name="teacherDash.html"),
     # path('studentDashboard/studentDashboard/', views.studentDashboard, name="studentDashboard/studentDashboard.html"),
     path('loggedin_view/', views.loggedin_view),
