@@ -1,25 +1,135 @@
-{% extends 'djauth/mainpage.html'%}
+{% extends 'djauth/mainpage.html' %}
 {% block title %} Contact Us {% endblock %}
-{% block content %} 
 
-{%load static%}
-    <link href="{% static 'djauth/contactUs.css' %}" rel="stylesheet">
-    <section id="contact-us-bar" class="contact-us-bar">
-        <h2 data-aos="fade-up"> CONTACT US </h2>
-    </section>
+{% block content %}
 
-    <section id="contact-options" class="contact-options">
-        <h2 data-aos="fade-up"> set your children up for success... </h2>
-        <p> have questions? use any of the below to contact us: </p>
+{% load static %}
+<link href="{% static 'djauth/contactus.css' %}" rel="stylesheet">
+<br>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="contact-wrap w-100 p-md-5 p-4">
+        <h3 class="mb-4">Contact Us</h3>
+        <div id="form-message-warning" class="mb-4"></div>
+        <div id="form-message-success" class="mb-4">
+          Your message was sent, thank you!
+        </div>
+        <form method="POST" action="{% url 'contactus.html' %}" id="contactForm" name="contactForm" class="contactForm">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="label" for="name">Full Name</label>
+                <input type="text" class="form-control" name="fullname" id="name" placeholder="Name">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="label" for="email">Email Address</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="label" for="subject">Subject</label>
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="label" for="#">Message</label>
+                <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <input type="submit" value="Send Message" class="btn btn-orange">
+                <div class="submitting"></div>
+              </div>
+            </div>
+          </div>
+        </form>
 
-        <div class = "button-row"> 
-            <a class="contact-button"> 123-456-7890 </a>
-            <a class="contact-button"> joah@joah </a>
-            <a class="contact-button"> kakaotalk </a>
-        </div> 
-    </section>
 
-     
-</body>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="dbox w-100 text-center">
+                    <div class="icon d-flex align-items-center justify-content-center">
+                        <i class="bi bi-globe"></i>
+                    </div>
+                    <div class="text">
+                    <p><span>Address:</span> 268 Broad Ave. 2nd Floor, Palisades Park, NJ 07650
+                    </p>
+                    </div>
+                </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dbox w-100 text-center">
+                    <div class="icon d-flex align-items-center justify-content-center">
+                        <i class="bi bi-telephone"></i>
+                    </div>
+                    <div class="text">
+                    <p><span>Phone:</span> <a href="tel://1234567920"> 973 939-1830
+                    </a></p>
+                    </div>
+                </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dbox w-100 text-center">
+                    <div class="icon d-flex align-items-center justify-content-center">
+                        <i class="bi bi-laptop"></i>
+                    </div>
+                    <div class="text">
+                    <p><span>Email:</span> <a href="mailto:info@joah-academy.com">info@joah-academy.com</a></p>
+                    </div>
+                </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dbox w-100 text-center">
+                    <div class="icon d-flex align-items-center justify-content-center">
+                        <i class="bi bi-phone"></i>
+                    </div>
+                    <div class="text">
+                    <p><span>KakaoTalk:</span> <a href="#"> ID#</a></p>
+                    </div>
+                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        </section>
+        <br><br><br>
+    
+        <script src="js/jquery.min.js"></script>
+      <script src="js/popper.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/jquery.validate.min.js"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+      <script src="js/google-map.js"></script>
+      <script src="js/main.js"></script>
+    
+        </body>
+
+        <style>
+            .btn-orange {
+                background-color: orange;
+                color: white;
+            }
+
+            .dbox .icon {
+                background-color: orange; /* Set icon background color to orange */
+            }
+        </style>
+    
+    
 {%endblock%}
+
+
 </html>

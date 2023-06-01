@@ -246,3 +246,8 @@ class ToDoListForm(forms.ModelForm):
     class Meta:
         model = ToDoList
         fields = ['item', 'completed']
+        
+class ContactUsForm(forms.ModelForm):
+    class Meta:
+        model = ContactUs
+        fields = ['fullname', 'email', 'subject', 'message']

@@ -46,6 +46,8 @@ from .forms import ToDoListForm
 from .models import ToDoList
 from .models import TeacherInquirie
 from .forms import TeacherInquirieForm
+from .models import ContactUs
+from .forms import ContactUsForm
 
 
 def mainpage(request):
@@ -82,7 +84,23 @@ def programs(request):
     return render(request, 'djauth/programs.html')
 
 def contactus(request):
-    return render(request, 'djauth/contactus.html')
+    if request.method == "POST":
+        form = ContactUsForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+        messages.success(request, ('Your message has been sent!'))
+        
+        return HttpResponseRedirect("/teacherDash")
+        #return render(request, 'teacherAnnouncement.html', {})
+        
+    else:
+        return render(request, 'djauth/contactus.html')
+    
+@login_required(login_url="/login")
+def newContactUs(request):
+    all_contactus = ContactUs.objects.all
+    return render(request, 'djauth/newContactUs.html',{'all':all_contactus})
+
 
 @login_required(login_url="/login")
 def teacherDash(request):

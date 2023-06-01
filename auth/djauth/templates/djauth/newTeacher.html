@@ -1,8 +1,8 @@
-{% extends 'djauth/mainpage.html'%}
+{% extends 'djauth/teacherDash.html'%}
 
 {% block content %} 
     <br> <br>
-    <h1> All inquiries </h1> 
+    <h1> All Employee Inquiries </h1> 
 
     {% for x in all %}
         <strong>{{ x.inqteacherfirstname }} {{x.inqteacherlastname }} </strong><br>
