@@ -26,6 +26,8 @@
       #right-half {
         height: 600px;
         overflow-y: auto;
+        background-color: rgba(255, 255, 255, 0.92);
+
       }
   
       #answer-fields label {
@@ -47,6 +49,37 @@
         display: inline-block;
         margin-right: 10px;
       }
+      
+      .exam-boxes {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          gap: 20px;
+          margin-top: 0px;
+          margin-left: 80px; /* Add margin-left to create space */
+          margin-right: 40px;
+          position: relative;
+        }
+  
+        
+        .exam-title {
+          text-align: center;
+          margin-bottom: 20px;
+          font-size: 40px;
+          font-weight: bold;
+          color: #263238;
+          width: 100%;
+        }
+  
+        .exam-box-title {
+          text-align: center;
+          margin-bottom: 20px;
+          font-size: 20px;
+          font-weight: bold;
+          color: #152d4b;
+          width: 100%;
+        }
+
     </style>
   </head>
   <header>
@@ -82,18 +115,22 @@
         <iframe src="{% static 'djauth/media/' %}{{ pdftest.pdf.url }}" width="100%" height="600px"></iframe>
       </div>
       <div id="right-half" style="overflow-y: scroll !important;">
-        <h1>Results!!</h1>
-        <h2>Score: {{ percentage }}%</h2>
-        {% if incorrect_answers %}
-          <p>Incorrect Answers:</p>
-          <ul>
-            {% for question_number, answers in incorrect_answers.items %}
-            <li>Question {{ question_number }} - Your Answer: {{ answers.your_answer }} | Correct Answer: {{ answers.correct_answer }} </li>
-          {% endfor %}
-          </ul>
-        {% else %}
-          <p>All answers are correct!</p>
-        {% endif %}
+        <div class="results">
+          <img class="results-picture" src="http://kmit.in/emagazine/wp-content/uploads/2018/02/karnataka-results.jpg" alt="Card image cap">
+
+          <center><h3>Score: {{ percentage }}%</h3></center>
+          {% if incorrect_answers %}
+            <center><h6>Incorrect Answers:</h6></center>
+            <ul style="list-style-type: none;">
+              <center>
+              {% for question_number, answers in incorrect_answers.items %}
+              <li>Question {{ question_number }} - You Answered: {{ answers.your_answer }} | Correct Answer: {{ answers.correct_answer }} </li>
+            {% endfor %}</center>
+            </ul>
+          {% else %}
+            <h6>All answers are correct!</h6>
+          {% endif %}
+          </div>
       </div>
   </body>
 </html>
