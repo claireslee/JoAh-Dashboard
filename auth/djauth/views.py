@@ -11,6 +11,8 @@ from django.views.generic import DetailView
 from django.contrib import messages
 from .forms import PdfTestForm
 from .models import PdfTest
+from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import UploadedFile
 from django.core.files.base import ContentFile
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -289,6 +291,14 @@ def studentCalendar(request):
     else:
         return render(request, "studentDashboard/studentCalendar.html")
 
+def is_pdf(file: UploadedFile) -> bool:
+    """
+    Check if the uploaded file is a PDF.
+    """
+    allowed_extensions = ['.pdf']
+    return any(file.name.lower().endswith(ext) for ext in allowed_extensions)
+
+
 @login_required(login_url="/login")
 def studentAnnouncement(request):
     if request.user.is_authenticated:
@@ -324,9 +334,7 @@ def addStudent(request):
                         last_name = request.POST['last_name']
                         username = request.POST['username']
                         password = request.POST['password']
-                        grade = request.POST['grade']
-                        
-                        
+                        grade = request.POST['grade']                      
                         User.objects.create_user(username=request.POST['username'],
                                             password=request.POST['password'] )
                         
@@ -850,6 +858,10 @@ def create_test(request):
                 else:
                     pdf_test = form.save(commit=False)
                     pdf_test.pdf = request.FILES['pdf']
+                    if not is_pdf(pdf_test.pdf):
+                        form.add_error('pdf', 'Only PDF files are allowed.')
+                    return render(request, 'djauth/create_test.html', {'form': form})
+                
                     pdf_test.name = name
                     pdf_test.num_questions = request.POST['num_questions']
                     pdf_test.answers = request.POST['answers']
