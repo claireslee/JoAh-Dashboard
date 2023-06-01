@@ -860,7 +860,7 @@ def create_test(request):
                     pdf_test.pdf = request.FILES['pdf']
                     if not is_pdf(pdf_test.pdf):
                         form.add_error('pdf', 'Only PDF files are allowed.')
-                    return render(request, 'djauth/create_test.html', {'form': form})
+                        return render(request, 'djauth/create_test.html', {'form': form})
                 
                     pdf_test.name = name
                     pdf_test.num_questions = request.POST['num_questions']
