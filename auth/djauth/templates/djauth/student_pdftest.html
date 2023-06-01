@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>joah project</title>
   {% load static %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
   <link rel="stylesheet" type="text/css" href="{% static 'djauth/teacherDash.css' %}">
   <link href="{% static 'djauth/student_pdftest.css' %}" rel="stylesheet">
   <style>
@@ -24,26 +26,82 @@
       height: 600px;
       overflow-y: auto;
     }
+    .answer-fields{
 
+      font-family: Montserrat;
+      
+    }
     #answer-fields label {
       display: inline-block;
-      margin-right: 10px;
+      
     }
 
     form.answers input[type="radio"] {
       display: inline-block;
-      margin-right: 10px;
+      left: 10px;
+      
     }
 
     form.answers label {
       display: inline-block;
-      margin-right: 10px;
+      
     }
 
     .inline input[type='radio'] {
       display: inline-block;
-      margin-right: 10px;
+      left: 10px;
+      
     }
+
+    input[type='radio']:after {
+      width: 18px;
+      height: 18px;
+      border-radius: 18px;
+      top: -6px;
+      left: 0px;
+      position: relative;
+      background-color: #d1d3d1;
+      content: '';
+      display: inline-block;
+      visibility: visible;
+      border: 2px solid white;
+  }
+
+  input[type='radio']:checked:after {
+      width: 18px;
+      height: 18px;
+      border-radius: 18px;
+      top: -6px;
+      left: 0px;
+      position: relative;
+      background-color: #ffa500;
+      content: '';
+      display: inline-block;
+      visibility: visible;
+      border: 2px solid white;
+  }
+  .create-test {
+    display: block;
+    width: 40%;
+    padding: 10px;
+    text-align: center;
+    background-color: rgba(192, 146, 242, 0.8);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    height: 40px;
+    vertical-align: middle;
+     /* Add this line to center-align the button */
+  }
+  
+  .create-test:hover {
+    background-color: rgb(170, 150, 237);
+
+  }
+  
   </style>
 </head>
 <header>
@@ -75,14 +133,17 @@
     <iframe src="{% static 'djauth/media/' %}{{ pdftest.pdf.url }}" width="100%" height="600px"></iframe>
   </div>
   <div id="right-half" style="overflow-y: scroll !important;">
+    <br>
     <form method="post" enctype="multipart/form-data" novalidate>
       {% csrf_token %}
       {{ form.as_p }}
+      <center>
       <div id="answer-fields">
         <!-- Radio buttons will be generated here -->
       </div>
+    </center>
       <input type="hidden" name="answers" id="id_answers" value=""> <!-- Hidden input field for answers -->
-      <button type="submit">Submit Test</button>
+      <button class="create-test" type="submit">Submit Test</button>
     </form>
   </div>
   {% block scripts %}
@@ -99,12 +160,26 @@
       for (let i = 1; i <= numQuestions; i++) {
         const questionNum = `q${i}`;
         const label = document.createElement('label');
-        label.innerHTML = `Answer for Question ${i}:`;
+        label.innerHTML = `Question ${i}:`;
+        label.style.fontSize = "18px";
     
         const radioA = createRadioButton(`${questionNum}_answer`, 'A', false);
         const radioB = createRadioButton(`${questionNum}_answer`, 'B', false);
         const radioC = createRadioButton(`${questionNum}_answer`, 'C', false);
         const radioD = createRadioButton(`${questionNum}_answer`, 'D', false);
+        radioA.style.fontSize = "18px";
+        radioB.style.fontSize = "18px";
+        radioC.style.fontSize = "18px";
+        radioD.style.fontSize = "18px";
+        radioA.style.padding = "5px"; // Change the padding value as desired
+        radioB.style.padding = "5px";
+        radioC.style.padding = "5px";
+        radioD.style.padding = "5px";
+        radioA.style.marginLeft = "5px"; // Change the margin value as desired
+        radioB.style.marginLeft = "5px";
+        radioC.style.marginLeft = "5px";
+        radioD.style.marginLeft = "5px";
+
         
         const questionContainer = document.createElement('span');
         questionContainer.appendChild(label);
@@ -112,6 +187,8 @@
         questionContainer.appendChild(radioB);
         questionContainer.appendChild(radioC);
         questionContainer.appendChild(radioD);
+
+        questionContainer.style.marginLeft = "10px";
         
         answerFieldsContainer.appendChild(questionContainer);
         answerFieldsContainer.appendChild(document.createElement('br'));
