@@ -18,7 +18,7 @@
         .main { 
         background-color: #FFFFFF;
         width: 485px;
-        height: 485px;
+        height: 685px;
         margin: 6em auto;
         border-radius: 1.5em;
         box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
@@ -26,14 +26,14 @@
 
         .sign {
         padding-top: 40px;
-        color: #ffa600;
+        color: rgb(139, 108, 243);
         font-family: 'Ubuntu', sans-serif;
         font-weight: bold;
         font-size: 40px;
         }
 
         .user {
-        width: 85%;
+        width: 90%;
         color: rgb(64, 72, 78);
         font-weight: 600;
         font-size: 15px;
@@ -78,13 +78,13 @@
 
 </head>
   
-<body style="background-color:#fde4c9">
+<body>
     
 <div class="main">
     <center>
     <div class="col-md-6">
         <p class="sign" align="center">Add Question</p>
-        <div class="card card-body">
+        <div class="user">
 
            <form action="" method="POST">
               {% csrf_token %}
