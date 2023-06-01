@@ -1,13 +1,18 @@
 {% extends 'djauth/teacherDash.html'%}
 
-{% block content %} 
-    <br> <br>
-    <h1> All General Contacts </h1> 
 
+{% block content %} 
+<div class="container">
+    <br> 
+    <h1> General Inquiries </h1> 
+    <br>
     {% for x in all %}
-        <strong>{{ x.fullname }} </strong><br>
-        Email: {{ x.email }} <br>
+       <strong> {{ x.fullname }} </strong><br>
+        <p>Email: {{ x.email }} <br>
+        Subject: {{ x.subject }} <br>
         Message: {{ x.message }} <br>
+        </p>
         <hr>
     {% endfor %}
+</div>
 {%endblock%}
