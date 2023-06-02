@@ -11,6 +11,6 @@ This project is a website and dashboard system for JoAh Academy.
 * Teachers can send announcements to students
 
 
-## Tech stack
+## Tech Stack
 
 Bootstrap, Django, SQLite
